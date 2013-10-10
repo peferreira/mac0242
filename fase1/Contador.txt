@@ -1,0 +1,19 @@
+# Contador simples: 
+# Defina o maximo aqui:
+PUSH 10
+STO 0
+PUSH 1 # Valor inicial do contador.
+STO 1
+RCL 1
+PRN # Primeira impressao.
+LOOP: PUSH 1
+RCL 1
+ADD # Incrementa o contador.
+STO 1 # Armazena o incrementado.
+RCL 1
+PRN # Impressao do contador.
+RCL 1 # Carrega variaveis para a comparacao.
+RCL 0
+LT # Comparacao para o loop.
+JIT LOOP
+END

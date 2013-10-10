@@ -1,0 +1,27 @@
+# Calcula a hipotenusa
+# (ao quadrado)
+# do triangulo retangulo
+# com catetos de lados
+# dados.
+SETUP: 
+PUSH 3 # Definicao dos catetos.
+STO 0
+PUSH 4
+STO 1
+PUSH 'Hip_squared_is:' # Mensagem ao usuario.
+PRN
+CALC: 
+RCL 0 # a*a
+DUP
+MUL
+STO 0
+RCL 1 # b*b
+DUP
+MUL
+STO 1
+RCL 0
+RCL 1
+ADD # (a*a)+(b*b)
+PRN
+FIM: 
+END
