@@ -2,6 +2,6 @@ package lab2.ime.usp;
 
 public interface Empilhavel {
 	
-	void voar();
-
+	abstract void print();
+	abstract Empilhavel clona();
 }

@@ -1,15 +1,23 @@
 package lab2.ime.usp;
 
-public class Teste implements Empilhavel{
-	
-	Teste(String nome){
+public class Teste implements Empilhavel {
+
+	private String nome;
+
+	public Teste(String nome) {
 		this.nome = nome;
 	}
-	public String nome;
 
-	public void voar(){
-		System.out.println("voarr!!! "+ nome);
-		
+	public Teste() {
+	}
+
+	public Teste clona() {
+		return (new Teste(nome));
+	}
+
+	public void print() {
+		System.out.println(nome);
+
 	}
 
 }
