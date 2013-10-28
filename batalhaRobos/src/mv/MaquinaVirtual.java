@@ -20,15 +20,14 @@ public class MaquinaVirtual {
 		
 	}
 	
-	void rodaMaquina() {
+	void inicializa(){
 		pilhaDeDados = new Stack<Empilhavel>();
 	    memoria = new Memoria();
 		programas = new Programas();
-		
-
 		programas.setListaDeProgramasPadroes();
 		listaDeProgramas = programas.getListaDeProgramas();
-		
+	}
+	void roda() {
 		for (Programa prg : listaDeProgramas) {
 			codigo = prg.getInstrucao();
 			while (!(codigo instanceof END)) {
@@ -41,7 +40,8 @@ public class MaquinaVirtual {
 	
 	public static void main(String[] args) {
 			MaquinaVirtual m = new MaquinaVirtual();
-			m.rodaMaquina();
+			m.inicializa();
+			m.roda();
 	}
 
 }
