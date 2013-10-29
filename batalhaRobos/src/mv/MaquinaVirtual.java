@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import mv.empilhaveis.*;
 import mv.instrucoes.*;
 
-
-
 public class MaquinaVirtual {
 
 	private Stack<Empilhavel> pilhaDeDados;
@@ -15,18 +13,19 @@ public class MaquinaVirtual {
 	private Programas programas;
 	private Instrucao codigo;
 	LinkedList<Programa> listaDeProgramas;
-	
-	void passo(){
-		
+
+	void passo() {
+
 	}
-	
-	void inicializa(){
+
+	void inicializa() {
 		pilhaDeDados = new Stack<Empilhavel>();
-	    memoria = new Memoria();
+		memoria = new Memoria();
 		programas = new Programas();
 		programas.setListaDeProgramasPadroes();
 		listaDeProgramas = programas.getListaDeProgramas();
 	}
+
 	void roda() {
 		for (Programa prg : listaDeProgramas) {
 			codigo = prg.getInstrucao();
@@ -37,11 +36,11 @@ public class MaquinaVirtual {
 		}
 
 	}
-	
+
 	public static void main(String[] args) {
-			MaquinaVirtual m = new MaquinaVirtual();
-			m.inicializa();
-			m.roda();
+		MaquinaVirtual m = new MaquinaVirtual();
+		m.inicializa();
+		m.roda();
 	}
 
 }
