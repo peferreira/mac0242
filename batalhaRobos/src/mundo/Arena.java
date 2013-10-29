@@ -1,54 +1,75 @@
 package mundo;
 
 import mundo.posicionaveis.Posicionavel;
-import mundo.posicionaveis.Robo;
 
 public class Arena {
-	private Hexagono[][] mapa;
 	private Posicionavel[] moveis;
 	private int numRobos;
+	private MapaHexagonal mapa;
+	private Zeus zeus;
 
 	Arena() {
-		mapa = new Hexagono[100][100];
 		moveis = new Posicionavel[100];
+		mapa = new MapaHexagonal();
+		zeus = new Zeus(mapa);
 	}
 
-	Hexagono getHexagono(int i, int j) {
-		return mapa[i][j];
+	void atualiza(){
+		zeus.atualiza();
 	}
-
-	void adicionaRobo(Robo robo, int i, int j) {
-		mapa[i][j].adiciona(robo);
-	}
-
+	
 	void moveCimaEsq(int movelID) {
+		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
-		moveis[movelID].alteraPosicao(movel.getI() + 1, movel.getJ() - 1);
+		posI = movel.getI();
+		posJ = movel.getJ();
+		Hexagono hex = mapa.getHexagono(posI + 1, posJ - 1);
+		hex.adiciona(movel);
 	}
 
 	void moveEsquerda(int movelID) {
+		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
-		moveis[movelID].alteraPosicao(movel.getI(), movel.getJ() - 1);
+		posI = movel.getI();
+		posJ = movel.getJ();
+		Hexagono hex = mapa.getHexagono(posI, posJ - 1);
+		hex.adiciona(movel);
 	}
 
 	void moveBaixoEsq(int movelID) {
+		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
-		moveis[movelID].alteraPosicao(movel.getI() - 1, movel.getJ() - 1);
+		posI = movel.getI();
+		posJ = movel.getJ();
+		Hexagono hex = mapa.getHexagono(posI - 1, posJ - 1);
+		hex.adiciona(movel);
 	}
 
 	void moveCimaDir(int movelID) {
+		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
-		moveis[movelID].alteraPosicao(movel.getI() + 1, movel.getJ());
+		posI = movel.getI();
+		posJ = movel.getJ();
+		Hexagono hex = mapa.getHexagono(posI + 1, posJ);
+		hex.adiciona(movel);
 	}
 
 	void moveDireita(int movelID) {
+		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
-		moveis[movelID].alteraPosicao(movel.getI(), movel.getJ() + 1);
+		posI = movel.getI();
+		posJ = movel.getJ();
+		Hexagono hex = mapa.getHexagono(posI,posJ + 1);
+		hex.adiciona(movel);
 	}
 
 	void moveBaixoDir(int movelID) {
+		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
-		moveis[movelID].alteraPosicao(movel.getI() - 1, movel.getJ());
+		posI = movel.getI();
+		posJ = movel.getJ();
+		Hexagono hex = mapa.getHexagono(posI - 1,posJ);
+		hex.adiciona(movel);
 	}
 
 }
