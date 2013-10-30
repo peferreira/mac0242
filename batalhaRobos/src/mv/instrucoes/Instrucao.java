@@ -1,10 +1,10 @@
 package mv.instrucoes;
 
-import java.util.Queue;
 import java.util.Stack;
 
-import mv.*;
-import mv.empilhaveis.*;
+import mv.Memoria;
+import mv.Programa;
+import mv.empilhaveis.Empilhavel;
 
 public class Instrucao {
     Empilhavel argumento;

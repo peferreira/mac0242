@@ -1,6 +1,7 @@
 package mundo;
 
 import mundo.posicionaveis.Posicionavel;
+import mundo.posicionaveis.Robo;
 
 public class Arena {
 	private Posicionavel[] moveis;
@@ -8,17 +9,18 @@ public class Arena {
 	private MapaHexagonal mapa;
 	private Zeus zeus;
 
-	Arena() {
+	public Arena() {
 		moveis = new Posicionavel[100];
 		mapa = new MapaHexagonal();
 		zeus = new Zeus(mapa);
+		mapa.inicializa();
 	}
 
-	void atualiza(){
+	public void atualiza(){
 		zeus.atualiza();
 	}
 	
-	void moveCimaEsq(int movelID) {
+	public void moveCimaEsq(int movelID) {
 		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
@@ -27,7 +29,7 @@ public class Arena {
 		hex.adiciona(movel);
 	}
 
-	void moveEsquerda(int movelID) {
+	public void moveEsquerda(int movelID) {
 		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
@@ -36,7 +38,7 @@ public class Arena {
 		hex.adiciona(movel);
 	}
 
-	void moveBaixoEsq(int movelID) {
+	public void moveBaixoEsq(int movelID) {
 		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
@@ -45,7 +47,7 @@ public class Arena {
 		hex.adiciona(movel);
 	}
 
-	void moveCimaDir(int movelID) {
+	public void moveCimaDir(int movelID) {
 		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
@@ -54,7 +56,7 @@ public class Arena {
 		hex.adiciona(movel);
 	}
 
-	void moveDireita(int movelID) {
+	public void moveDireita(int movelID) {
 		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
@@ -63,13 +65,18 @@ public class Arena {
 		hex.adiciona(movel);
 	}
 
-	void moveBaixoDir(int movelID) {
+	public void moveBaixoDir(int movelID) {
 		int posI, posJ;
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
 		posJ = movel.getJ();
 		Hexagono hex = mapa.getHexagono(posI - 1,posJ);
 		hex.adiciona(movel);
+	}
+	
+	public void insereExercito(){
+		moveis[0] = new Robo(5,5);
+		mapa.setNovoRobo(5,5);
 	}
 
 }

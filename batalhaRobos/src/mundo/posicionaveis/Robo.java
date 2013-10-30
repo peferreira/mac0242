@@ -5,11 +5,12 @@ public class Robo implements Posicionavel {
 	private int posI;
 	private int posJ;
 
-	Robo(int posI, int posJ) {
+	public Robo(int posI, int posJ) {
 		this.posI = posI;
 		this.posJ = posJ;
 
 	}
+
 
 	public int getI() {
 		return posI;

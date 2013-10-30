@@ -18,13 +18,18 @@ public class Zeus {
 		hex = mapa.getHexagono(i, j);
 		if (!(hex.temOcupante())) {
 			Posicionavel ocupante = hex.defineOcupante();
-			hex.retiraCompetidores();
-			ocupante.alteraPosicao(i, j);
-			hexAntigo = mapa.getHexagono(ocupante.getI(), ocupante.getJ());
-			hexAntigo.retiraOcupante();
+			if(ocupante != null) {
+				hex.retiraCompetidores();
+				System.out.println("ARobo - i: " + ocupante.getI() + " j: " + ocupante.getJ());
+				ocupante.alteraPosicao(i, j);
+				hexAntigo = mapa.getHexagono(ocupante.getI(), ocupante.getJ());
+				hexAntigo.retiraOcupante();
+				System.out.println("NRobo - i: " + ocupante.getI() + " j: " + ocupante.getJ());
+			}
 		} else {
 			hex.retiraCompetidores();
 		}
+		
 	}
 
 	void atualiza() {
