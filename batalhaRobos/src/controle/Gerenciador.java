@@ -11,12 +11,12 @@ public class Gerenciador {
 
 	public Gerenciador() {
 		arena = new Arena();
-		mvs = new MaquinaVirtual[1];
+		mvs = new MaquinaVirtual[2];
 	}
 
 	void init() {
 		arena.insereExercito();
-		novasMaquinasVirtuais(1);
+		novasMaquinasVirtuais(2);
 	}
 
 	void novasMaquinasVirtuais(int n) {

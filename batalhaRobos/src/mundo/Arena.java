@@ -77,6 +77,9 @@ public class Arena {
 	public void insereExercito(){
 		moveis[0] = new Robo(1,1);
 		mapa.setNovoRobo((Robo)moveis[0]);
+		moveis[1] = new Robo(1,1);
+		mapa.setNovoRobo((Robo)moveis[1]);
+
 	}
 
 }

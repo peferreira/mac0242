@@ -8,9 +8,9 @@ public class MapaHexagonal {
 	private int sizeJ;
 
 	MapaHexagonal() {
-		this.sizeI = 3;
-		this.sizeJ = 3;
-		mapa = new Hexagono[3][3];
+		this.sizeI = 10;
+		this.sizeJ = 10;
+		mapa = new Hexagono[10][10];
 	}
 
 	void inicializa() {
