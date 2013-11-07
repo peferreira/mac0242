@@ -1,7 +1,7 @@
 package mv.instrucoes;
 
 public class END extends Instrucao {
-    public END () {
-	super();
-    }
+	public END() {
+		super();
+	}
 }

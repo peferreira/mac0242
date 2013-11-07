@@ -14,8 +14,9 @@ public class MOVE extends Especial {
 			Stack<Operacao> filaDeOperacoes, Programa programa) {
 		Operacao op;
 		Empilhavel dir = pilhaDeDados.pop();
+		dir.print();
 		if (dir instanceof Direcao) {
-			op = new Operacao(codigo, ((Direcao) dir).getCodigoDir());
+			op = new Operacao(codigo, ((Direcao) dir).getDir());
 			filaDeOperacoes.add(op);
 			programa.incPonteiroPrograma();
 		} else {

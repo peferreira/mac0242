@@ -6,15 +6,17 @@ import mv.*;
 import mv.empilhaveis.*;
 
 public class DUP extends Instrucao {
-    public DUP () {
-	super ();
-    }
-    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa) {
-	Empilhavel clone, topo; 
-	topo = pilhaDeDados.pop();
-	clone = topo.clona();
-	pilhaDeDados.push(clone);
-	pilhaDeDados.push(topo);
-	programa.incPonteiroPrograma();
-    }
+	public DUP() {
+		super();
+	}
+
+	public void executar(Stack<Empilhavel> pilhaDeDados, Memoria memoria,
+			Programa programa) {
+		Empilhavel clone, topo;
+		topo = pilhaDeDados.pop();
+		clone = topo.clona();
+		pilhaDeDados.push(clone);
+		pilhaDeDados.push(topo);
+		programa.incPonteiroPrograma();
+	}
 }

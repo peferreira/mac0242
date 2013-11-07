@@ -1,6 +1,6 @@
 package mv;
 
-import java.util.Queue;
+import java.util.EmptyStackException;
 import java.util.Stack;
 import java.util.LinkedList;
 
@@ -9,7 +9,7 @@ import mv.instrucoes.*;
 
 public class MaquinaVirtual {
 
-	private Stack<Operacao> filaDeOperacoes;
+	private Stack<Operacao> pilhaDeOperacoes;
 	private Stack<Empilhavel> pilhaDeDados;
 	private Memoria memoria;
 	private Programas programas;
@@ -18,11 +18,11 @@ public class MaquinaVirtual {
 	boolean ultimaResposta;
 
 	public MaquinaVirtual() {
-		filaDeOperacoes = new Stack<Operacao>();
+		pilhaDeOperacoes = new Stack<Operacao>();
 		pilhaDeDados = new Stack<Empilhavel>();
 		memoria = new Memoria();
 		programas = new Programas();
-		programas.testaMoveEast();
+		programas.testaMovimentoDeUmRobo();
 		listaDeProgramas = programas.getListaDeProgramas();
 	}
 
@@ -34,28 +34,28 @@ public class MaquinaVirtual {
 				codigo = prg.getInstrucao();
 			}
 			if (codigo instanceof Especial) {
-				((Especial) codigo).geraOperacao(pilhaDeDados, filaDeOperacoes, prg);
+				((Especial) codigo).geraOperacao(pilhaDeDados, pilhaDeOperacoes,
+						prg);
 			}
 		}
 	}
 
-	public Operacao retornaOperacao() {
-		return filaDeOperacoes.pop();
+	public Operacao getOperacao() {
+		Operacao op;
+		try {
+			op = pilhaDeOperacoes.pop();
+		} catch(EmptyStackException excecao){
+			System.out.println("Não existem operações para processamento!");
+			op = null;
+		}
+		return op;
 	}
 
-	public void submeteResposta(boolean resposta) {
-		ultimaResposta = resposta;
+	public void setResposta(boolean resposta) {
+		if (resposta) {
+			pilhaDeDados.push(new Verdadeiro());
+		} else {
+			pilhaDeDados.push(new Falso());
+		}
 	}
-
-	/*
-	 * void roda() { for (Programa prg : listaDeProgramas) { codigo =
-	 * prg.getInstrucao(); while (!(codigo instanceof END)) {
-	 * codigo.executar(pilhaDeDados, memoria, prg); codigo = prg.getInstrucao();
-	 * } }
-	 * 
-	 * }
-	 * 
-	 * public static void main(String[] args) { MaquinaVirtual m = new
-	 * MaquinaVirtual(); m.inicializa(); m.roda(); }
-	 */
 }

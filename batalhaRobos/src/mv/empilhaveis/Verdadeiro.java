@@ -1,26 +1,14 @@
 package mv.empilhaveis;
 
-public class Verdadeiro extends Booleano implements Empilhavel {
+public class Verdadeiro extends Booleano {
 
-    private int v;
-    
-    public Verdadeiro () {
-	v = 1;
-    }
+	private int v;
 
-    public int valor () {
-	return v;
-    }
-    
-    public void print(){
-	System.out.println(v);
-    }
+	public Verdadeiro() {
+		v = 1;
+	}
 
-    public Verdadeiro clona(){
-	return (new Verdadeiro ());
-    }
-
-    public boolean equals (Object obj) {
-	return (obj instanceof Verdadeiro);
-    }
+	public int valor() {
+		return v;
+	}
 }

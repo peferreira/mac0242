@@ -4,46 +4,46 @@ import mv.empilhaveis.Endereco;
 import mv.instrucoes.*;
 
 public class Programa {
+
+	private Instrucao[] vetorPrograma;
+	private final int tamanhoPadrao = 1024;
+	private int ponteiroPrograma;
+	private int numeroDeInstrucoes;
 	
-    private Instrucao [] vetorPrograma;
-    private final int tamanhoPadrao = 1024;
-    private int ponteiroPrograma;
-    private int numeroDeInstrucoes;
-    
-    public Programa() {
-	vetorPrograma = new Instrucao [tamanhoPadrao];
-	ponteiroPrograma = 0;
-	numeroDeInstrucoes = 0;
-    }
+	public Programa() {
+		vetorPrograma = new Instrucao[tamanhoPadrao];
+		ponteiroPrograma = 0;
+		numeroDeInstrucoes = 0;
+	}
 
-    public Programa(int tamanho) {
-	vetorPrograma = new Instrucao [tamanho];
-	ponteiroPrograma = 0;
-	numeroDeInstrucoes = 0;
-    }
-    
-    public void setPonteiroPrograma (Endereco endereco) {
-	ponteiroPrograma = endereco.getEndereco();
-    }
-    
-    public int getPonteiroPrograma() {
-	return ponteiroPrograma;
-    }
+	public Programa(int tamanho) {
+		vetorPrograma = new Instrucao[tamanho];
+		ponteiroPrograma = 0;
+		numeroDeInstrucoes = 0;
+	}
 
-    public void incPonteiroPrograma() {
-	ponteiroPrograma++;
-    }
+	public void setPonteiroPrograma(Endereco endereco) {
+		ponteiroPrograma = endereco.getEndereco();
+	}
 
-    public void addInstrucao(Instrucao codigo) {
-	vetorPrograma[numeroDeInstrucoes] = codigo;
-	numeroDeInstrucoes++;
-    }
+	public int getPonteiroPrograma() {
+		return ponteiroPrograma;
+	}
 
-    public Instrucao getInstrucao() {
-	return vetorPrograma[ponteiroPrograma];
-    }
+	public void incPonteiroPrograma() {
+		ponteiroPrograma++;
+	}
 
-    public int getNumeroDeInstrucoes(){
-	return numeroDeInstrucoes;
-    }
+	public void addInstrucao(Instrucao codigo) {
+		vetorPrograma[numeroDeInstrucoes] = codigo;
+		numeroDeInstrucoes++;
+	}
+
+	public Instrucao getInstrucao() {
+		return vetorPrograma[ponteiroPrograma];
+	}
+
+	public int getNumeroDeInstrucoes() {
+		return numeroDeInstrucoes;
+	}
 }

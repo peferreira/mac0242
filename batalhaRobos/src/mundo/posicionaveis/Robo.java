@@ -11,7 +11,6 @@ public class Robo implements Posicionavel {
 
 	}
 
-
 	public int getI() {
 		return posI;
 	}

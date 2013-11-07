@@ -25,7 +25,7 @@ public class Arena {
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
 		posJ = movel.getJ();
-		Hexagono hex = mapa.getHexagono(posI + 1, posJ - 1);
+		Hexagono hex = mapa.getHexagono(posI - 1, posJ - 1);
 		hex.adiciona(movel);
 	}
 
@@ -43,7 +43,7 @@ public class Arena {
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
 		posJ = movel.getJ();
-		Hexagono hex = mapa.getHexagono(posI - 1, posJ - 1);
+		Hexagono hex = mapa.getHexagono(posI + 1, posJ);
 		hex.adiciona(movel);
 	}
 
@@ -52,7 +52,7 @@ public class Arena {
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
 		posJ = movel.getJ();
-		Hexagono hex = mapa.getHexagono(posI + 1, posJ);
+		Hexagono hex = mapa.getHexagono(posI - 1, posJ);
 		hex.adiciona(movel);
 	}
 
@@ -70,13 +70,13 @@ public class Arena {
 		Posicionavel movel = moveis[movelID];
 		posI = movel.getI();
 		posJ = movel.getJ();
-		Hexagono hex = mapa.getHexagono(posI - 1,posJ);
+		Hexagono hex = mapa.getHexagono(posI + 1,posJ + 1);
 		hex.adiciona(movel);
 	}
 	
 	public void insereExercito(){
-		moveis[0] = new Robo(5,5);
-		mapa.setNovoRobo(5,5);
+		moveis[0] = new Robo(1,1);
+		mapa.setNovoRobo((Robo)moveis[0]);
 	}
 
 }

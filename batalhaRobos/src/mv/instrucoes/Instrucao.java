@@ -7,23 +7,25 @@ import mv.Programa;
 import mv.empilhaveis.Empilhavel;
 
 public class Instrucao {
-    Empilhavel argumento;
+	Empilhavel argumento;
+	Empilhavel argumento2;
 
-    public Instrucao () {
-	argumento = null;
-    }
+	public Instrucao() {
+		argumento = null;
+		argumento2 = null;
+	}
 
-    public Instrucao (Empilhavel operando) {
-	argumento = operando;
-    }
+	public Instrucao(Empilhavel operando) {
+		argumento = operando;
+		argumento2 = null;
+	}
 
-    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa) {
-    }
+	public Instrucao(Empilhavel operando, Empilhavel operando2) {
+		argumento = operando;
+		argumento2 = operando2;
+	}
+
+	public void executar(Stack<Empilhavel> pilhaDeDados, Memoria memoria,
+			Programa programa) {
+	}
 }
-
-
-
-
-	
-
-
