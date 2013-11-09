@@ -1,5 +1,10 @@
 package mundo;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import comunicacao.Resposta;
+
 import mundo.posicionaveis.Posicionavel;
 import mundo.posicionaveis.Robo;
 
@@ -8,17 +13,32 @@ public class Arena {
 	private int numRobos;
 	private MapaHexagonal mapa;
 	private Zeus zeus;
+	private LinkedList<Resposta> respostas;
 
 	public Arena() {
 		moveis = new Posicionavel[100];
 		mapa = new MapaHexagonal();
-		zeus = new Zeus(mapa);
+		this.respostas = new LinkedList<Resposta>();
+		zeus = new Zeus(mapa , respostas);
 		mapa.inicializa();
 	}
 
+	public LinkedList<Resposta> getRespostas(){
+		return respostas;
+	}
+	public void apagaRespostas(){
+		respostas.clear();
+	}
 	public void atualiza(){
 		zeus.atualiza();
 	}
+	
+	public void inicializa(){
+		FabricaRobos fr = new FabricaRobos();
+		fr.criaRobos();
+		moveis = fr.getRobos();
+	}
+	
 	
 	public void moveCimaEsq(int movelID) {
 		int posI, posJ;
@@ -74,12 +94,17 @@ public class Arena {
 		hex.adiciona(movel);
 	}
 	
-	public void insereExercito(){
+	/*public void insereExercito(){
 		moveis[0] = new Robo(1,1);
 		mapa.setNovoRobo((Robo)moveis[0]);
 		moveis[1] = new Robo(1,1);
 		mapa.setNovoRobo((Robo)moveis[1]);
 
+	}*/
+	
+	
+	public Posicionavel[] getMoveis() {
+		return moveis;
 	}
 
 }

@@ -1,38 +1,62 @@
 package controle;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import comunicacao.Resposta;
+
 import mundo.Arena;
 import mv.MaquinaVirtual;
 import mv.Operacao;
+import mundo.posicionaveis.Posicionavel;
 
 public class Gerenciador {
 
 	private MaquinaVirtual[] mvs;
 	private Arena arena;
-
+	private int[] turnos;
 	public Gerenciador() {
 		arena = new Arena();
-		mvs = new MaquinaVirtual[2];
+		
 	}
 
-	void init() {
-		arena.insereExercito();
-		novasMaquinasVirtuais(2);
+	void inicializa() {
+		arena.inicializa();
+		novasMaquinasVirtuais(arena.getMoveis());
 	}
 
-	void novasMaquinasVirtuais(int n) {
-		for (int i = 0; i < n; i++) {
+	void novasMaquinasVirtuais(Posicionavel[] moveis) {
+		mvs = new MaquinaVirtual[moveis.length];
+		turnos = new int[moveis.length];
+		
+		for (int i = 0; i < moveis.length; i++) {
 			mvs[i] = new MaquinaVirtual();
 		}
 	}
 
 	void executaVM() {
 		for (int i = 0; i < mvs.length; i++) {
-			mvs[i].passo();
+			if(turnos[i] == 0)
+				mvs[i].passo();
+			else if(turnos[i] > 0)
+				turnos[i]--;
 		}
 		processaOperacoes();
 		arena.atualiza();
+		processaRespostas();
 	}
 
+	void processaRespostas(){
+		LinkedList<Resposta> respostas = arena.getRespostas();
+		for(Resposta r: respostas){
+			System.out.println(r.responde());
+		}
+		if (respostas != null){
+			arena.apagaRespostas();
+		}
+	}
+	
+	
 	void processaOperacoes() {
 		Operacao op;
 		for (int i = 0; i < mvs.length; i++) {
@@ -87,7 +111,7 @@ public class Gerenciador {
 
 	public static void main(String[] args) {
 		Gerenciador gerenciador = new Gerenciador();
-		gerenciador.init();
+		gerenciador.inicializa();
 		for (int i = 0; i < 4; i++) {
 			gerenciador.executaVM();
 		}

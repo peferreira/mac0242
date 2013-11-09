@@ -12,35 +12,29 @@ public class Hexagono {
 	private Stack<Posicionavel> competidores;
 	private Posicionavel ocupante;
 	private Solo solo;
-	
+
 	/*
-	private double x;
-	private double y;
-	*/
+	 * private double x; private double y;
+	 */
 
 	public Hexagono(double coordx, double coordy, double r) {
 		/*
-		double xOff = Math.sin(Math.toRadians(30)) * r;
-		double yOff = Math.cos(Math.toRadians(30)) * r;
-		x = coordx * xOff * 2;
-		if (coordy % 2 != 0) {
-			x += xOff;
-		}
-		y = coordy * yOff * 3;
-		*/
+		 * double xOff = Math.sin(Math.toRadians(30)) * r; double yOff =
+		 * Math.cos(Math.toRadians(30)) * r; x = coordx * xOff * 2; if (coordy %
+		 * 2 != 0) { x += xOff; } y = coordy * yOff * 3;
+		 */
 		competidores = new Stack<Posicionavel>();
 	}
-	
+
 	/*
-	public double getX() {
-		return x;
+	 * public double getX() { return x; }
+	 * 
+	 * public double getY() { return y; }
+	 */
+	public Posicionavel getOcupante() {
+		return ocupante;
 	}
-
-	public double getY() {
-		return y;
-	}
-	*/
-
+	
 	void adiciona(Posicionavel competidor) {
 		competidores.push(competidor);
 	}
@@ -66,7 +60,7 @@ public class Hexagono {
 		}
 	}
 
-	void retiraCompetidores() {
+	void apagaCompetidores() {
 		competidores.clear();
 	}
 
@@ -74,6 +68,14 @@ public class Hexagono {
 		if (!competidores.empty()) {
 			ocupante = competidores.pop();
 			return ocupante;
+		} else {
+			return null;
+		}
+	}
+
+	Posicionavel popCompetidor() {
+		if (!competidores.empty()) {
+			return competidores.pop();
 		} else {
 			return null;
 		}
