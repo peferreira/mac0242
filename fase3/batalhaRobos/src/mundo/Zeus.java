@@ -6,17 +6,18 @@ import mundo.elementos.Robo;
 
 public class Zeus {
 	
-	MapaHexagonal mapa;
-	RespostaMOVE resp;
-	LinkedList<Resposta> respostas;
+	private MapaHexagonal mapa;
+	private LinkedList<Resposta> respostas;
+	private int[] turnos;
 	
-	Zeus(MapaHexagonal mapa, LinkedList<Resposta> respostas) {
+	Zeus(MapaHexagonal mapa, LinkedList<Resposta> respostas, int[] turnos) {
 		this.mapa = mapa;
 		this.respostas = respostas;
+		this.turnos = turnos;
 	}
 
 	private void processaRequesicoes(int i, int j) {
-
+		int c;
 		Hexagono hex, hexAntigo;
 		hex = mapa.getHexagono(i, j);
 		if (!(hex.temOcupante())) {
@@ -33,7 +34,15 @@ public class Zeus {
 				hexAntigo.retiraOcupante();
 				ocupante.alteraPosicao(i, j);
 				mapa.setNovoRobo(ocupante);
-				System.out.println("entrou aqui");
+				
+				// Calculo do custo da operacao (experimental)
+				c = 0;
+				if (ocupante.temCristal()){
+					c = ocupante.getCristal().custo();
+				}
+				turnos[ocupante.getID()] = hex.getSolo().custo() + c;
+				
+				
 				//Meramente informativo
 				System.out.println("NRobo:" + ocupante.getID() + " - i: "
 						+ ocupante.getPosI() + " j: " + ocupante.getPosJ());

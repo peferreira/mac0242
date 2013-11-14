@@ -3,8 +3,6 @@ package mundo;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -22,31 +20,23 @@ public class Arena extends Canvas {
 	private MapaHexagonal mapa;
 	private Zeus zeus;
 	private LinkedList<Resposta> respostas;
-
-	private int numRobos;
-	private int numExercitos;
 	private BufferStrategy strategy;
 
-	public Arena(int numRobos, int tamX, int tamY) {
+	private int numRobos;
+
+	public Arena(int numRobos, int[] turnos) {
 		this.numRobos = numRobos;
-
 		moveis = new Robo[numRobos];
-
-		mapa = new MapaHexagonal(tamX, tamY, 20, 800, 800);
-
+		mapa = new MapaHexagonal(5, 5, 20, 800, 800); // criacao do mapa
+														// hexagonal
 		respostas = new LinkedList<Resposta>();
-		zeus = new Zeus(mapa, respostas);
-
-	}
-
-	public LinkedList<Resposta> getRespostas() {
-		return respostas;
+		zeus = new Zeus(mapa, respostas, turnos);
 	}
 
 	public void draw() {
 		Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
 		g.setColor(Color.black);
-		g.fillRect(0,0,800,800);
+		g.fillRect(0, 0, 800, 800);
 		mapa.draw(g);
 		g.dispose();
 		strategy.show();
@@ -63,7 +53,7 @@ public class Arena extends Canvas {
 		panel.setLayout(null);
 
 		// setup our canvas size and put it into the content of the frame
-		setBounds(0, 0, 800, 800 );
+		setBounds(0, 0, 800, 800);
 		panel.add(this);
 
 		// Tell AWT not to bother repainting our canvas since we're
@@ -98,6 +88,10 @@ public class Arena extends Canvas {
 		// to see at startup
 	}
 
+	public LinkedList<Resposta> getRespostas() {
+		return respostas;
+	}
+
 	public void apagaRespostas() {
 		respostas.clear();
 	}
@@ -110,8 +104,6 @@ public class Arena extends Canvas {
 		FabricaRobos fr = new FabricaRobos(numRobos);
 		fr.criaRobos();
 		moveis = fr.getRobos();
-		/* mapa.inicializa(); */
-		numExercitos = 0;
 	}
 
 	private boolean eLinhaPar(int posLinha) {
@@ -217,46 +209,89 @@ public class Arena extends Canvas {
 		}
 	}
 
-	public void insereExercito() {
-		moveis[0].setPosI(1);
-		moveis[0].setPosJ(1);
+	private int insereExercito1(int roboAtual) {
+		int numRobosAux = roboAtual;
 		// Meramente informativo
-		System.out.println("Inserção de um robo:");
-		System.out.println("Id: " + 0);
-		System.out.println("PosI: " + moveis[0].getPosI());
-		System.out.println("PosJ: " + moveis[0].getPosJ());
+		System.out.println("Exercito 1:");
+		for (int i = 0; i <= 4 && i < mapa.getMaxI(); i += 2) {
+			for (int j = 1; j < mapa.getMaxJ(); j += 2) {
+				if (numRobosAux < (numRobos / 2)) {
+					moveis[numRobosAux].setPosI(i);
+					moveis[numRobosAux].setPosJ(j);
+					moveis[numRobosAux].setExercito(1);
 
-		mapa.setNovoRobo(moveis[0]);
-		/*
-		moveis[1].setPosI(1);
-		moveis[1].setPosJ(1);
-		// Meramente informativo
-		System.out.println("Inserção de um robo:");
-		System.out.println("Id: " + 0);
-		System.out.println("PosI: " + moveis[1].getPosI());
-		System.out.println("PosJ: " + moveis[1].getPosJ());
+					// Meramente informativo
+					System.out.println("Inserção de um robo:");
+					System.out.println("Id: " + numRobosAux);
+					System.out
+							.println("PosI: " + moveis[numRobosAux].getPosI());
+					System.out
+							.println("PosJ: " + moveis[numRobosAux].getPosJ());
 
-		mapa.setNovoRobo(moveis[1]);*/
+					mapa.setNovoRobo(moveis[numRobosAux]);
+					numRobosAux++;
+				} else {
+					break;
+				}
+			}
+			if (numRobosAux >= (numRobos / 2)) {
+				break;
+			}
+		}
+		return numRobosAux;
 	}
 
-	private void insere(int coluna) {
-		if (numRobos <= mapa.getMaxJ()) {
-			for (int k = 0; k < numRobos; k++) {
-				moveis[k].setPosI(coluna);
-				moveis[k].setPosJ(k);
-				// Meramente informativo
-				System.out.println("Inserção de um robo:");
-				System.out.println("Id: " + k);
-				System.out.println("PosI: " + moveis[k].getPosI());
-				System.out.println("PosJ: " + moveis[k].getPosJ());
+	private int insereExercito2(int roboAtual) {
+		int numRobosAux = roboAtual;
+		// Meramente informativo
+		System.out.println("Exercito 2:");
+		for (int i = mapa.getMaxI() - 1; i >= (mapa.getMaxI() - 5) && i >= 0; i -= 2) {
+			for (int j = 1; j < mapa.getMaxJ(); j += 2) {
+				if (numRobosAux < numRobos) {
+					moveis[numRobosAux].setPosI(i);
+					moveis[numRobosAux].setPosJ(j);
+					moveis[numRobosAux].setExercito(2);
 
-				mapa.setNovoRobo(moveis[k]);
+					// Meramente informativo
+					System.out.println("Inserção de um robo:");
+					System.out.println("Id: " + numRobosAux);
+					System.out
+							.println("PosI: " + moveis[numRobosAux].getPosI());
+					System.out
+							.println("PosJ: " + moveis[numRobosAux].getPosJ());
+
+					mapa.setNovoRobo(moveis[numRobosAux]);
+					numRobosAux++;
+				} else {
+					break;
+				}
 			}
+			if (numRobosAux >= numRobos) {
+				break;
+			}
+		}
+		return numRobosAux;
+	}
+
+	public void insereExercitos() {
+		int roboAtual = 0;
+		roboAtual = insereExercito1(roboAtual);
+		roboAtual = insereExercito2(roboAtual);
+		if (roboAtual < numRobos) {
+			System.out
+					.println("Atenção! Excesso de robos para o tamanho do mapa!");
+			System.exit(1);
 		}
 	}
 
-	/*
-	 * public void removeExercito(){}
-	 */
+	public void removeExercito(int idExercito) {
+		for (int j = 0; j < mapa.getMaxJ(); j++) {
+			for (int i = 0; i < mapa.getMaxI(); i++) {
+				if (mapa.getHexagono(i, j).getOcupante().getExercito() == idExercito) {
+					mapa.getHexagono(i, j).retiraOcupante();
+				}
+			}
+		}
+	}
 
 }

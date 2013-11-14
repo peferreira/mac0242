@@ -9,19 +9,23 @@ public class Robo {
 
 	private int posI;
 	private int posJ;
-	private int equipe;
+	private int exercito;
 	private int id;
 	private int vidas;
+	private Cristal cristal;
 	BufferedImage img;
 	private Sprite sprite;
 	
+	
 	public Robo(int id) {
 		this.id = id;
+		vidas = 3;
+		cristal = null;
 		this.sprite = graficos.SpriteStore.get().getSprite("graficos/robo1.png");
-
-		
 	}
-	
+	public void draw(Graphics g, int x, int y) {
+		sprite.draw(g, x, y);
+	}
 	public void setPosI(int posI) {
 		this.posI = posI;
 	}
@@ -47,20 +51,34 @@ public class Robo {
 		this.posJ = posJ;
 	}
 	
-	public int getEquipe(){
-		return equipe;
+	public int getExercito(){
+		return exercito;
 	}
 	
-	public void setEquipe(int equipe){
-		this.equipe = equipe;
+	public void setExercito(int exercito){
+		this.exercito = exercito;
+	}
+	
+	public Cristal getCristal(){
+		return cristal;
+	}
+	
+	public void setCristal(Cristal c){
+		cristal = c;
+	}
+	
+	public Cristal removeCristal(){
+		Cristal aux = cristal;
+		cristal = null;
+		return aux;
+	}
+	
+	public boolean temCristal(){
+		return cristal == null ? false : true;
 	}
 	
 	public int getID(){
 		return id;
-	}
-
-	public void draw(Graphics g, int x, int y) {
-		sprite.draw(g, x, y);
 	}
 
 }

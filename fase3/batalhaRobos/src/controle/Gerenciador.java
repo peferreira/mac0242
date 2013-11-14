@@ -1,6 +1,7 @@
 package controle;
 
 import java.util.LinkedList;
+
 import comunicacao.Resposta;
 import mundo.Arena;
 import mv.MaquinaVirtual;
@@ -13,30 +14,31 @@ public class Gerenciador {
 	private Arena arena;
 	private int[] turnos;
 
-	Gerenciador(int numMV, int maxX, int maxY) {
-		numMaquinasVirtuais = numMV;
-		arena = new Arena(numMV, maxX, maxY);
+	public Gerenciador(int numMV) {
+		if ((numMV % 2) == 0) {
+			numMaquinasVirtuais = numMV;
+			turnos = new int[numMaquinasVirtuais];
+			mvs = new MaquinaVirtual[numMaquinasVirtuais];
+			arena = new Arena(numMV, turnos);
+		} else {
+			System.out
+					.println("O número de maquinas virtuais (ou robos) por arena tem que ser par!");
+			System.exit(1);
+		}
 	}
 
 	public void inicializa() {
-		novasMaquinasVirtuais();
-		arena.inicializa();
-		arena.initGraphics();
-		arena.insereExercito();
-
-	}
-
-	private void novasMaquinasVirtuais() {
-		mvs = new MaquinaVirtual[numMaquinasVirtuais];
-		turnos = new int[numMaquinasVirtuais];
-
 		for (int i = 0; i < numMaquinasVirtuais; i++) {
 			mvs[i] = new MaquinaVirtual();
 		}
+		arena.inicializa();
+		arena.initGraphics();
+		arena.insereExercitos();
 	}
 
 	public void executaMV() {
 		arena.draw();
+		// Verifica e atualiza o tempo de espera para realizar uma nova operacao
 		for (int i = 0; i < mvs.length; i++) {
 			if (turnos[i] == 0)
 				mvs[i].passo();
@@ -46,6 +48,7 @@ public class Gerenciador {
 
 		// Apaga as respostas processadas anteriormente
 		arena.apagaRespostas();
+
 		processaOperacoes();
 		arena.atualiza();
 		processaRespostas(arena.getRespostas());
@@ -113,17 +116,9 @@ public class Gerenciador {
 	}
 
 	public static void main(String[] args) {
-		Gerenciador g = new Gerenciador(1, 20, 20);
-
-		g.inicializa();
-		while (true) {
-			g.executaMV();
-			try {
-				Thread.sleep(10);
-			} catch (Exception e) {
-			}
-		}
-
+		Gerenciador gerenciador = new Gerenciador(2);
+		gerenciador.inicializa();
+		for (int i = 0; i < 50; i++) { gerenciador.executaMV(); }
 	}
 
 }

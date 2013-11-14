@@ -9,35 +9,25 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
+
 
 //import java.lang.Math;
 import mundo.elementos.Robo;
-//import mundo.elementos.Solo;
+import mundo.elementos.Solo;
 
 /*Representa uma posicao da arena hexagonal do jogo*/
 public class Hexagono {
-	
 	private ArrayList<Robo> requerentes;
 	private Robo ocupante;
-	//private Solo solo;
+	private Random  rand;
+	private Solo solo;
 	Polygon p = new Polygon();
 	BufferedImage bffimage;
 	BufferedImage bf;
 	int cx, cy;
-	
-	/*
-	 * private double x; private double y;
-	 */
-	
 
-	
-	public Hexagono(int x, int y, int r, BufferedImage bffimage) {
-		/*
-		 * double xOff = Math.sin(Math.toRadians(30)) * r; double yOff =
-		 * Math.cos(Math.toRadians(30)) * r; x = coordx * xOff * 2; if (coordy %
-		 * 2 != 0) { x += xOff; } y = coordy * yOff * 3;
-		 */
+	public Hexagono(int x, int y, double r, BufferedImage bffimage) {
+		
 		cx = x-5;
 		cy = y-5;
 		for (int i = 0; i < 6; i++)
@@ -45,13 +35,11 @@ public class Hexagono {
 					   y + (int) (r * Math.cos(i * 2 * Math.PI / 6)));
 		this.bffimage = bffimage;
 		requerentes = new ArrayList<Robo>();
+		rand = new Random();
+		
+		// Por motivo de testes
+		solo = new Solo();
 	}
-
-	/*
-	 * public double getX() { return x; }
-	 * 
-	 * public double getY() { return y; }
-	 */
 	
 	public void draw(Graphics g) { 
 		Graphics2D g2d = (Graphics2D) g;
@@ -63,11 +51,18 @@ public class Hexagono {
 			System.out.println("tem ocupante I:" + ocupante.getPosI() +"e J:"+ ocupante.getPosJ());
 		}
 		
-	}	
+	}
 
-	
 	public Robo getOcupante() {
 		return ocupante;
+	}
+	
+	public Solo getSolo() {
+		return solo;
+	}
+	
+	public void setSolo(Solo s) {
+		solo = s;
 	}
 	
 	public void adRequerente(Robo requerente) {
@@ -87,7 +82,6 @@ public class Hexagono {
 	}
 	
 	public Robo novoOcupante() {
-		Random  rand = new Random();
 		int i = rand.nextInt(requerentes.size());
 		Robo escolhido = requerentes.remove(i);
 		

@@ -240,8 +240,6 @@ public class Programas {
 		prg1.addInstrucao(new PUSH(new NEAST()));
 		prg1.addInstrucao(new MOVE());
 		prg1.addInstrucao(new PRN());
-		
-		
 		prg1.addInstrucao(new END());
 
 		listaDeProgramas.add(prg1);
