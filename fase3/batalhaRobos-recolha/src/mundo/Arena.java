@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import comunicacao.Resposta;
+import comunicacao.RespostaDEP;
+import mundo.elementos.Base;
 import mundo.elementos.Cristal;
 import mundo.elementos.Posicionavel;
 import mundo.elementos.Robo;
@@ -157,6 +159,30 @@ public class Arena extends Canvas {
 	 * = mapa.getHexagono(novoPosI, novoPosJ); hex.adRequerente(movel); } }
 	 */
 
+	public void deposita(int idRobo, String dir) {
+		System.out.println("pedido de recolha feito por robo:" +idRobo);
+		int posI, posJ, depPosI, depPosJ;
+		Hexagono hex;
+		Robo movel = moveis[idRobo];
+		Posicionavel posicionavel;
+		posI = movel.getPosI();
+		posJ = movel.getPosJ();
+		depPosI = novoX(posI, posJ, dir);
+		depPosJ = novoY(posJ, dir);
+		if (movel.temCristal() && zeus.ehPossivelDepositar(depPosI, depPosJ, idRobo)) {
+			hex = mapa.getHexagono(depPosI, depPosJ);
+			posicionavel = hex.getOcupante();
+			if(posicionavel instanceof Base){
+				((Base) posicionavel).addCristal();
+				movel.removeCristal();			
+				zeus.criaResposta(new RespostaDEP(true,idRobo));
+			}
+			else{
+				zeus.criaResposta(new RespostaDEP(false,idRobo));
+			}
+		}
+	}
+	
 	public void recolhe(int idRobo, String dir) {
 		int posI, posJ, novoPosI, novoPosJ;
 		Hexagono hex;
@@ -165,7 +191,7 @@ public class Arena extends Canvas {
 		posJ = movel.getPosJ();
 		novoPosI = novoX(posI, posJ, dir);
 		novoPosJ = novoY(posJ, dir);
-		if (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) {
+		if (zeus.ehPossivelRecolher(novoPosI, novoPosJ, idRobo)) {
 			hex = mapa.getHexagono(novoPosI, novoPosJ);
 			hex.adMinerador(movel);
 		}
@@ -179,7 +205,7 @@ public class Arena extends Canvas {
 		posJ = movel.getPosJ();
 		novoPosI = novoX(posI, posJ, dir);
 		novoPosJ = novoY(posJ, dir);
-		if (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) {
+		if (zeus.ehPossivelMover(novoPosI, novoPosJ, idRobo)) {
 			hex = mapa.getHexagono(novoPosI, novoPosJ);
 			hex.adRequerente(movel);
 		}
@@ -330,6 +356,12 @@ public class Arena extends Canvas {
 		}
 		// numCristais = cristaisColocados;
 	}
+	
+	public void insereBase(){
+		Hexagono h = mapa.getHexagono(0, 0);
+		h.setOcupante(new Base(1));
+		
+	}
 
 	public void removeExercito(int idExercito) {
 		for (int j = 0; j < mapa.getMaxJ(); j++) {
@@ -343,5 +375,9 @@ public class Arena extends Canvas {
 			}
 		}
 	}
+
+
+
+
 
 }

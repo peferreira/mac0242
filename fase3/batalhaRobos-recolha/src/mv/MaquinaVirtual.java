@@ -23,7 +23,7 @@ public class MaquinaVirtual {
 		memoria = new Memoria();
 		programas = new Programas();
 		//programas.testaMovimentoDeUmRobo();
-		programas.testaRecolhaDeUmCristal(); // Para o teste com um robo e um cristal
+		programas.testaRecolheDepositaUmCristal(); // Par o teste com um robo e um cristal
 		listaDeProgramas = programas.getListaDeProgramas();
 	}
 

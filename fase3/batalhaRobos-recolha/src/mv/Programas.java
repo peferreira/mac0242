@@ -255,5 +255,29 @@ public class Programas {
 
 		listaDeProgramas.add(prg1);
 	}
+	
+	public void testaRecolheDepositaUmCristal(){
+		Programa prg1 = new Programa();
+
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PUSH(new NWEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+
+
+		prg1.addInstrucao(new PRN());
+
+		prg1.addInstrucao(new END());
+
+		listaDeProgramas.add(prg1);
+		
+	}
 
 }

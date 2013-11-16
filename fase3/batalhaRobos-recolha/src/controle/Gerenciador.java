@@ -46,6 +46,7 @@ public class Gerenciador {
 		// arena.insereCristais(10);
 		arena.insereUmRobo();
 		arena.insereUmCristal();
+		arena.insereBase();
 	}
 
 	public void executaMV() {
@@ -72,7 +73,7 @@ public class Gerenciador {
 			mv = mvs[r.getDestinatario()];
 			mv.setResposta(r.responde());
 		}
-
+		
 	}
 
 	private void processaOperacoes() {
@@ -92,6 +93,7 @@ public class Gerenciador {
 					arena.recolhe(i, op.getArgumento());
 					break;
 				case 4:
+					arena.deposita(i,op.getArgumento());
 					// processaDeposito(op)
 					break;
 				default:
