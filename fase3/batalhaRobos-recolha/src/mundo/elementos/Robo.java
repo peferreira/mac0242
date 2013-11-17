@@ -21,11 +21,11 @@ public class Robo implements Posicionavel {
 		this.id = id;
 		vidas = 3;
 		cristal = null;
-		this.sprite = graficos.SpriteStore.get().getSprite("graficos/robo1.png");
+		this.sprite = graficos.SpriteStore.get().getSprite("graficos/robo3.png");
 	}
 	public void draw(Graphics g, int x, int y) {
 		
-		sprite.draw(g, x-5, y-5);
+		sprite.draw(g, x-15, y-15);
 	}
 	public void setPosI(int posI) {
 		this.posI = posI;
