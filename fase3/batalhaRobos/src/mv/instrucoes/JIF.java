@@ -1,5 +1,6 @@
 package mv.instrucoes;
 
+import java.util.Random;
 import java.util.Stack;
 
 import mv.*;
@@ -9,7 +10,9 @@ public class JIF extends Instrucao {
     public JIF (Empilhavel item) {
 	super(item);
     }
-    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa) {
+
+	public void executar(Stack<Empilhavel> pilhaDeDados, Memoria memoria,
+			Programa programa, Random rand) {
 	Empilhavel item = pilhaDeDados.pop();
 	if (item instanceof Falso) {
 		if (argumento instanceof Endereco) {	

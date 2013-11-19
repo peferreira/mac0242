@@ -13,11 +13,11 @@ public class RespostaMOVE extends Resposta {
 	public Empilhavel responde(){
 		if (move) {
 			// Meramente informativo!
-			System.out.println("robo" + super.destinatario + ":movimento realizado com sucesso");
+			/*System.out.println("robo" + super.destinatario + ":movimento realizado com sucesso");*/
 			return (new Verdadeiro());
 		} else {
 			// Meramente informativo!
-			System.out.println("robo" + super.destinatario + ":movimento não realizado");
+			/*System.out.println("robo" + super.destinatario + ":movimento não realizado");*/
 			return (new Falso());
 		}
 	}

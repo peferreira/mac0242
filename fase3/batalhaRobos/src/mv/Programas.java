@@ -33,7 +33,7 @@ public class Programas {
 		Programa prg6 = new Programa();
 		Programa prg7 = new Programa();
 		Programa prg8 = new Programa();
-		
+
 		Endereco loop;
 
 		prg1.addInstrucao(new PUSH(new CadeiaDeCaracteres(
@@ -114,7 +114,7 @@ public class Programas {
 		prg4.addInstrucao(new EQ());
 		prg4.addInstrucao(new JIF(loop));
 		prg4.addInstrucao(new END());
-		
+
 		prg5.addInstrucao(new PUSH(new CadeiaDeCaracteres("Fibonacci2:")));
 		prg5.addInstrucao(new PRN());
 		prg5.addInstrucao(new PUSH(new Inteiro(1)));
@@ -141,7 +141,7 @@ public class Programas {
 		prg5.addInstrucao(new EQ());
 		prg5.addInstrucao(new JIF(loop));
 		prg5.addInstrucao(new END());
-		
+
 		prg6.addInstrucao(new PUSH(new CadeiaDeCaracteres("Fibonacci3:")));
 		prg6.addInstrucao(new PRN());
 		prg6.addInstrucao(new PUSH(new Inteiro(0)));
@@ -170,7 +170,7 @@ public class Programas {
 		prg6.addInstrucao(new EQ());
 		prg6.addInstrucao(new JIF(loop));
 		prg6.addInstrucao(new END());
-		
+
 		prg7.addInstrucao(new PUSH(new CadeiaDeCaracteres("PG:")));
 		prg7.addInstrucao(new PRN());
 		prg7.addInstrucao(new PUSH(new Real(1.5)));
@@ -195,7 +195,7 @@ public class Programas {
 		prg7.addInstrucao(new NE());
 		prg7.addInstrucao(new JIT(loop));
 		prg7.addInstrucao(new END());
-		
+
 		prg8.addInstrucao(new PUSH(new CadeiaDeCaracteres("Potencia2:")));
 		prg8.addInstrucao(new PRN());
 		prg8.addInstrucao(new PUSH(new Inteiro(1)));
@@ -214,7 +214,7 @@ public class Programas {
 		prg8.addInstrucao(new LT());
 		prg8.addInstrucao(new JIF(loop));
 		prg8.addInstrucao(new END());
-		
+
 		listaDeProgramas.add(prg1);
 		listaDeProgramas.add(prg2);
 		listaDeProgramas.add(prg3);
@@ -243,6 +243,232 @@ public class Programas {
 		prg1.addInstrucao(new END());
 
 		listaDeProgramas.add(prg1);
+	}
+
+	public void testaRecolhaDeUmCristal() {
+		Programa prg1 = new Programa();
+
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new END());
+
+		listaDeProgramas.add(prg1);
+	}
+
+	public void testaRecolheDepositaUmCristal() {
+		Programa prg1 = new Programa();
+
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PUSH(new NWEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new END());
+
+		listaDeProgramas.add(prg1);
+
+	}
+
+	public void testaRecolheDepositaSeteCristais() {
+		Programa prg1 = new Programa();
+
+		// Pega e deposita o primeiro cristal
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PUSH(new NWEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+
+		// Pega e deposita o segundo cristal
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new PRN());
+
+		// Pega e deposita o terceiro cristal
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new SEAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new PRN());
+
+		// Pega e deposita o quarto cristal
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new PRN());
+
+		// Pega e deposita o quinto cristal
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new SEAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new PRN());
+
+		// Pega e deposita o sexto cristal
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new PRN());
+
+		// Pega e deposita o setimo cristal
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new SEAST()));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new PUSH(new WEST()));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new PRN());
+
+		prg1.addInstrucao(new END());
+
+		listaDeProgramas.add(prg1);
+
+	}
+	
+	public void testaScanCristal() {
+		Programa prg1 = new Programa();
+
+		prg1.addInstrucao(new SCANC());
+		prg1.addInstrucao(new JIF(new Endereco(4)));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new END());
+
+		listaDeProgramas.add(prg1);
+
+	}
+	
+	public void testaRandDir() {
+		Programa prg1 = new Programa();
+
+		prg1.addInstrucao(new RDIR());
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new JMP(new Endereco(0)));
+		prg1.addInstrucao(new END());
+
+		listaDeProgramas.add(prg1);
+
+	}
+	
+	public void testaRoboVsCristais() {
+		Programa prg1 = new Programa();
+
+		prg1.addInstrucao(new SCAND());
+		prg1.addInstrucao(new JIF(new Endereco(0)));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new SCANC());
+		prg1.addInstrucao(new JIF(new Endereco(0)));
+		prg1.addInstrucao(new PICK());
+		//prg1.addInstrucao(new JMP(new Endereco(0)));
+		prg1.addInstrucao(new END());
+
+		listaDeProgramas.add(prg1);
+
+	}
+	/*
+	public void testaRoboVsCristaisVsBase() {
+		Programa prg1 = new Programa();
+
+		prg1.addInstrucao(new RDIR());
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new JIF(new Endereco(0)));
+		prg1.addInstrucao(new SCANC());
+		prg1.addInstrucao(new JIF(new Endereco(0)));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new JIF(new Endereco(0)));
+		prg1.addInstrucao(new HOME());
+		prg1.addInstrucao(new JIF(new Endereco(11)));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new JIT(new Endereco(0)));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new JMP(new Endereco(7)));
+
+		listaDeProgramas.add(prg1);
+
+	}*/
+	
+	public void testaRoboVsCristaisVsBase() {
+		Programa prg1 = new Programa();
+
+		prg1.addInstrucao(new PUSH(new SWEST()));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new JIT(new Endereco(0)));
+		prg1.addInstrucao(new END());
+		
+		listaDeProgramas.add(prg1);
+
 	}
 
 }

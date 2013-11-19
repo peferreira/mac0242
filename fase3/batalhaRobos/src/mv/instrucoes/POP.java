@@ -1,5 +1,6 @@
 package mv.instrucoes;
 
+import java.util.Random;
 import java.util.Stack;
 import java.util.EmptyStackException;
 
@@ -12,7 +13,7 @@ public class POP extends Instrucao {
 	}
 
 	public void executar(Stack<Empilhavel> pilhaDeDados, Memoria memoria,
-			Programa programa) {
+			Programa programa, Random rand) {
 		try {
 			pilhaDeDados.pop();
 		} catch (EmptyStackException excecao) {

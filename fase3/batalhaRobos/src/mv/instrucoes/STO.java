@@ -1,5 +1,6 @@
 package mv.instrucoes;
 
+import java.util.Random;
 import java.util.Stack;
 
 import mv.*;
@@ -9,7 +10,7 @@ public class STO extends Instrucao {
     public STO (Empilhavel item) {
 	super (item);
     }
-    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa ) {
+    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa, Random rand) {
 	Empilhavel topo = pilhaDeDados.pop();
 	if (argumento instanceof Endereco) {
 	    memoria.setMemoria(topo, argumento);

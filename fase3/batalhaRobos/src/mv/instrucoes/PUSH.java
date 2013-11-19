@@ -1,5 +1,6 @@
 package mv.instrucoes;
 
+import java.util.Random;
 import java.util.Stack;
 
 import mv.*;
@@ -9,7 +10,7 @@ public class PUSH extends Instrucao {
     public PUSH (Empilhavel item) {
 	super (item);
     }
-    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa) {
+    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa, Random rand) {
 	 pilhaDeDados.push(argumento);
 	 programa.incPonteiroPrograma();
     }

@@ -1,6 +1,7 @@
 package mv;
 
 import java.util.EmptyStackException;
+import java.util.Random;
 import java.util.Stack;
 import java.util.LinkedList;
 
@@ -16,13 +17,19 @@ public class MaquinaVirtual {
 	private Instrucao codigo;
 	LinkedList<Programa> listaDeProgramas;
 	boolean ultimaResposta;
+	Random rand;
 
 	public MaquinaVirtual() {
+		rand = new Random(Double.doubleToLongBits(Math.random()));
 		pilhaDeOperacoes = new Stack<Operacao>();
 		pilhaDeDados = new Stack<Empilhavel>();
 		memoria = new Memoria();
 		programas = new Programas();
-		programas.testaMovimentoDeUmRobo();
+		//programas.testaMovimentoDeUmRobo();
+		//programas.testaRecolheDepositaSeteCristais(); // Par o teste com um robo e um cristal
+		//programas.testaScanCristal();
+		//programas.testaRandDir();
+		programas.testaRoboVsCristais();
 		listaDeProgramas = programas.getListaDeProgramas();
 	}
 
@@ -30,7 +37,7 @@ public class MaquinaVirtual {
 		for (Programa prg : listaDeProgramas) {
 			codigo = prg.getInstrucao();
 			while (!(codigo instanceof END) && !(codigo instanceof Especial)) {
-				codigo.executar(pilhaDeDados, memoria, prg);
+				codigo.executar(pilhaDeDados, memoria, prg,rand);
 				codigo = prg.getInstrucao();
 			}
 			if (codigo instanceof Especial) {

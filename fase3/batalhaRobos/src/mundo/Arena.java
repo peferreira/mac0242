@@ -7,27 +7,44 @@ import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import comunicacao.Resposta;
+import comunicacao.RespostaDEP;
+import comunicacao.RespostaSCAN;
+import mundo.elementos.Base;
+import mundo.elementos.Cristal;
+import mundo.elementos.Posicionavel;
 import mundo.elementos.Robo;
 
 public class Arena extends Canvas {
+	private static final long serialVersionUID = 1L; // Adicionado para remover
+														// o warning da classe
+														// Arena
+
 	private Robo[] moveis;
+	private Base[] bases;
 	private MapaHexagonal mapa;
 	private Zeus zeus;
 	private LinkedList<Resposta> respostas;
 	private BufferStrategy strategy;
-
+	// private int numCristais;
 	private int numRobos;
+	private int numBases;
+	private Random rand;
 
-	public Arena(int numRobos, int[] turnos) {
+	public Arena(int numRobos, int numBases, int[] turnos) {
+		rand = new Random(Double.doubleToLongBits(Math.random()));
 		this.numRobos = numRobos;
+		this.numBases = numBases;
 		moveis = new Robo[numRobos];
-		mapa = new MapaHexagonal(5, 5, 20, 800, 800); // criacao do mapa
+		bases = new Base[numBases];
+		mapa = new MapaHexagonal(15, 15, 30, 800, 800); // criacao do mapa
 														// hexagonal
 		respostas = new LinkedList<Resposta>();
 		zeus = new Zeus(mapa, respostas, turnos);
@@ -37,9 +54,18 @@ public class Arena extends Canvas {
 		Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 800, 800);
+
+		long startTime = System.nanoTime();
 		mapa.draw(g);
+
+		long endTime = System.nanoTime();
+
+		long duration = endTime-startTime;
 		g.dispose();
+
 		strategy.show();
+
+		System.out.println("tempo desenhando o mapa" + duration);
 	}
 
 	public void initGraphics() {
@@ -110,185 +136,391 @@ public class Arena extends Canvas {
 		return (posLinha % 2) == 0;
 	}
 
-	public void moveCimaEsq(int idRobo) {
+	/*
+	 * public void moveCimaEsq(int idRobo) { int posI, posJ, novoPosI, novoPosJ;
+	 * Hexagono hex; Robo movel = moveis[idRobo]; posI = movel.getPosI(); posJ =
+	 * movel.getPosJ(); if (eLinhaPar(posJ)) { novoPosI = posI - 1; novoPosJ =
+	 * posJ - 1; } else { novoPosI = posI; novoPosJ = posJ - 1; } if
+	 * (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) { hex =
+	 * mapa.getHexagono(novoPosI, novoPosJ); hex.adRequerente(movel); } }
+	 * 
+	 * public void moveEsquerda(int idRobo) { int posJ, novoPosI; Robo movel =
+	 * moveis[idRobo]; novoPosI = movel.getPosI() - 1; posJ = movel.getPosJ();
+	 * if (zeus.roboDentroDaArena(novoPosI, posJ, idRobo)) { Hexagono hex =
+	 * mapa.getHexagono(novoPosI, posJ); hex.adRequerente(movel); } }
+	 * 
+	 * public void moveBaixoEsq(int idRobo) { int posI, posJ, novoPosI,
+	 * novoPosJ; Hexagono hex; Robo movel = moveis[idRobo]; posI =
+	 * movel.getPosI(); posJ = movel.getPosJ(); if (eLinhaPar(posJ)) { novoPosI
+	 * = posI - 1; novoPosJ = posJ + 1; } else { novoPosI = posI; novoPosJ =
+	 * posJ + 1; } if (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) { hex
+	 * = mapa.getHexagono(novoPosI, novoPosJ); hex.adRequerente(movel); } }
+	 * 
+	 * public void moveCimaDir(int idRobo) { int posI, posJ, novoPosI, novoPosJ;
+	 * Hexagono hex; Robo movel = moveis[idRobo]; posI = movel.getPosI(); posJ =
+	 * movel.getPosJ(); if (eLinhaPar(posJ)) { novoPosI = posI; novoPosJ = posJ
+	 * - 1; } else { novoPosI = posI + 1; novoPosJ = posJ - 1; } if
+	 * (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) { hex =
+	 * mapa.getHexagono(novoPosI, novoPosJ); hex.adRequerente(movel); } }
+	 * 
+	 * public void moveDireita(int idRobo) { int posJ, novoPosI; Hexagono hex;
+	 * Robo movel = moveis[idRobo]; novoPosI = movel.getPosI() + 1; posJ =
+	 * movel.getPosJ(); if (zeus.roboDentroDaArena(novoPosI, posJ, idRobo)) {
+	 * hex = mapa.getHexagono(novoPosI, posJ); hex.adRequerente(movel); } }
+	 * 
+	 * public void moveBaixoDir(int idRobo) { int posI, posJ, novoPosI,
+	 * novoPosJ; Hexagono hex; Robo movel = moveis[idRobo]; posI =
+	 * movel.getPosI(); posJ = movel.getPosJ(); if (eLinhaPar(posJ)) { novoPosI
+	 * = posI; novoPosJ = posJ + 1; } else { novoPosI = posI + 1; novoPosJ =
+	 * posJ + 1; } if (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) { hex
+	 * = mapa.getHexagono(novoPosI, novoPosJ); hex.adRequerente(movel); } }
+	 */
+
+	public void deposita(int idRobo, String dir) {
+		System.out.println("pedido de recolha feito por robo:" + idRobo);
+		int posI, posJ, depPosI, depPosJ;
+		Hexagono hex;
+		Robo movel = moveis[idRobo];
+		posI = movel.getPosI();
+		posJ = movel.getPosJ();
+		depPosI = novoX(posI, posJ, dir);
+		depPosJ = novoY(posJ, dir);
+		if (movel.temCristal()) {
+			if (zeus.ehPossivelDepositar(depPosI, depPosJ, idRobo)) {
+				hex = mapa.getHexagono(depPosI, depPosJ);
+				((Base) hex.getOcupante()).addCristal();
+				movel.removeCristal();
+				zeus.criaResposta(new RespostaDEP(true, idRobo));
+			}
+		} else {
+			zeus.criaResposta(new RespostaDEP(false, idRobo));
+		}
+	}
+
+	public void recolhe(int idRobo, String dir) {
 		int posI, posJ, novoPosI, novoPosJ;
 		Hexagono hex;
 		Robo movel = moveis[idRobo];
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
-		if (eLinhaPar(posJ)) {
-			novoPosI = posI - 1;
-			novoPosJ = posJ - 1;
+		novoPosI = novoX(posI, posJ, dir);
+		novoPosJ = novoY(posJ, dir);
+		if (!movel.temCristal()) {
+			if (zeus.ehPossivelRecolher(novoPosI, novoPosJ, idRobo)) {
+				hex = mapa.getHexagono(novoPosI, novoPosJ);
+				hex.adMinerador(movel);
+			}
 		} else {
-			novoPosI = posI;
-			novoPosJ = posJ - 1;
-		}
-		if (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) {
-			hex = mapa.getHexagono(novoPosI, novoPosJ);
-			hex.adRequerente(movel);
+			zeus.criaResposta(new RespostaDEP(false, idRobo));
 		}
 	}
 
-	public void moveEsquerda(int idRobo) {
-		int posJ, novoPosI;
-		Robo movel = moveis[idRobo];
-		novoPosI = movel.getPosI() - 1;
-		posJ = movel.getPosJ();
-		if (zeus.roboDentroDaArena(novoPosI, posJ, idRobo)) {
-			Hexagono hex = mapa.getHexagono(novoPosI, posJ);
-			hex.adRequerente(movel);
-		}
-	}
-
-	public void moveBaixoEsq(int idRobo) {
+	public void movimento(int idRobo, String dir) {
 		int posI, posJ, novoPosI, novoPosJ;
 		Hexagono hex;
 		Robo movel = moveis[idRobo];
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
-		if (eLinhaPar(posJ)) {
-			novoPosI = posI - 1;
-			novoPosJ = posJ + 1;
-		} else {
-			novoPosI = posI;
-			novoPosJ = posJ + 1;
-		}
-		if (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) {
+		novoPosI = novoX(posI, posJ, dir);
+		novoPosJ = novoY(posJ, dir);
+		if (zeus.ehPossivelMover(novoPosI, novoPosJ, idRobo)) {
 			hex = mapa.getHexagono(novoPosI, novoPosJ);
 			hex.adRequerente(movel);
 		}
 	}
 
-	public void moveCimaDir(int idRobo) {
+	public void scanCristal(int idRobo) {
 		int posI, posJ, novoPosI, novoPosJ;
-		Hexagono hex;
+		String[] dirs = { "NE", "E", "SE", "SW", "W", "NW" };
 		Robo movel = moveis[idRobo];
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
-		if (eLinhaPar(posJ)) {
-			novoPosI = posI;
-			novoPosJ = posJ - 1;
-		} else {
-			novoPosI = posI + 1;
-			novoPosJ = posJ - 1;
+		for (int i = 0; i < dirs.length; i++) {
+			novoPosI = novoX(posI, posJ, dirs[i]);
+			novoPosJ = novoY(posJ, dirs[i]);
+			if (zeus.cristalDescoberto(novoPosI, novoPosJ, idRobo, dirs[i])) {
+				return;
+			}
 		}
-		if (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) {
-			hex = mapa.getHexagono(novoPosI, novoPosJ);
-			hex.adRequerente(movel);
-		}
+		zeus.criaResposta(new RespostaSCAN(false, idRobo));
 	}
 
-	public void moveDireita(int idRobo) {
-		int posJ, novoPosI;
-		Hexagono hex;
-		Robo movel = moveis[idRobo];
-		novoPosI = movel.getPosI() + 1;
-		posJ = movel.getPosJ();
-		if (zeus.roboDentroDaArena(novoPosI, posJ, idRobo)) {
-			hex = mapa.getHexagono(novoPosI, posJ);
-			hex.adRequerente(movel);
-		}
-	}
-
-	public void moveBaixoDir(int idRobo) {
+	public void scanRobo(int idRobo, int dist) {
 		int posI, posJ, novoPosI, novoPosJ;
-		Hexagono hex;
+		String[] dirs = { "NE", "E", "SE", "SW", "W", "NW" };
 		Robo movel = moveis[idRobo];
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
-		if (eLinhaPar(posJ)) {
-			novoPosI = posI;
-			novoPosJ = posJ + 1;
-		} else {
-			novoPosI = posI + 1;
-			novoPosJ = posJ + 1;
-		}
-		if (zeus.roboDentroDaArena(novoPosI, novoPosJ, idRobo)) {
-			hex = mapa.getHexagono(novoPosI, novoPosJ);
-			hex.adRequerente(movel);
-		}
-	}
-
-	private int insereExercito1(int roboAtual) {
-		int numRobosAux = roboAtual;
-		// Meramente informativo
-		System.out.println("Exercito 1:");
-		for (int i = 0; i <= 4 && i < mapa.getMaxI(); i += 2) {
-			for (int j = 1; j < mapa.getMaxJ(); j += 2) {
-				if (numRobosAux < (numRobos / 2)) {
-					moveis[numRobosAux].setPosI(i);
-					moveis[numRobosAux].setPosJ(j);
-					moveis[numRobosAux].setExercito(1);
-
-					// Meramente informativo
-					System.out.println("Inserção de um robo:");
-					System.out.println("Id: " + numRobosAux);
-					System.out
-							.println("PosI: " + moveis[numRobosAux].getPosI());
-					System.out
-							.println("PosJ: " + moveis[numRobosAux].getPosJ());
-
-					mapa.setNovoRobo(moveis[numRobosAux]);
-					numRobosAux++;
-				} else {
-					break;
+		for (int i = 0; i < dirs.length; i++) {
+			novoPosI = novoX(posI, posJ, dirs[i]);
+			novoPosJ = novoY(posJ, dirs[i]);
+			for (int j = 0; j < dist; j++) {
+				if (zeus.enemigoDescoberto(novoPosI, novoPosJ, idRobo,
+						movel.getExercito(), dirs[i])) {
+					return;
 				}
-			}
-			if (numRobosAux >= (numRobos / 2)) {
-				break;
-			}
-		}
-		return numRobosAux;
-	}
-
-	private int insereExercito2(int roboAtual) {
-		int numRobosAux = roboAtual;
-		// Meramente informativo
-		System.out.println("Exercito 2:");
-		for (int i = mapa.getMaxI() - 1; i >= (mapa.getMaxI() - 5) && i >= 0; i -= 2) {
-			for (int j = 1; j < mapa.getMaxJ(); j += 2) {
-				if (numRobosAux < numRobos) {
-					moveis[numRobosAux].setPosI(i);
-					moveis[numRobosAux].setPosJ(j);
-					moveis[numRobosAux].setExercito(2);
-
-					// Meramente informativo
-					System.out.println("Inserção de um robo:");
-					System.out.println("Id: " + numRobosAux);
-					System.out
-							.println("PosI: " + moveis[numRobosAux].getPosI());
-					System.out
-							.println("PosJ: " + moveis[numRobosAux].getPosJ());
-
-					mapa.setNovoRobo(moveis[numRobosAux]);
-					numRobosAux++;
-				} else {
-					break;
-				}
-			}
-			if (numRobosAux >= numRobos) {
-				break;
+				novoPosI = novoX(novoPosI, novoPosJ, dirs[i]);
+				novoPosJ = novoY(novoPosJ, dirs[i]);
 			}
 		}
-		return numRobosAux;
+		zeus.criaResposta(new RespostaSCAN(false, idRobo));
 	}
+	
+	public void scanDir(int idRobo) {
+		int posI, posJ, novoPosI, novoPosJ, k;
+		ArrayList<String> dirs = new ArrayList<String>();
+		Robo movel = moveis[idRobo];
+		posI = movel.getPosI();
+		posJ = movel.getPosJ();
+		dirs.add("NE");
+		dirs.add("E");
+		dirs.add("SE");
+		dirs.add("SW");
+		dirs.add("W");
+		dirs.add("NW");
+		for (int i = 0; i < 6; i++) {
+			k = rand.nextInt(dirs.size());
+			novoPosI = novoX(posI, posJ, dirs.get(k));
+			novoPosJ = novoY(posJ, dirs.get(k));
+			if (zeus.dirLivre(novoPosI, novoPosJ, idRobo, dirs.get(k))) {
+				return;
+			}
+		}
+		zeus.criaResposta(new RespostaSCAN(false, idRobo));
+	}
+	/*
+	public void regressoBase(int idRobo) {
+		int posI, posJ, basePosI, basePosJ;
+		Base b;
+		Robo movel = moveis[idRobo];
+		posI = movel.getPosI();
+		posJ = movel.getPosJ();
+		b = bases[movel.getExercito()];
+		basePosI = b.getPosI();
+		basePosJ = b.getPosJ();
+		
+		if (zeus.estouNaBase(novoPosI, novoPosJ, idRobo)) {
+			return;
+		}
+		
+	}*/
+
+	private int novoY(int y, String dir) {
+		switch (dir) {
+		case "NE":
+		case "NW":
+			return y - 1;
+		case "E":
+		case "W":
+			return y;
+		case "SW":
+		case "SE":
+			return y + 1;
+		default:
+			System.out.println("Y: Direcao inválida! - " + dir);
+			return -1;
+		}
+	}
+
+	private int novoX(int x, int y, String dir) {
+		switch (dir) {
+		case "SE":
+		case "NE":
+			return (eLinhaPar(y) == true) ? x : x + 1;
+		case "SW":
+		case "NW":
+			return (eLinhaPar(y) == true) ? x - 1 : x;
+		case "E":
+			return x + 1;
+		case "W":
+			return x - 1;
+		default:
+			System.out.println("X: Direcao inválida! - " + dir);
+			return -1;
+		}
+	}
+
+	/*
+	 * private int insereExercito1(int roboAtual) { int numRobosAux = roboAtual;
+	 * // Meramente informativo System.out.println("Exercito 1:"); for (int i =
+	 * 0; i <= 4 && i < mapa.getMaxI(); i += 2) { for (int j = 1; j <
+	 * mapa.getMaxJ(); j += 2) { if (numRobosAux < (numRobos / 2)) {
+	 * moveis[numRobosAux].setPosI(i); moveis[numRobosAux].setPosJ(j);
+	 * moveis[numRobosAux].setExercito(1);
+	 * 
+	 * // Meramente informativo System.out.println("Inserção de um robo:");
+	 * System.out.println("Id: " + numRobosAux); System.out .println("PosI: " +
+	 * moveis[numRobosAux].getPosI()); System.out .println("PosJ: " +
+	 * moveis[numRobosAux].getPosJ());
+	 * 
+	 * mapa.setNovoRobo(moveis[numRobosAux]); numRobosAux++; } else { break; } }
+	 * if (numRobosAux >= (numRobos / 2)) { break; } } return numRobosAux; }
+	 * 
+	 * private int insereExercito2(int roboAtual) { int numRobosAux = roboAtual;
+	 * // Meramente informativo System.out.println("Exercito 2:"); for (int i =
+	 * mapa.getMaxI() - 1; i >= (mapa.getMaxI() - 5) && i >= 0; i -= 2) { for
+	 * (int j = 1; j < mapa.getMaxJ(); j += 2) { if (numRobosAux < numRobos) {
+	 * moveis[numRobosAux].setPosI(i); moveis[numRobosAux].setPosJ(j);
+	 * moveis[numRobosAux].setExercito(2);
+	 * 
+	 * // Meramente informativo System.out.println("Inserção de um robo:");
+	 * System.out.println("Id: " + numRobosAux); System.out .println("PosI: " +
+	 * moveis[numRobosAux].getPosI()); System.out .println("PosJ: " +
+	 * moveis[numRobosAux].getPosJ());
+	 * 
+	 * mapa.setNovoRobo(moveis[numRobosAux]); numRobosAux++; } else { break; } }
+	 * if (numRobosAux >= numRobos) { break; } } return numRobosAux; }
+	 * 
+	 * public void insereExercitos() { int roboAtual = 0; roboAtual =
+	 * insereExercito1(roboAtual); roboAtual = insereExercito2(roboAtual); if
+	 * (roboAtual < numRobos) { System.out
+	 * .println("Atenção! Excesso de robos para o tamanho do mapa!");
+	 * System.exit(1); }
+	 * 
+	 * }
+	 */
 
 	public void insereExercitos() {
-		int roboAtual = 0;
-		roboAtual = insereExercito1(roboAtual);
-		roboAtual = insereExercito2(roboAtual);
-		if (roboAtual < numRobos) {
-			System.out
-					.println("Atenção! Excesso de robos para o tamanho do mapa!");
-			System.exit(1);
+		Base b;
+		int posI, posJ;
+		int posMedI = mapa.getMaxI() / 2;
+		int posMedJ = mapa.getMaxJ() / 2;
+		int robosBase = numRobos / numBases;
+		for (int i = 0; i < numBases; i++) {
+			b = bases[i];
+			posI = b.getPosI();
+			posJ = b.getPosJ();
+			if (posJ < posMedJ) {
+				if (posI < posMedI) {
+					insereExercito(1, robosBase, i);
+				} else {
+					insereExercito(2, robosBase, i);
+				}
+			} else if (posI < posMedI) {
+				insereExercito(3, robosBase, i);
+			} else {
+				insereExercito(4, robosBase, i);
+			}
 		}
 	}
+
+	private void insereExercito(int q, int robosBase, int exerc) {
+		Hexagono h;
+		int rposI = 0;
+		int rposJ = 0;
+		int posMedI = mapa.getMaxI() / 2;
+		int posMedJ = mapa.getMaxJ() / 2;
+		for (int i = robosBase * exerc; i < (robosBase + (robosBase * exerc)); i++) {
+			do {
+				switch (q) {
+				case 1:
+					rposI = rand.nextInt(posMedI);
+					rposJ = rand.nextInt(posMedJ);
+					break;
+				case 2:
+					rposI = posMedI + rand.nextInt(posMedI) + 1;
+					rposJ = rand.nextInt(posMedJ);
+					break;
+				case 3:
+					rposI = rand.nextInt(posMedI);
+					rposJ = posMedJ + rand.nextInt(posMedJ) + 1;
+					break;
+				case 4:
+					rposI = posMedI + rand.nextInt(posMedI) + 1;
+					rposJ = posMedJ + rand.nextInt(posMedJ) + 1;
+					break;
+				default:
+					System.out.println("Quadrante inválido!");
+					break;
+				}
+				h = mapa.getHexagono(rposI, rposJ);
+			} while (h.temOcupante());
+			moveis[i].setPosI(rposI);
+			moveis[i].setPosJ(rposJ);
+			moveis[i].setExercito(exerc);
+			h.setOcupante(moveis[i]);
+		}
+	}
+
+	/*
+	 * // Para o teste com um robo e um cristal public void insereUmRobo() {
+	 * moveis[0].setPosI(1); moveis[0].setPosJ(12); mapa.setNovoRobo(moveis[0]);
+	 * }
+	 * 
+	 * public void insereSeteCristais() { Hexagono h = mapa.getHexagono(1, 1);
+	 * h.setOcupante(new Cristal(1)); h = mapa.getHexagono(2, 0);
+	 * h.setOcupante(new Cristal(1)); h = mapa.getHexagono(3, 0);
+	 * h.setOcupante(new Cristal(1)); h = mapa.getHexagono(4, 0);
+	 * h.setOcupante(new Cristal(1)); h = mapa.getHexagono(2, 1);
+	 * h.setOcupante(new Cristal(1)); h = mapa.getHexagono(3, 1);
+	 * h.setOcupante(new Cristal(1)); h = mapa.getHexagono(4, 1);
+	 * h.setOcupante(new Cristal(1)); }
+	 */
+
+	public void insereCristais(int n) {
+		int t, cristaisColocados, r, s;
+		Hexagono h;
+		t = 0;
+		cristaisColocados = 0;
+		while (cristaisColocados < n && t < 3 * n) {
+			r = rand.nextInt(mapa.getMaxI());
+			s = rand.nextInt(mapa.getMaxJ());
+			System.out.println("Inserindo Cristal:");
+			System.out.println("i: " + r);
+			System.out.println("j: " + s);
+			h = mapa.getHexagono(r, s);
+			if (!h.temOcupante()) {
+				h.setOcupante(new Cristal(1));
+				cristaisColocados++;
+			}
+			t++;
+		}
+
+		System.out.println("Insere cristais:");
+		System.out.println("Numero de cristais:" + n);
+		System.out.println("Cristais colocados:" + cristaisColocados);
+		// numCristais = cristaisColocados;
+	}
+
+	public void insereBases() {
+		int k;
+		Base b;
+		Hexagono h;
+		ArrayList<Base> localizacao = new ArrayList<Base>();
+		localizacao.add(new Base(0, 0));
+		localizacao.add(new Base(0, mapa.getMaxJ() - 1));
+		localizacao.add(new Base(mapa.getMaxI() - 1, 0));
+		localizacao.add(new Base(mapa.getMaxI() - 1, mapa.getMaxJ() - 1));
+		for (int i = 0; i < numBases; i++) {
+			k = rand.nextInt(localizacao.size());
+			b = localizacao.remove(k);
+			h = mapa.getHexagono(b.getPosI(), b.getPosJ());
+			b.setEquipe(i);
+			bases[i] = b;
+			h.setOcupante(b);
+		}
+	}
+
+	/*
+	 * public void insereBase() { Base b; Hexagono h; ArrayList<Base>
+	 * localizacao = new ArrayList<Base>(); localizacao.add(new Base(0,
+	 * mapa.getMaxJ() - 1)); for (int i = 0; i < 1; i++) { b =
+	 * localizacao.remove(i); h = mapa.getHexagono(b.getPosI(), b.getPosJ());
+	 * b.setEquipe(i); bases[i] = b; h.setOcupante(b); } }
+	 */
 
 	public void removeExercito(int idExercito) {
 		for (int j = 0; j < mapa.getMaxJ(); j++) {
 			for (int i = 0; i < mapa.getMaxI(); i++) {
-				if (mapa.getHexagono(i, j).getOcupante().getExercito() == idExercito) {
-					mapa.getHexagono(i, j).retiraOcupante();
+				Posicionavel ocupante = mapa.getHexagono(i, j).getOcupante();
+				if (ocupante instanceof Robo || ocupante instanceof Base) {
+					if (ocupante instanceof Robo) {
+						if (((Robo) ocupante).getExercito() == idExercito)
+							mapa.getHexagono(i, j).retiraOcupante();
+					} else if (((Base) ocupante).getEquipe() == idExercito) {
+						mapa.getHexagono(i, j).retiraOcupante();
+					}
+
 				}
 			}
 		}

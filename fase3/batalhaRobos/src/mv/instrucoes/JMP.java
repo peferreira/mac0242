@@ -1,5 +1,6 @@
 package mv.instrucoes;
 
+import java.util.Random;
 import java.util.Stack;
 
 import mv.*;
@@ -9,7 +10,7 @@ public class JMP extends Instrucao {
     public JMP (Empilhavel item) {
 	super(item);
     }
-    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa) {
+    public void executar (Stack<Empilhavel> pilhaDeDados, Memoria memoria, Programa programa, Random rand) {
 	if (argumento instanceof Endereco) {	
 		programa.setPonteiroPrograma(((Endereco)argumento));
 	} else {

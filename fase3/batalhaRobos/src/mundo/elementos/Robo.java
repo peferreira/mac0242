@@ -5,7 +5,7 @@ import graficos.Sprite;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public class Robo {
+public class Robo implements Posicionavel {
 
 	private int posI;
 	private int posJ;
@@ -21,10 +21,11 @@ public class Robo {
 		this.id = id;
 		vidas = 3;
 		cristal = null;
-		this.sprite = graficos.SpriteStore.get().getSprite("graficos/robo1.png");
+		this.sprite = graficos.SpriteStore.get().getSprite("graficos/robo3.png");
 	}
 	public void draw(Graphics g, int x, int y) {
-		sprite.draw(g, x, y);
+		
+		sprite.draw(g, x+11, y+15);
 	}
 	public void setPosI(int posI) {
 		this.posI = posI;

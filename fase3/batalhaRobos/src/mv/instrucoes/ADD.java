@@ -1,5 +1,6 @@
 package mv.instrucoes;
 
+import java.util.Random;
 import java.util.Stack;
 
 import mv.*;
@@ -11,7 +12,7 @@ public class ADD extends Instrucao {
 	}
 
 	public void executar(Stack<Empilhavel> pilhaDeDados, Memoria memoria,
-			Programa programa) {
+			Programa programa, Random rand) {
 		Empilhavel item1 = pilhaDeDados.pop();
 		Empilhavel item2 = pilhaDeDados.pop();
 		double resultado;
