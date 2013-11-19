@@ -154,14 +154,16 @@ public class Gerenciador {
 		gerenciador.inicializa();
 		for (int i = 0; i < 10000; i++) {
 			gerenciador.executaMV();
+		
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 }
