@@ -17,11 +17,11 @@ public class Robo implements Posicionavel {
 	private Sprite sprite;
 	
 	
-	public Robo(int id) {
+	public Robo(int id, String cor) {
 		this.id = id;
 		vidas = 3;
 		cristal = null;
-		this.sprite = graficos.SpriteStore.get().getSprite("graficos/roboamerica.png");
+		this.sprite = graficos.SpriteStore.get().getSprite("graficos/robo"+cor+".png");
 	}
 	public void draw(Graphics g, int x, int y) {
 		

@@ -1,6 +1,7 @@
 package mv;
 
 import java.util.LinkedList;
+
 import mv.empilhaveis.*;
 import mv.instrucoes.*;
 
@@ -431,44 +432,48 @@ public class Programas {
 		prg1.addInstrucao(new SCANC());
 		prg1.addInstrucao(new JIF(new Endereco(0)));
 		prg1.addInstrucao(new PICK());
-		//prg1.addInstrucao(new JMP(new Endereco(0)));
+		prg1.addInstrucao(new JMP(new Endereco(0)));
 		prg1.addInstrucao(new END());
 
 		listaDeProgramas.add(prg1);
 
 	}
-	/*
-	public void testaRoboVsCristaisVsBase() {
+	public void testaRoboVsHome() {
 		Programa prg1 = new Programa();
 
-		prg1.addInstrucao(new RDIR());
-		prg1.addInstrucao(new MOVE());
-		prg1.addInstrucao(new JIF(new Endereco(0)));
 		prg1.addInstrucao(new SCANC());
 		prg1.addInstrucao(new JIF(new Endereco(0)));
 		prg1.addInstrucao(new PICK());
 		prg1.addInstrucao(new JIF(new Endereco(0)));
 		prg1.addInstrucao(new HOME());
-		prg1.addInstrucao(new JIF(new Endereco(11)));
-		prg1.addInstrucao(new DEP());
-		prg1.addInstrucao(new JIT(new Endereco(0)));
+		prg1.addInstrucao(new JIT(new Endereco(8)));
 		prg1.addInstrucao(new MOVE());
-		prg1.addInstrucao(new JMP(new Endereco(7)));
-
-		listaDeProgramas.add(prg1);
-
-	}*/
-	
-	public void testaRoboVsCristaisVsBase() {
-		Programa prg1 = new Programa();
-
-		prg1.addInstrucao(new PUSH(new SWEST()));
-		prg1.addInstrucao(new MOVE());
-		prg1.addInstrucao(new JIT(new Endereco(0)));
+		prg1.addInstrucao(new JMP(new Endereco(4)));
 		prg1.addInstrucao(new END());
 		
 		listaDeProgramas.add(prg1);
+	}
+	
+	public void testaRoboVsCristalVsBase() {
+		Programa prg1 = new Programa();
 
+		prg1.addInstrucao(new JMP(new Endereco(4)));
+		prg1.addInstrucao(new SCAND());
+		prg1.addInstrucao(new JIF(new Endereco(1)));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new SCANC());
+		prg1.addInstrucao(new JIF(new Endereco(1)));
+		prg1.addInstrucao(new PICK());
+		prg1.addInstrucao(new JIF(new Endereco(1)));
+		prg1.addInstrucao(new HOME());
+		prg1.addInstrucao(new JIT(new Endereco(12)));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new JMP(new Endereco(8)));
+		prg1.addInstrucao(new DEP());
+		prg1.addInstrucao(new JIT(new Endereco(1)));
+		prg1.addInstrucao(new END());
+		
+		listaDeProgramas.add(prg1);
 	}
 
 }

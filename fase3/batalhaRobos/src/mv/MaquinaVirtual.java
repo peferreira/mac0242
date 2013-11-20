@@ -25,11 +25,7 @@ public class MaquinaVirtual {
 		pilhaDeDados = new Stack<Empilhavel>();
 		memoria = new Memoria();
 		programas = new Programas();
-		//programas.testaMovimentoDeUmRobo();
-		//programas.testaRecolheDepositaSeteCristais(); // Par o teste com um robo e um cristal
-		//programas.testaScanCristal();
-		//programas.testaRandDir();
-		programas.testaRoboVsCristais();
+		programas.testaRoboVsCristalVsBase();
 		listaDeProgramas = programas.getListaDeProgramas();
 	}
 

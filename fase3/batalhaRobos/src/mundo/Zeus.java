@@ -45,7 +45,7 @@ public class Zeus {
 				if (ocupante.temCristal()) {
 					c = ocupante.getCristal().custo();
 				}
-				turnos[ocupante.getID()] = 0/* hex.getSolo().custo() + c */;
+				turnos[ocupante.getID()] = hex.getSolo().custo() + c;
 
 				// Meramente informativo
 				System.out.println("NRobo:" + ocupante.getID() + " - i: "
@@ -78,7 +78,7 @@ public class Zeus {
 				hex.retiraOcupante();
 
 				// Calculo do custo da operacao (experimental)
-				turnos[minerador.getID()] = 0/* minerador.getCristal().custo() */;
+				turnos[minerador.getID()] = minerador.getCristal().custo();
 
 				respostas.add(new RespostaPICK(true, minerador.getID()));
 				hex.delMineradores();
@@ -91,7 +91,7 @@ public class Zeus {
 
 	}
 
-	private boolean dentroDaArena(int i, int j, int id) {
+	public boolean dentroDaArena(int i, int j, int id) {
 		if (i >= 0 && i < mapa.getMaxI()) {
 			if (j >= 0 && j < mapa.getMaxJ()) {
 				// Meramente informativo
@@ -194,6 +194,46 @@ public class Zeus {
 			}
 		}
 		return false;
+	}
+	
+	public void regressoBase(int i, int j,int ni,int nj, int bi, int bj, int id, String dir) {
+		Hexagono hex;
+		if (dentroDaArena(ni, nj, id)) {
+			//System.out.println("HI");
+			respostas.add(new RespostaHOMED(dir, id));
+			hex = mapa.getHexagono(ni, nj);
+			if (hex.temOcupante() && (hex.getOcupante() instanceof Base)) {
+				//System.out.println(":]");
+				respostas.add(new RespostaHOME(true, id));
+				return;
+			}
+		} else {
+			//System.out.println(":[");
+			if (j == bj){
+				if(i > bi){
+					respostas.add(new RespostaHOMED("W", id));
+				}else {
+					respostas.add(new RespostaHOMED("E", id));
+				}
+			}
+			// 1º e 2º quadrante
+			if (i == bi &&  j > bj){
+				if (j % 2 == 0){
+					respostas.add(new RespostaHOMED("NE", id));
+				}else{
+					respostas.add(new RespostaHOMED("NW", id));
+				}
+			}
+			// 3º e 4º quadrante	
+			if (i == bi &&  j < bj){
+				if (j % 2 == 0){
+					respostas.add(new RespostaHOMED("SE", id));
+				}else{
+					respostas.add(new RespostaHOMED("SW", id));
+				}
+			}
+		}
+		respostas.add(new RespostaHOME(false, id));
 	}
 
 	public void criaResposta(Resposta r) {

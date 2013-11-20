@@ -33,10 +33,10 @@ public class Gerenciador {
 
 	// Para o teste com um robo e um cristal
 	public Gerenciador() {
-		numMaquinasVirtuais = 24;
+		numMaquinasVirtuais = 20;
 		turnos = new int[numMaquinasVirtuais];
 		mvs = new MaquinaVirtual[numMaquinasVirtuais];
-		arena = new Arena(24, 4, turnos);
+		arena = new Arena(20, 4, turnos);
 	}
 
 	public void inicializa() {
@@ -49,9 +49,9 @@ public class Gerenciador {
 		arena.insereBases();
 		arena.insereExercitos();
 		arena.insereCristais(28);
-		// arena.insereSeteCristais();
-		// arena.insereBase();
-		// arena.insereUmRobo();
+		//arena.insereUmaBase();
+		//arena.insereUmRobo();
+		//arena.insereUmCristal();
 	}
 
 	public void executaMV() {
@@ -127,7 +127,7 @@ public class Gerenciador {
 					arena.scanDir(i);
 					break;
 				case 8:
-					// arena.base(i);
+					arena.regressoBase(i);
 					break;
 				default:
 					System.out.println("Operacao inválida!");
@@ -152,7 +152,7 @@ public class Gerenciador {
 		Gerenciador gerenciador = new Gerenciador(); // Para o teste com um robo
 														// e um cristal
 		gerenciador.inicializa();
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < 1000000; i++) {
 			gerenciador.executaMV();
 		
 			try {
