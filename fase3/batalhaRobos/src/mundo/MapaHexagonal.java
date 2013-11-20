@@ -1,5 +1,7 @@
 package mundo;
 
+import graficos.Sprite;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -15,7 +17,7 @@ public class MapaHexagonal {
 	private int[][] Terreno;
 	int Larg, Alt, Dx, Dy; // largura do terreno, altura do terreno, incremento
 	// em x e incremento em y
-	BufferedImage grama, terra, agua;
+	Sprite grama, terra, agua;
 
 	public MapaHexagonal(int maxJ, int maxI, int L, int W, int H) {
 		this.maxJ = maxJ;
@@ -26,35 +28,25 @@ public class MapaHexagonal {
 		this.Terreno = new int[maxJ][maxI];
 		for (int j = 0; j < maxJ; j++)
 			for (int i = 0; i < maxI; i++)
-				Terreno[j][i] = 2;
-		Dx = (int) (2 * L * Math.sin(2 * Math.PI / 6)); // incremento em x para
+				this.Terreno[j][i] = 2;
+	/*	Dx = (int) (2 * L * Math.sin(2 * Math.PI / 6)); // incremento em x para
 		// desenhar os hexágonos
 		Dy = 3 * L / 2; // idem para y
 		Larg = W;
-		Alt = H;
+		Alt = H;*/
 
 		// cada try..catch que segue carregará uma textura, ou levantará uma
 		// exceção que encerrará a aplicação com erro
-		try {
-			grama = ImageIO.read(this.getClass().getResource("grama2.png"));
-		} catch (Exception e) {
+		
 
-			System.exit(1);
-		}
+		agua = graficos.SpriteStore.get().getSprite("graficos/hexagua.png");
+		grama = graficos.SpriteStore.get().getSprite("graficos/hexgrama.png");
+		terra = graficos.SpriteStore.get().getSprite("graficos/hexterra.png");
+		Sprite[] imagem = { agua, terra, grama }; // array de texturas
 
-		try {
-			terra = ImageIO.read(this.getClass().getResource("terra2.png"));
-		} catch (Exception e) {
-			System.exit(1);
-		}
 
-		try {
-			agua = ImageIO.read(this.getClass().getResource("agua2.png"));
-		} catch (Exception e) {
-			System.exit(1);
-		}
 
-		BufferedImage[] Textura = { agua, terra, grama }; // array de texturas
+
 		// (valores de
 		// enumeração: 0, 1,
 		// 2)
@@ -75,14 +67,16 @@ public class MapaHexagonal {
 		for (int j = 0; j < maxJ; j++){
 			for( int i = 0; i < maxI; i++){
 				mapaHexagonal[j][i] = new Hexagono(DELTA+i*52, j*45
-				, L, Textura[Terreno[j][i]]);
+				, L, imagem[Terreno[j][i]]);
 				
 			}
 			DELTA = DELTA == 0 ? 52 / 2 : 0;
 		}
 	}
 
-	
+	void geraMapaAleatorio() {
+		
+	}
 	void draw(Graphics g){
 		for (int j = 0; j < maxJ; j++) {
 			for (int i = 0; i < maxI; i++) {

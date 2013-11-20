@@ -31,7 +31,7 @@ public class Hexagono {
 	int m,n;
 	private Sprite sprite;
 	
-	public Hexagono(int x, int y, double r, BufferedImage bffimage) {
+	public Hexagono(int x, int y, double r, Sprite imagem) {
 		m = x;
 		n = y;
 		cx = x;
@@ -39,14 +39,12 @@ public class Hexagono {
 		for (int i = 0; i < 6; i++)
 			p.addPoint(x + (int) (r * Math.sin(i * 2 * Math.PI / 6)), y
 					+ (int) (r * Math.cos(i * 2 * Math.PI / 6)));
-		this.bffimage = bffimage;
+		this.sprite = imagem;
 		requerentes = new ArrayList<Robo>();
 		mineradores = new ArrayList<Robo>();
 		rand = new Random(Double.doubleToLongBits(Math.random()));
-
 		// Por motivo de testes
 		solo = new Solo();
-		this.sprite = graficos.SpriteStore.get().getSprite("graficos/hexgrama.png");
 
 	}
 	
