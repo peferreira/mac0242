@@ -7,38 +7,39 @@ import java.awt.Graphics;
 public class Base implements Posicionavel {
 	private int equipe;
 	private int numCristais;
-	private Sprite[] sprite;
+	private Sprite[] starSprite;
+	private Sprite baseSprite;
 	private int posJ;
 	private int posI;
 
-	public Base(int posI, int posJ) {
+	public Base(int posI, int posJ,String corBase) {
 		this.posI = posI;
 		this.posJ = posJ;
-		this.sprite = new Sprite[8];
-		this.sprite[0] = graficos.SpriteStore.get().getSprite(
-				"graficos/base.png");
-		this.sprite[1] = graficos.SpriteStore.get().getSprite(
-				"graficos/base1.png");
-		this.sprite[2] = graficos.SpriteStore.get().getSprite(
-				"graficos/base2.png");
-		this.sprite[3] = graficos.SpriteStore.get().getSprite(
-				"graficos/base3.png");
-		this.sprite[4] = graficos.SpriteStore.get().getSprite(
-				"graficos/base4.png");
-		this.sprite[5] = graficos.SpriteStore.get().getSprite(
-				"graficos/base5.png");
-		this.sprite[6] = graficos.SpriteStore.get().getSprite(
-				"graficos/base6.png");
-		this.sprite[7] = graficos.SpriteStore.get().getSprite(
-				"graficos/base7.png");
+		this.starSprite = new Sprite[7];
+		this.baseSprite = graficos.SpriteStore.get().getSprite(
+				"graficos/base"+corBase+".png");
+		this.starSprite[0] = graficos.SpriteStore.get().getSprite(
+				"graficos/estrela1.png");
+		this.starSprite[1] = graficos.SpriteStore.get().getSprite(
+				"graficos/estrela2.png");
+		this.starSprite[2] = graficos.SpriteStore.get().getSprite(
+				"graficos/estrela3.png");
+		this.starSprite[3] = graficos.SpriteStore.get().getSprite(
+				"graficos/estrela4.png");
+		this.starSprite[4] = graficos.SpriteStore.get().getSprite(
+				"graficos/estrela5.png");
+		this.starSprite[5] = graficos.SpriteStore.get().getSprite(
+				"graficos/estrela6.png");
+		this.starSprite[6] = graficos.SpriteStore.get().getSprite(
+				"graficos/estrela7.png");
 	}
 
 	public void draw(Graphics g, int x, int y) {
-		if (numCristais < 8) {
-			sprite[numCristais].draw(g, x , y+5);
-		} else
-			sprite[7].draw(g, x - 25, y - 25);
-
+		baseSprite.draw(g, x, y+5);
+		if (numCristais > 0 && numCristais < 8) {
+			starSprite[numCristais-1].draw(g, x , y+5);
+		}
+		
 	}
 
 	public void addCristal() {

@@ -487,10 +487,10 @@ public class Arena extends Canvas {
 		Base b;
 		Hexagono h;
 		ArrayList<Base> localizacao = new ArrayList<Base>();
-		localizacao.add(new Base(0, 0));
-		localizacao.add(new Base(0, mapa.getMaxJ() - 1));
-		localizacao.add(new Base(mapa.getMaxI() - 1, 0));
-		localizacao.add(new Base(mapa.getMaxI() - 1, mapa.getMaxJ() - 1));
+		localizacao.add(new Base(0, 0,"rosa"));
+		localizacao.add(new Base(0, mapa.getMaxJ() - 1,"vermelha"));
+		localizacao.add(new Base(mapa.getMaxI() - 1, 0,"azul"));
+		localizacao.add(new Base(mapa.getMaxI() - 1, mapa.getMaxJ() - 1,""));
 		for (int i = 0; i < numBases; i++) {
 			k = rand.nextInt(localizacao.size());
 			b = localizacao.remove(k);
