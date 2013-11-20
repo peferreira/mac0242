@@ -46,7 +46,7 @@ public class Hexagono {
 
 		// Por motivo de testes
 		solo = new Solo();
-		this.sprite = graficos.SpriteStore.get().getSprite("graficos/gramahex.png");
+		this.sprite = graficos.SpriteStore.get().getSprite("graficos/hexgrama.png");
 
 	}
 	

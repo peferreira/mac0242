@@ -74,7 +74,7 @@ public class MapaHexagonal {
 */
 		for (int j = 0; j < maxJ; j++){
 			for( int i = 0; i < maxI; i++){
-				mapaHexagonal[j][i] = new Hexagono(DELTA+i*52, j*46
+				mapaHexagonal[j][i] = new Hexagono(DELTA+i*52, j*45
 				, L, Textura[Terreno[j][i]]);
 				
 			}
