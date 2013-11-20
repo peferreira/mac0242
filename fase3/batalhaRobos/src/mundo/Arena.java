@@ -313,7 +313,7 @@ public class Arena extends Canvas {
 		novoPosI = novoX(posI, posJ, dir);
 		novoPosJ = novoY(posJ, dir);
 		if (!zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < lados.length; i++) {
 				novoPosI = novoX(posI, posJ, lados[i]);
 				novoPosJ = novoY(posJ, lados[i]);
 				if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {

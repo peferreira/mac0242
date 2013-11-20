@@ -3,9 +3,9 @@ package mundo;
 import graficos.Sprite;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+//import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
+//import javax.imageio.ImageIO;
 
 import mundo.elementos.Robo;
 
