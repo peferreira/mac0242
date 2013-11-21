@@ -199,7 +199,7 @@ public class Zeus {
 	public void regressoBase(int i, int j,int ni,int nj, int bi, int bj, int id, String dir) {
 		Hexagono hex;
 		if (dentroDaArena(ni, nj, id)) {
-			//System.out.println("HI");
+			System.out.println("O.O");
 			respostas.add(new RespostaHOMED(dir, id));
 			hex = mapa.getHexagono(ni, nj);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Base)) {
@@ -208,7 +208,7 @@ public class Zeus {
 				return;
 			}
 		} else {
-			//System.out.println(":[");
+			System.out.println(":[");
 			if (j == bj){
 				if(i > bi){
 					respostas.add(new RespostaHOMED("W", id));

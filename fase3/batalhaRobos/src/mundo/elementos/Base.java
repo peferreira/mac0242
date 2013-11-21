@@ -43,7 +43,9 @@ public class Base implements Posicionavel {
 	}
 
 	public void addCristal() {
-		numCristais++;
+		if (numCristais < 7) {
+			numCristais++;
+		}
 	}
 
 	public int getNumDeCristais() {

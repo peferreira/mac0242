@@ -33,10 +33,10 @@ public class Gerenciador {
 
 	// Para o teste com um robo e um cristal
 	public Gerenciador() {
-		numMaquinasVirtuais = 20;
+		numMaquinasVirtuais = 24;
 		turnos = new int[numMaquinasVirtuais];
 		mvs = new MaquinaVirtual[numMaquinasVirtuais];
-		arena = new Arena(20, 4, turnos);
+		arena = new Arena(24, 4, turnos);
 	}
 
 	public void inicializa() {
@@ -152,6 +152,7 @@ public class Gerenciador {
 		Gerenciador gerenciador = new Gerenciador(); // Para o teste com um robo
 														// e um cristal
 		gerenciador.inicializa();
+		/*
 		for (int i = 0; i < 1000000; i++) {
 			gerenciador.executaMV();
 		
@@ -162,7 +163,23 @@ public class Gerenciador {
 				e.printStackTrace();
 			}
 		}
-		
+		*/
+		while (true) {
+			if (gerenciador.arena.baseVencedor()== null){
+				gerenciador.executaMV();
+			} else {
+				gerenciador.executaMV();
+				gerenciador.arena.removeExercitosPerdedores();
+				gerenciador.executaMV();
+				break;
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 	}
 

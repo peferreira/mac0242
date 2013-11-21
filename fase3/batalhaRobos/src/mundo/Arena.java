@@ -127,7 +127,7 @@ public class Arena extends Canvas {
 	}
 
 	public void inicializa() {
-		FabricaRobos fr = new FabricaRobos(numRobos,numBases);
+		FabricaRobos fr = new FabricaRobos(numRobos, numBases);
 		fr.criaRobos();
 		moveis = fr.getRobos();
 	}
@@ -294,13 +294,19 @@ public class Arena extends Canvas {
 		Hexagono hex;
 		Base b;
 		String dir;
-		String lados[] = { "E", "W","NW","NE","SW","SE" };
 		Robo movel = moveis[idRobo];
+		ArrayList<String> lados = new ArrayList<String>();
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
 		b = bases[movel.getExercito()];
 		basePosI = b.getPosI();
 		basePosJ = b.getPosJ();
+		lados.add("E");
+		lados.add("W");
+		lados.add("NE");
+		lados.add("NW");
+		lados.add("SE");
+		lados.add("SW");
 		if (basePosI == 0 && basePosJ == 0) {
 			dir = "NW";
 		} else if (basePosI == 0 && basePosJ == (mapa.getMaxJ() - 1)) {
@@ -313,21 +319,82 @@ public class Arena extends Canvas {
 		novoPosI = novoX(posI, posJ, dir);
 		novoPosJ = novoY(posJ, dir);
 		if (!zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
-			for (int i = 0; i < lados.length; i++) {
-				novoPosI = novoX(posI, posJ, lados[i]);
-				novoPosJ = novoY(posJ, lados[i]);
+			for (int i = 0; i < lados.size(); i++) {
+				novoPosI = novoX(posI, posJ, lados.get(i));
+				novoPosJ = novoY(posJ, lados.get(i));
 				if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
 					hex = mapa.getHexagono(novoPosI, novoPosJ);
 					if (hex.temOcupante()
 							&& (hex.getOcupante() instanceof Base)) {
-						dir = lados[i];
+						dir = lados.get(i);
 						break;
 					}
 				}
 			}
 		}
+		
 		novoPosI = novoX(posI, posJ, dir);
 		novoPosJ = novoY(posJ, dir);
+		/*
+		if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
+			hex = mapa.getHexagono(novoPosI, novoPosJ);
+			if (hex.temOcupante() && (hex.getOcupante() instanceof Cristal)) {
+				if (novoPosJ != basePosJ && novoPosI != basePosI){
+					if(novoPosI > basePosI){
+						dir = "W";
+					}else {
+						dir = "E";
+					}
+				}
+				
+				if (novoPosJ == basePosJ){
+					if(novoPosI > basePosI){
+						dir = "NE";
+					}else {
+						dir = "NW";
+					}
+				}
+				
+				if (novoPosI == basePosI && novoPosJ < basePosJ){
+					if (novoPosI == 0){
+						dir = "E";
+					} else if (novoPosI == mapa.getMaxI()){
+						dir = "W";
+					}
+				}
+				
+			}
+		}
+		*/
+		if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
+			hex = mapa.getHexagono(novoPosI, novoPosJ);
+			if (hex.temOcupante() && (hex.getOcupante() instanceof Cristal)) {
+				
+				if (basePosI == 0 && basePosJ == 0) {
+					lados.remove("SE");
+				} else if (basePosI == 0 && basePosJ == (mapa.getMaxJ() - 1)) {
+					lados.remove("NE");
+				} else if (basePosI == (mapa.getMaxI() - 1) && basePosJ == 0) {
+					lados.remove("SW");
+				} else {
+					lados.remove("NW");
+				}
+				System.out.println("Size lados: " + lados.size());
+				for (int i = 0; i < lados.size(); i++){
+					dir = lados.remove(rand.nextInt(lados.size()));
+					novoPosI = novoX(posI, posJ, dir);
+					novoPosJ = novoY(posJ, dir);
+					hex = mapa.getHexagono(novoPosI, novoPosJ);
+					if (!hex.temOcupante()) {
+						break;
+					}
+				}
+			}
+		}
+		/*
+		novoPosI = novoX(posI, posJ, dir);
+		novoPosJ = novoY(posJ, dir);
+		*/
 		zeus.regressoBase(posI, posJ, novoPosI, novoPosJ, basePosI, basePosJ,
 				idRobo, dir);
 	}
@@ -408,15 +475,25 @@ public class Arena extends Canvas {
 	 */
 
 	public void insereUmRobo() {
-		Hexagono h = mapa.getHexagono(14, 4);
-		moveis[0].setPosI(14);
-		moveis[0].setPosJ(4);
+		Hexagono h = mapa.getHexagono(4, 5);
+		moveis[0].setPosI(4);
+		moveis[0].setPosJ(5);
 		moveis[0].setExercito(0);
 		h.setOcupante(moveis[0]);
 	}
 
 	public void insereUmCristal() {
-		Hexagono h = mapa.getHexagono(13, 4);
+		Hexagono h = mapa.getHexagono(4, 4);
+		h.setOcupante(new Cristal(1));
+		h = mapa.getHexagono(3, 3);
+		h.setOcupante(new Cristal(1));
+		h = mapa.getHexagono(3, 4);
+		h.setOcupante(new Cristal(1));
+		h = mapa.getHexagono(3, 5);
+		h.setOcupante(new Cristal(1));
+		h = mapa.getHexagono(4, 3);
+		h.setOcupante(new Cristal(1));
+		h = mapa.getHexagono(4, 6);
 		h.setOcupante(new Cristal(1));
 	}
 
@@ -527,10 +604,11 @@ public class Arena extends Canvas {
 		Base b;
 		Hexagono h;
 		ArrayList<Base> localizacao = new ArrayList<Base>();
-		localizacao.add(new Base(0, 0,"azul"));
-		localizacao.add(new Base(0, mapa.getMaxJ() - 1,"rosa"));
-		localizacao.add(new Base(mapa.getMaxI() - 1, 0,"verde"));
-		localizacao.add(new Base(mapa.getMaxI() - 1, mapa.getMaxJ() - 1,"vermelha"));
+		localizacao.add(new Base(0, 0, "azul"));
+		localizacao.add(new Base(0, mapa.getMaxJ() - 1, "rosa"));
+		localizacao.add(new Base(mapa.getMaxI() - 1, 0, "verde"));
+		localizacao.add(new Base(mapa.getMaxI() - 1, mapa.getMaxJ() - 1,
+				"vermelha"));
 		for (int i = 0; i < numBases; i++) {
 			k = rand.nextInt(localizacao.size());
 			b = localizacao.remove(k);
@@ -540,18 +618,25 @@ public class Arena extends Canvas {
 			h.setOcupante(b);
 		}
 	}
-	
+
 	public void insereUmaBase() {
 		Base b;
 		Hexagono h;
 		ArrayList<Base> localizacao = new ArrayList<Base>();
-		localizacao.add(new Base(0, 0,"azul"));
-		localizacao.add(new Base(0, mapa.getMaxJ() - 1,"rosa"));
-		localizacao.add(new Base(mapa.getMaxI() - 1, 0,"verde"));
-		localizacao.add(new Base(mapa.getMaxI() - 1, mapa.getMaxJ() - 1,"vermelha"));
-		b = localizacao.get(2);
+		localizacao.add(new Base(0, 0, "azul"));
+		localizacao.add(new Base(0, mapa.getMaxJ() - 1, "rosa"));
+		localizacao.add(new Base(mapa.getMaxI() - 1, 0, "verde"));
+		localizacao.add(new Base(mapa.getMaxI() - 1, mapa.getMaxJ() - 1,
+				"vermelha"));
+		b = localizacao.get(0);
 		h = mapa.getHexagono(b.getPosI(), b.getPosJ());
 		b.setEquipe(0);
+		b.addCristal();
+		b.addCristal();
+		b.addCristal();
+		b.addCristal();
+		b.addCristal();
+		b.addCristal();
 		bases[0] = b;
 		h.setOcupante(b);
 	}
@@ -579,6 +664,25 @@ public class Arena extends Canvas {
 				}
 			}
 		}
+	}
+	
+	public void removeExercitosPerdedores() {
+		Base vencedor =  baseVencedor();
+		for(int i = 0; i < numBases; i++){
+			if (!vencedor.equals(bases[i])){
+				removeExercito(bases[i].getEquipe());
+			}
+		}
+	}
+	
+	public Base baseVencedor() {
+		Base vencedor = null;
+		for (int i = 0; i < numBases; i++){
+			if (bases[i].getNumDeCristais() == 7){
+				vencedor = bases[i];
+			}
+		}
+		return vencedor;
 	}
 
 }
