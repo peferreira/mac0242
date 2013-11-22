@@ -1,8 +1,12 @@
 package mundo;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import comunicacao.*;
+import mundo.elementos.Bala;
 import mundo.elementos.Base;
 import mundo.elementos.Cristal;
 import mundo.elementos.Robo;
@@ -90,8 +94,56 @@ public class Zeus {
 		 */
 
 	}
+	
+	private void processaTurnoZero(Bala b, int i, int j){
+		int novoI = novoX(i, j,b.getDir());
+		int novoJ = novoY(j, b.getDir());
+		Hexagono hex;
+		if (dentroDaArena(novoI, novoJ)){
+			hex = mapa.getHexagono(novoI, novoJ);
+			hex.adAtaque(b);
+			b.setTurno(2);
+			b.decVida();
+		}
+		
+	}
+	
+	private void processaBala(int i, int j){
+		ArrayList<Bala> ataques;
+		Hexagono hex;
+		Bala b;
+		hex = mapa.getHexagono(i, j);
+		if (hex.temAtaques()){
+			System.out.println("i:"+i+"j:"+j);
+			ataques = hex.getAtaques(); 
+			for(int k = 0; k < ataques.size(); k++){
+				System.out.println("xXx");
+				b = ataques.get(k);
+				switch (b.getTurno()) {
+				case 0:
+					ataques.remove(k);
+					System.out.println("xXx0");
+					if (b.getVida() > 0){
+						processaTurnoZero(b, i, j);
+						System.out.println("xXx1");
 
-	public boolean dentroDaArena(int i, int j, int id) {
+					}
+					System.out.println("xXx2");
+					break;
+				case 1:
+					b.decTurno();
+					break;
+				case 2:
+					b.decTurno();
+					break;
+				default:
+					break;
+				}
+			}
+		} 
+	}
+
+	public boolean dentroDaArena(int i, int j) {
 		if (i >= 0 && i < mapa.getMaxI()) {
 			if (j >= 0 && j < mapa.getMaxJ()) {
 				// Meramente informativo
@@ -113,7 +165,7 @@ public class Zeus {
 	public boolean ehPossivelMover(int i, int j, int id) {
 		boolean possivel;
 		Hexagono hex;
-		possivel = dentroDaArena(i, j, id);
+		possivel = dentroDaArena(i, j);
 		if (possivel) {
 			hex = mapa.getHexagono(i, j);
 			if (!hex.temOcupante()) {
@@ -129,7 +181,7 @@ public class Zeus {
 	public boolean ehPossivelRecolher(int i, int j, int id) {
 		boolean possivel;
 		Hexagono hex;
-		possivel = dentroDaArena(i, j, id);
+		possivel = dentroDaArena(i, j);
 		if (possivel) {
 			hex = mapa.getHexagono(i, j);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Cristal)) {
@@ -144,7 +196,7 @@ public class Zeus {
 	public boolean ehPossivelDepositar(int i, int j, int id) {
 		boolean possivel;
 		Hexagono hex;
-		possivel = dentroDaArena(i, j, id);
+		possivel = dentroDaArena(i, j);
 		if (possivel) {
 			hex = mapa.getHexagono(i, j);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Base)) {
@@ -158,7 +210,7 @@ public class Zeus {
 
 	public boolean cristalDescoberto(int i, int j, int id, String dir) {
 		Hexagono hex;
-		if (dentroDaArena(i, j, id)) {
+		if (dentroDaArena(i, j)) {
 			hex = mapa.getHexagono(i, j);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Cristal)) {
 				respostas.add(new RespostaSCAND(dir, id));
@@ -169,9 +221,9 @@ public class Zeus {
 		return false;
 	}
 
-	public boolean enemigoDescoberto(int i, int j, int id, int exerc, String dir) {
+	public boolean inimigoDescoberto(int i, int j, int id, int exerc, String dir) {
 		Hexagono hex;
-		if (dentroDaArena(i, j, id)) {
+		if (dentroDaArena(i, j)) {
 			hex = mapa.getHexagono(i, j);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Robo)
 					&& (exerc != ((Robo) hex.getOcupante()).getExercito())) {
@@ -182,10 +234,10 @@ public class Zeus {
 		}
 		return false;
 	}
-	
+
 	public boolean dirLivre(int i, int j, int id, String dir) {
 		Hexagono hex;
-		if (dentroDaArena(i, j, id)) {
+		if (dentroDaArena(i, j)) {
 			hex = mapa.getHexagono(i, j);
 			if (!hex.temOcupante()) {
 				respostas.add(new RespostaSCAND(dir, id));
@@ -195,40 +247,41 @@ public class Zeus {
 		}
 		return false;
 	}
-	
-	public void regressoBase(int i, int j,int ni,int nj, int bi, int bj, int id, String dir) {
+
+	public void regressoBase(int i, int j, int ni, int nj, int bi, int bj,
+			int id, String dir) {
 		Hexagono hex;
-		if (dentroDaArena(ni, nj, id)) {
+		if (dentroDaArena(ni, nj)) {
 			System.out.println("O.O");
 			respostas.add(new RespostaHOMED(dir, id));
 			hex = mapa.getHexagono(ni, nj);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Base)) {
-				//System.out.println(":]");
+				// System.out.println(":]");
 				respostas.add(new RespostaHOME(true, id));
 				return;
 			}
 		} else {
 			System.out.println(":[");
-			if (j == bj){
-				if(i > bi){
+			if (j == bj) {
+				if (i > bi) {
 					respostas.add(new RespostaHOMED("W", id));
-				}else {
+				} else {
 					respostas.add(new RespostaHOMED("E", id));
 				}
 			}
 			// 1º e 2º quadrante
-			if (i == bi &&  j > bj){
-				if (j % 2 == 0){
+			if (i == bi && j > bj) {
+				if (j % 2 == 0) {
 					respostas.add(new RespostaHOMED("NE", id));
-				}else{
+				} else {
 					respostas.add(new RespostaHOMED("NW", id));
 				}
 			}
-			// 3º e 4º quadrante	
-			if (i == bi &&  j < bj){
-				if (j % 2 == 0){
+			// 3º e 4º quadrante
+			if (i == bi && j < bj) {
+				if (j % 2 == 0) {
 					respostas.add(new RespostaHOMED("SE", id));
-				}else{
+				} else {
 					respostas.add(new RespostaHOMED("SW", id));
 				}
 			}
@@ -249,8 +302,48 @@ public class Zeus {
 			for (int i = 0; i < maxI; i++) {
 				processaRequesicoes(i, j);
 				processaMineradores(i, j);
+				processaBala(i, j);
 			}
 		}
 	}
+	
+	public int novoY(int y, String dir) {
+		switch (dir) {
+		case "NE":
+		case "NW":
+			return y - 1;
+		case "E":
+		case "W":
+			return y;
+		case "SW":
+		case "SE":
+			return y + 1;
+		default:
+			System.out.println("Y: Direcao inválida! - " + dir);
+			return -1;
+		}
+	}
+
+	public int novoX(int x, int y, String dir) {
+		switch (dir) {
+		case "SE":
+		case "NE":
+			return (eLinhaPar(y) == true) ? x : x + 1;
+		case "SW":
+		case "NW":
+			return (eLinhaPar(y) == true) ? x - 1 : x;
+		case "E":
+			return x + 1;
+		case "W":
+			return x - 1;
+		default:
+			System.out.println("X: Direcao inválida! - " + dir);
+			return -1;
+		}
+	}
+	private boolean eLinhaPar(int posLinha) {
+		return (posLinha % 2) == 0;
+	}
+
 
 }

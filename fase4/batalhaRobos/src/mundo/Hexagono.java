@@ -9,9 +9,11 @@ import java.awt.Polygon;
 //import java.awt.Rectangle;
 //import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Random;
 
+import mundo.elementos.Bala;
 import mundo.elementos.Posicionavel;
 //import java.lang.Math;
 import mundo.elementos.Robo;
@@ -22,6 +24,7 @@ public class Hexagono {
 	private ArrayList<Robo> requerentes;
 	private ArrayList<Robo> mineradores;
 	private Posicionavel ocupante;
+	private ArrayList<Bala> ataques;
 	private Random rand;
 	private Solo solo;
 	Polygon p = new Polygon();
@@ -42,6 +45,7 @@ public class Hexagono {
 		this.sprite = imagem;
 		requerentes = new ArrayList<Robo>();
 		mineradores = new ArrayList<Robo>();
+		ataques = new ArrayList<Bala>();
 		rand = new Random(Double.doubleToLongBits(Math.random()));
 		// Por motivo de testes
 		solo = new Solo();
@@ -54,9 +58,22 @@ public class Hexagono {
 			ocupante.draw(g, m, n);
 			
 		}
+		for(int i = 0; i < ataques.size(); i++){
+			ataques.get(i).draw(g, m, n);
+		}
 	}
-
 	
+	public void adAtaque(Bala b){
+		ataques.add(b);
+	}
+	
+	public boolean temAtaques(){
+		return !ataques.isEmpty();
+	}
+	
+	public ArrayList<Bala> getAtaques(){
+		return ataques;
+	}
 
 	public Posicionavel getOcupante() {
 		return ocupante;

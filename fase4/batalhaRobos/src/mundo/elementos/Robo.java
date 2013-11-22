@@ -46,6 +46,10 @@ public class Robo implements Posicionavel {
 	public int getVidas() {
 		return vidas;
 	}
+	
+	public void decVidas() {
+		vidas--;
+	}
 
 	public void alteraPosicao(int posI, int posJ) {
 		this.posI = posI;

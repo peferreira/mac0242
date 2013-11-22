@@ -475,5 +475,31 @@ public class Programas {
 		
 		listaDeProgramas.add(prg1);
 	}
+	
+	public void testaScanInimigo() {
+		Programa prg1 = new Programa();
+		
+		prg1.addInstrucao(new SCANE());
+		prg1.addInstrucao(new JIF(new Endereco(5)));
+		prg1.addInstrucao(new PUSH(new CadeiaDeCaracteres("Encontrei um inimigo!")));
+		prg1.addInstrucao(new PRN());
+		prg1.addInstrucao(new END());
+		prg1.addInstrucao(new SCAND());
+		prg1.addInstrucao(new JIF(new Endereco(5)));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new JMP(new Endereco(0)));
+		
+		listaDeProgramas.add(prg1);
+	}
+	
+	public void testaTiro() {
+		Programa prg1 = new Programa();
+		
+		prg1.addInstrucao(new PUSH(new EAST()));
+		prg1.addInstrucao(new ATTACK());
+		prg1.addInstrucao(new END());
+		
+		listaDeProgramas.add(prg1);
+	}
 
 }

@@ -52,6 +52,7 @@ public class Gerenciador {
 		//arena.insereUmaBase();
 		//arena.insereUmRobo();
 		//arena.insereUmCristal();
+		//arena.insereDoisRobosInimigos();
 	}
 
 	public void executaMV() {
@@ -109,6 +110,7 @@ public class Gerenciador {
 					break;
 				case 2:
 					// processaAtaque(op)
+					arena.ataque(i,op.getArgumento());
 					break;
 				case 3:
 					arena.recolhe(i, op.getArgumento());
@@ -121,7 +123,7 @@ public class Gerenciador {
 					arena.scanCristal(i);
 					break;
 				case 6:
-					// arena.scanRobo(i, 2);
+					arena.scanRobo(i, 4);
 					break;
 				case 7:
 					arena.scanDir(i);

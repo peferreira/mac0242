@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import comunicacao.Resposta;
 import comunicacao.RespostaDEP;
 import comunicacao.RespostaSCAN;
+import mundo.elementos.Bala;
 import mundo.elementos.Base;
 import mundo.elementos.Cristal;
 import mundo.elementos.Posicionavel;
@@ -132,10 +133,7 @@ public class Arena extends Canvas {
 		moveis = fr.getRobos();
 	}
 
-	private boolean eLinhaPar(int posLinha) {
-		return (posLinha % 2) == 0;
-	}
-
+	
 	/*
 	 * public void moveCimaEsq(int idRobo) { int posI, posJ, novoPosI, novoPosJ;
 	 * Hexagono hex; Robo movel = moveis[idRobo]; posI = movel.getPosI(); posJ =
@@ -183,8 +181,8 @@ public class Arena extends Canvas {
 		Robo movel = moveis[idRobo];
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
-		depPosI = novoX(posI, posJ, dir);
-		depPosJ = novoY(posJ, dir);
+		depPosI = zeus.novoX(posI, posJ, dir);
+		depPosJ = zeus.novoY(posJ, dir);
 		if (movel.temCristal()) {
 			if (zeus.ehPossivelDepositar(depPosI, depPosJ, idRobo)) {
 				hex = mapa.getHexagono(depPosI, depPosJ);
@@ -203,8 +201,8 @@ public class Arena extends Canvas {
 		Robo movel = moveis[idRobo];
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
-		novoPosI = novoX(posI, posJ, dir);
-		novoPosJ = novoY(posJ, dir);
+		novoPosI = zeus.novoX(posI, posJ, dir);
+		novoPosJ = zeus.novoY(posJ, dir);
 		if (!movel.temCristal()) {
 			if (zeus.ehPossivelRecolher(novoPosI, novoPosJ, idRobo)) {
 				hex = mapa.getHexagono(novoPosI, novoPosJ);
@@ -221,12 +219,20 @@ public class Arena extends Canvas {
 		Robo movel = moveis[idRobo];
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
-		novoPosI = novoX(posI, posJ, dir);
-		novoPosJ = novoY(posJ, dir);
+		novoPosI = zeus.novoX(posI, posJ, dir);
+		novoPosJ = zeus.novoY(posJ, dir);
 		if (zeus.ehPossivelMover(novoPosI, novoPosJ, idRobo)) {
 			hex = mapa.getHexagono(novoPosI, novoPosJ);
 			hex.adRequerente(movel);
 		}
+	}
+	
+	public void ataque(int idRobo, String dir) {
+		Hexagono hex;
+		Bala b = new Bala(dir);
+		Robo movel = moveis[idRobo];
+		hex = mapa.getHexagono(movel.getPosI(), movel.getPosJ());
+		hex.adAtaque(b);
 	}
 
 	public void scanCristal(int idRobo) {
@@ -236,8 +242,8 @@ public class Arena extends Canvas {
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
 		for (int i = 0; i < dirs.length; i++) {
-			novoPosI = novoX(posI, posJ, dirs[i]);
-			novoPosJ = novoY(posJ, dirs[i]);
+			novoPosI = zeus.novoX(posI, posJ, dirs[i]);
+			novoPosJ = zeus.novoY(posJ, dirs[i]);
 			if (zeus.cristalDescoberto(novoPosI, novoPosJ, idRobo, dirs[i])) {
 				return;
 			}
@@ -252,15 +258,15 @@ public class Arena extends Canvas {
 		posI = movel.getPosI();
 		posJ = movel.getPosJ();
 		for (int i = 0; i < dirs.length; i++) {
-			novoPosI = novoX(posI, posJ, dirs[i]);
-			novoPosJ = novoY(posJ, dirs[i]);
+			novoPosI = zeus.novoX(posI, posJ, dirs[i]);
+			novoPosJ = zeus.novoY(posJ, dirs[i]);
 			for (int j = 0; j < dist; j++) {
-				if (zeus.enemigoDescoberto(novoPosI, novoPosJ, idRobo,
+				if (zeus.inimigoDescoberto(novoPosI, novoPosJ, idRobo,
 						movel.getExercito(), dirs[i])) {
 					return;
 				}
-				novoPosI = novoX(novoPosI, novoPosJ, dirs[i]);
-				novoPosJ = novoY(novoPosJ, dirs[i]);
+				novoPosI = zeus.novoX(novoPosI, novoPosJ, dirs[i]);
+				novoPosJ = zeus.novoY(novoPosJ, dirs[i]);
 			}
 		}
 		zeus.criaResposta(new RespostaSCAN(false, idRobo));
@@ -280,8 +286,8 @@ public class Arena extends Canvas {
 		dirs.add("NW");
 		for (int i = 0; i < 6; i++) {
 			k = rand.nextInt(dirs.size());
-			novoPosI = novoX(posI, posJ, dirs.get(k));
-			novoPosJ = novoY(posJ, dirs.get(k));
+			novoPosI = zeus.novoX(posI, posJ, dirs.get(k));
+			novoPosJ = zeus.novoY(posJ, dirs.get(k));
 			if (zeus.dirLivre(novoPosI, novoPosJ, idRobo, dirs.get(k))) {
 				return;
 			}
@@ -316,13 +322,13 @@ public class Arena extends Canvas {
 		} else {
 			dir = "SE";
 		}
-		novoPosI = novoX(posI, posJ, dir);
-		novoPosJ = novoY(posJ, dir);
-		if (!zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
+		novoPosI = zeus.novoX(posI, posJ, dir);
+		novoPosJ = zeus.novoY(posJ, dir);
+		if (!zeus.dentroDaArena(novoPosI, novoPosJ)) {
 			for (int i = 0; i < lados.size(); i++) {
-				novoPosI = novoX(posI, posJ, lados.get(i));
-				novoPosJ = novoY(posJ, lados.get(i));
-				if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
+				novoPosI = zeus.novoX(posI, posJ, lados.get(i));
+				novoPosJ = zeus.novoY(posJ, lados.get(i));
+				if (zeus.dentroDaArena(novoPosI, novoPosJ)) {
 					hex = mapa.getHexagono(novoPosI, novoPosJ);
 					if (hex.temOcupante()
 							&& (hex.getOcupante() instanceof Base)) {
@@ -333,8 +339,8 @@ public class Arena extends Canvas {
 			}
 		}
 
-		novoPosI = novoX(posI, posJ, dir);
-		novoPosJ = novoY(posJ, dir);
+		novoPosI = zeus.novoX(posI, posJ, dir);
+		novoPosJ = zeus.novoY(posJ, dir);
 		/*
 		 * if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) { hex =
 		 * mapa.getHexagono(novoPosI, novoPosJ); if (hex.temOcupante() &&
@@ -350,7 +356,7 @@ public class Arena extends Canvas {
 		 * 
 		 * } }
 		 */
-		if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
+		if (zeus.dentroDaArena(novoPosI, novoPosJ)) {
 			hex = mapa.getHexagono(novoPosI, novoPosJ);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Cristal)) {
 
@@ -367,9 +373,9 @@ public class Arena extends Canvas {
 				for (int i = 0; i < lados.size(); i++) {
 					dir = lados.remove(rand.nextInt(lados.size()));
 
-					novoPosI = novoX(posI, posJ, dir);
-					novoPosJ = novoY(posJ, dir);
-					if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
+					novoPosI = zeus.novoX(posI, posJ, dir);
+					novoPosJ = zeus.novoY(posJ, dir);
+					if (zeus.dentroDaArena(novoPosI, novoPosJ)) {
 						hex = mapa.getHexagono(novoPosI, novoPosJ);
 
 						if (!hex.temOcupante()) {
@@ -380,47 +386,13 @@ public class Arena extends Canvas {
 			}
 		}
 		/*
-		 * novoPosI = novoX(posI, posJ, dir); novoPosJ = novoY(posJ, dir);
+		 * novoPosI = zeus.novoX(posI, posJ, dir); novoPosJ = zeus.novoY(posJ, dir);
 		 */
 		zeus.regressoBase(posI, posJ, novoPosI, novoPosJ, basePosI, basePosJ,
 				idRobo, dir);
 	}
 
-	private int novoY(int y, String dir) {
-		switch (dir) {
-		case "NE":
-		case "NW":
-			return y - 1;
-		case "E":
-		case "W":
-			return y;
-		case "SW":
-		case "SE":
-			return y + 1;
-		default:
-			System.out.println("Y: Direcao inválida! - " + dir);
-			return -1;
-		}
-	}
-
-	private int novoX(int x, int y, String dir) {
-		switch (dir) {
-		case "SE":
-		case "NE":
-			return (eLinhaPar(y) == true) ? x : x + 1;
-		case "SW":
-		case "NW":
-			return (eLinhaPar(y) == true) ? x - 1 : x;
-		case "E":
-			return x + 1;
-		case "W":
-			return x - 1;
-		default:
-			System.out.println("X: Direcao inválida! - " + dir);
-			return -1;
-		}
-	}
-
+	
 	/*
 	 * private int insereExercito1(int roboAtual) { int numRobosAux = roboAtual;
 	 * // Meramente informativo System.out.println("Exercito 1:"); for (int i =
@@ -460,6 +432,19 @@ public class Arena extends Canvas {
 	 * 
 	 * }
 	 */
+	
+	public void insereDoisRobosInimigos() {
+		Hexagono h = mapa.getHexagono(4, 5);
+		moveis[0].setPosI(4);
+		moveis[0].setPosJ(5);
+		moveis[0].setExercito(0);
+		h.setOcupante(moveis[0]);
+		h = mapa.getHexagono(9, 5);
+		moveis[1].setPosI(9);
+		moveis[1].setPosJ(5);
+		moveis[1].setExercito(1);
+		h.setOcupante(moveis[1]);
+	}
 
 	public void insereUmRobo() {
 		Hexagono h = mapa.getHexagono(4, 5);
