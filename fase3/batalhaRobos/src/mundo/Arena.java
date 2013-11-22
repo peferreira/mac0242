@@ -332,44 +332,28 @@ public class Arena extends Canvas {
 				}
 			}
 		}
-		
+
 		novoPosI = novoX(posI, posJ, dir);
 		novoPosJ = novoY(posJ, dir);
 		/*
+		 * if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) { hex =
+		 * mapa.getHexagono(novoPosI, novoPosJ); if (hex.temOcupante() &&
+		 * (hex.getOcupante() instanceof Cristal)) { if (novoPosJ != basePosJ &&
+		 * novoPosI != basePosI){ if(novoPosI > basePosI){ dir = "W"; }else {
+		 * dir = "E"; } }
+		 * 
+		 * if (novoPosJ == basePosJ){ if(novoPosI > basePosI){ dir = "NE"; }else
+		 * { dir = "NW"; } }
+		 * 
+		 * if (novoPosI == basePosI && novoPosJ < basePosJ){ if (novoPosI == 0){
+		 * dir = "E"; } else if (novoPosI == mapa.getMaxI()){ dir = "W"; } }
+		 * 
+		 * } }
+		 */
 		if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
 			hex = mapa.getHexagono(novoPosI, novoPosJ);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Cristal)) {
-				if (novoPosJ != basePosJ && novoPosI != basePosI){
-					if(novoPosI > basePosI){
-						dir = "W";
-					}else {
-						dir = "E";
-					}
-				}
-				
-				if (novoPosJ == basePosJ){
-					if(novoPosI > basePosI){
-						dir = "NE";
-					}else {
-						dir = "NW";
-					}
-				}
-				
-				if (novoPosI == basePosI && novoPosJ < basePosJ){
-					if (novoPosI == 0){
-						dir = "E";
-					} else if (novoPosI == mapa.getMaxI()){
-						dir = "W";
-					}
-				}
-				
-			}
-		}
-		*/
-		if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
-			hex = mapa.getHexagono(novoPosI, novoPosJ);
-			if (hex.temOcupante() && (hex.getOcupante() instanceof Cristal)) {
-				
+
 				if (basePosI == 0 && basePosJ == 0) {
 					lados.remove("SE");
 				} else if (basePosI == 0 && basePosJ == (mapa.getMaxJ() - 1)) {
@@ -380,21 +364,24 @@ public class Arena extends Canvas {
 					lados.remove("NW");
 				}
 				System.out.println("Size lados: " + lados.size());
-				for (int i = 0; i < lados.size(); i++){
+				for (int i = 0; i < lados.size(); i++) {
 					dir = lados.remove(rand.nextInt(lados.size()));
+
 					novoPosI = novoX(posI, posJ, dir);
 					novoPosJ = novoY(posJ, dir);
-					hex = mapa.getHexagono(novoPosI, novoPosJ);
-					if (!hex.temOcupante()) {
-						break;
+					if (zeus.dentroDaArena(novoPosI, novoPosJ, idRobo)) {
+						hex = mapa.getHexagono(novoPosI, novoPosJ);
+
+						if (!hex.temOcupante()) {
+							break;
+						}
 					}
 				}
 			}
 		}
 		/*
-		novoPosI = novoX(posI, posJ, dir);
-		novoPosJ = novoY(posJ, dir);
-		*/
+		 * novoPosI = novoX(posI, posJ, dir); novoPosJ = novoY(posJ, dir);
+		 */
 		zeus.regressoBase(posI, posJ, novoPosI, novoPosJ, basePosI, basePosJ,
 				idRobo, dir);
 	}
@@ -665,20 +652,20 @@ public class Arena extends Canvas {
 			}
 		}
 	}
-	
+
 	public void removeExercitosPerdedores() {
-		Base vencedor =  baseVencedor();
-		for(int i = 0; i < numBases; i++){
-			if (!vencedor.equals(bases[i])){
+		Base vencedor = baseVencedor();
+		for (int i = 0; i < numBases; i++) {
+			if (!vencedor.equals(bases[i])) {
 				removeExercito(bases[i].getEquipe());
 			}
 		}
 	}
-	
+
 	public Base baseVencedor() {
 		Base vencedor = null;
-		for (int i = 0; i < numBases; i++){
-			if (bases[i].getNumDeCristais() == 7){
+		for (int i = 0; i < numBases; i++) {
+			if (bases[i].getNumDeCristais() == 7) {
 				vencedor = bases[i];
 			}
 		}
