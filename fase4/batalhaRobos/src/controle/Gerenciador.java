@@ -56,8 +56,10 @@ public class Gerenciador {
 	}
 
 	public void executaMV() {
+
 		long startTime = System.nanoTime();
 		arena.draw();
+
 		long endTime = System.nanoTime();
 		long duration = endTime-startTime;
 		System.out.println("tempo de desenho:" + duration );
@@ -87,6 +89,7 @@ public class Gerenciador {
 		System.out.println("tempo de atualizacao da arena" + duration);
 		
 		processaRespostas(arena.getRespostas());
+
 	}
 
 	private void processaRespostas(LinkedList<Resposta> respostas) {
@@ -170,13 +173,12 @@ public class Gerenciador {
 			if (gerenciador.arena.baseVencedor()== null){
 				gerenciador.executaMV();
 			} else {
-				gerenciador.executaMV();
 				gerenciador.arena.removeExercitosPerdedores();
 				gerenciador.executaMV();
 				break;
 			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

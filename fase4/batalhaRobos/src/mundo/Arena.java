@@ -232,7 +232,7 @@ public class Arena extends Canvas {
 		Bala b = new Bala(dir);
 		Robo movel = moveis[idRobo];
 		hex = mapa.getHexagono(movel.getPosI(), movel.getPosJ());
-		hex.adAtaque(b);
+		hex.addNovoAtaque(b);
 	}
 
 	public void scanCristal(int idRobo) {
@@ -629,13 +629,14 @@ public class Arena extends Canvas {
 					if (ocupante instanceof Robo) {
 						if (((Robo) ocupante).getExercito() == idExercito)
 							mapa.getHexagono(i, j).retiraOcupante();
-					} else if (((Base) ocupante).getEquipe() == idExercito) {
+					} else if(((Base) ocupante).getEquipe() == idExercito) {
 						mapa.getHexagono(i, j).retiraOcupante();
 					}
 
 				}
 			}
 		}
+		
 	}
 
 	public void removeExercitosPerdedores() {

@@ -14,7 +14,7 @@ public class Bala {
 
 	public Bala(String dir) {
 		vida = 4;
-		turno = 0;
+		turno = 1;
 		this.dir = dir;
 		this.balaSprite = new Sprite[3];
 		setBalaSprite();
@@ -65,6 +65,7 @@ public class Bala {
 	}
 	
 	public void draw(Graphics g, int x, int y) {
+		System.out.println("Bala turno impressao: " + turno);
 		balaSprite[2 - turno].draw(g, x, y);
 	}
 

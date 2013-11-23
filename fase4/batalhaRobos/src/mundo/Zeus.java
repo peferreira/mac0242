@@ -94,36 +94,40 @@ public class Zeus {
 		 */
 
 	}
-	
-	private void processaTurnoZero(Bala b, int i, int j){
-		int novoI = novoX(i, j,b.getDir());
+
+	private void processaTurnoZero(Bala b, int i, int j) {
+		int novoI = novoX(i, j, b.getDir());
 		int novoJ = novoY(j, b.getDir());
 		Hexagono hex;
-		if (dentroDaArena(novoI, novoJ)){
+		if (dentroDaArena(novoI, novoJ)) {
+			System.out.println("O.O");
 			hex = mapa.getHexagono(novoI, novoJ);
-			hex.adAtaque(b);
-			b.setTurno(2);
+			hex.addNovoAtaque(b);
 			b.decVida();
+			b.setTurno(2);
 		}
-		
+
 	}
-	
-	private void processaBala(int i, int j){
+
+	private void processaBala(int i, int j) {
 		ArrayList<Bala> ataques;
 		Hexagono hex;
 		Bala b;
 		hex = mapa.getHexagono(i, j);
-		if (hex.temAtaques()){
-			System.out.println("i:"+i+"j:"+j);
-			ataques = hex.getAtaques(); 
-			for(int k = 0; k < ataques.size(); k++){
+		if (hex.temAtaques()) {
+			System.out.println("i:" + i + "j:" + j);
+			ataques = hex.getAtaques();
+
+			for (int k = 0; k < ataques.size(); k++) {
 				System.out.println("xXx");
 				b = ataques.get(k);
+				
+				System.out.println("Bala turno:" + b.getTurno());
 				switch (b.getTurno()) {
 				case 0:
 					ataques.remove(k);
 					System.out.println("xXx0");
-					if (b.getVida() > 0){
+					if (b.getVida() > 0) {
 						processaTurnoZero(b, i, j);
 						System.out.println("xXx1");
 
@@ -140,7 +144,7 @@ public class Zeus {
 					break;
 				}
 			}
-		} 
+		}
 	}
 
 	public boolean dentroDaArena(int i, int j) {
@@ -293,6 +297,27 @@ public class Zeus {
 		respostas.add(r);
 	}
 
+	void atualizaBala() {
+		int maxI, maxJ;
+		maxI = mapa.getMaxI();
+		maxJ = mapa.getMaxJ();
+		Hexagono hex;
+		ArrayList<Bala> novosAtaques;
+		ArrayList<Bala> ataques;
+		for (int i = 0; i < maxI; i++) {
+			for (int j = 0; j < maxJ; j++) {
+				hex = mapa.getHexagono(i, j);
+				novosAtaques = hex.getNovosAtaques();
+				ataques = hex.getAtaques();
+				for (int k = 0; k < novosAtaques.size(); k++) {
+					hex.adAtaque(novosAtaques.get(k));
+				}
+				novosAtaques.clear();
+			}
+		}
+
+	}
+
 	public void atualiza() {
 		int maxI, maxJ;
 		maxI = mapa.getMaxI();
@@ -305,8 +330,9 @@ public class Zeus {
 				processaBala(i, j);
 			}
 		}
+		atualizaBala();
 	}
-	
+
 	public int novoY(int y, String dir) {
 		switch (dir) {
 		case "NE":
@@ -341,9 +367,9 @@ public class Zeus {
 			return -1;
 		}
 	}
+
 	private boolean eLinhaPar(int posLinha) {
 		return (posLinha % 2) == 0;
 	}
-
 
 }

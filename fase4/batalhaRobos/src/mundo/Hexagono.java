@@ -25,6 +25,7 @@ public class Hexagono {
 	private ArrayList<Robo> mineradores;
 	private Posicionavel ocupante;
 	private ArrayList<Bala> ataques;
+	private ArrayList<Bala> novosAtaques;
 	private Random rand;
 	private Solo solo;
 	Polygon p = new Polygon();
@@ -46,6 +47,7 @@ public class Hexagono {
 		requerentes = new ArrayList<Robo>();
 		mineradores = new ArrayList<Robo>();
 		ataques = new ArrayList<Bala>();
+		novosAtaques = new ArrayList<Bala>();
 		rand = new Random(Double.doubleToLongBits(Math.random()));
 		// Por motivo de testes
 		solo = new Solo();
@@ -70,7 +72,9 @@ public class Hexagono {
 	public boolean temAtaques(){
 		return !ataques.isEmpty();
 	}
-	
+	public boolean temNovosAtaques(){
+		return !novosAtaques.isEmpty();
+	}
 	public ArrayList<Bala> getAtaques(){
 		return ataques;
 	}
@@ -170,5 +174,12 @@ public class Hexagono {
 		System.out.println("PosJ: " + escolhido.getPosJ());
 
 		return escolhido;
+	}
+
+	public ArrayList<Bala> getNovosAtaques() {
+		return novosAtaques;
+	}
+	public void addNovoAtaque(Bala b){
+		novosAtaques.add(b);
 	}
 }
