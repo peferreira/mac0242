@@ -39,7 +39,7 @@ public class Arena extends Canvas {
 	private int numBases;
 	private Random rand;
 
-	public Arena(int numRobos, int numBases, int[] turnos) {
+	public Arena(int numRobos, int numBases, int[] turnos, LinkedList<Integer> listaDaMorte) {
 		rand = new Random(Double.doubleToLongBits(Math.random()));
 		this.numRobos = numRobos;
 		this.numBases = numBases;
@@ -48,7 +48,7 @@ public class Arena extends Canvas {
 		mapa = new MapaHexagonal(15, 15, 30, 800, 800); // criacao do mapa
 														// hexagonal
 		respostas = new LinkedList<Resposta>();
-		zeus = new Zeus(mapa, respostas, turnos);
+		zeus = new Zeus(mapa, respostas, turnos, listaDaMorte);
 	}
 
 	public void draw() {
@@ -228,7 +228,7 @@ public class Arena extends Canvas {
 
 	public void ataque(int idRobo, String dir) {
 		Hexagono hex;
-		Bala b = new Bala(dir);
+		Bala b = new Bala(dir,idRobo);
 		Robo movel = moveis[idRobo];
 		hex = mapa.getHexagono(movel.getPosI(), movel.getPosJ());
 		hex.addNovoAtaque(b);

@@ -7,7 +7,6 @@ import mundo.elementos.Bala;
 import mundo.elementos.Base;
 import mundo.elementos.Cristal;
 import mundo.elementos.Robo;
-
 import comunicacao.Resposta;
 import comunicacao.RespostaDEP;
 import comunicacao.RespostaHOME;
@@ -22,11 +21,13 @@ public class Zeus {
 	private MapaHexagonal mapa;
 	private LinkedList<Resposta> respostas;
 	private int[] turnos;
+	private LinkedList<Integer> listaDaMorte;
 
-	Zeus(MapaHexagonal mapa, LinkedList<Resposta> respostas, int[] turnos) {
+	Zeus(MapaHexagonal mapa, LinkedList<Resposta> respostas, int[] turnos, LinkedList<Integer> listaDaMorte) {
 		this.mapa = mapa;
 		this.respostas = respostas;
 		this.turnos = turnos;
+		this.listaDaMorte = listaDaMorte;
 	}
 
 	private void processaRequesicoes(int i, int j) {
@@ -106,7 +107,7 @@ public class Zeus {
 		int novoJ = novoY(j, b.getDir());
 		Hexagono hex;
 		if (dentroDaArena(novoI, novoJ)) {
-			System.out.println("O.O");
+			//System.out.println("O.O");
 			hex = mapa.getHexagono(novoI, novoJ);
 			hex.addNovoAtaque(b);
 			b.decVida();
@@ -119,29 +120,37 @@ public class Zeus {
 		ArrayList<Bala> ataques;
 		Hexagono hex;
 		Bala b;
+		Robo vitima;
 		hex = mapa.getHexagono(i, j);
 		if (hex.temAtaques()) {
-			System.out.println("i:" + i + "j:" + j);
+			//System.out.println("i:" + i + "j:" + j);
 			ataques = hex.getAtaques();
 
 			for (int k = 0; k < ataques.size(); k++) {
-				System.out.println("xXx");
+				//System.out.println("xXx");
 				b = ataques.get(k);
 
-				System.out.println("Bala turno:" + b.getTurno());
+				//System.out.println("Bala turno:" + b.getTurno());
 				switch (b.getTurno()) {
 				case 0:
 					ataques.remove(k);
-					System.out.println("xXx0");
+					//System.out.println("xXx0");
 					if (b.getVida() > 0) {
 						processaTurnoZero(b, i, j);
-						System.out.println("xXx1");
+						//System.out.println("xXx1");
 
 					}
-					System.out.println("xXx2");
+					//System.out.println("xXx2");
 					break;
 				case 1:
-					b.decTurno();
+					if (hex.temOcupante() && hex.getOcupante() instanceof Robo && ((Robo)hex.getOcupante()).getID() != b.getAgressor()){
+						vitima = (Robo)hex.getOcupante();
+						vitima.decVidas();
+						//b.zeraVida();
+						hex.getAtaques().remove(b);
+					}else{
+						b.decTurno();
+					}
 					break;
 				case 2:
 					b.decTurno();
@@ -322,12 +331,12 @@ public class Zeus {
 		maxJ = mapa.getMaxJ();
 		Hexagono hex;
 		ArrayList<Bala> novosAtaques;
-		ArrayList<Bala> ataques;
+		// ArrayList<Bala> ataques;
 		for (int i = 0; i < maxI; i++) {
 			for (int j = 0; j < maxJ; j++) {
 				hex = mapa.getHexagono(i, j);
 				novosAtaques = hex.getNovosAtaques();
-				ataques = hex.getAtaques();
+				// ataques = hex.getAtaques();
 				for (int k = 0; k < novosAtaques.size(); k++) {
 					hex.adAtaque(novosAtaques.get(k));
 				}
@@ -335,6 +344,18 @@ public class Zeus {
 			}
 		}
 
+	}
+	
+	void morte(int i, int j) {
+		Hexagono hex = mapa.getHexagono(i, j);
+		Robo vitima;
+		if (hex.temOcupante() && hex.getOcupante() instanceof Robo){
+			vitima = (Robo)hex.getOcupante();
+			if (vitima.getVidas() == 0){
+				hex.retiraOcupante();
+				listaDaMorte.add(vitima.getID());
+			}
+		}
 	}
 
 	public void atualiza() {
@@ -347,6 +368,7 @@ public class Zeus {
 				processaRequesicoes(i, j);
 				processaMineradores(i, j);
 				processaBala(i, j);
+				morte(i,j);
 			}
 		}
 		atualizaBala();

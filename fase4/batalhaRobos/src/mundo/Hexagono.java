@@ -9,7 +9,6 @@ import java.awt.Polygon;
 //import java.awt.Rectangle;
 //import java.awt.TexturePaint;
 import java.awt.image.BufferedImage;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -32,9 +31,9 @@ public class Hexagono {
 	BufferedImage bffimage;
 	BufferedImage bf;
 	int cx, cy;
-	int m,n;
+	int m, n;
 	private Sprite sprite;
-	
+
 	public Hexagono(int x, int y, double r, Sprite imagem) {
 		m = x;
 		n = y;
@@ -53,29 +52,31 @@ public class Hexagono {
 		solo = new Solo();
 
 	}
-	
-	public void draw(Graphics g){
+
+	public void draw(Graphics g) {
 		sprite.draw(g, m, n);
 		if (ocupante != null) {
 			ocupante.draw(g, m, n);
-			
+
 		}
-		for(int i = 0; i < ataques.size(); i++){
+		for (int i = 0; i < ataques.size(); i++) {
 			ataques.get(i).draw(g, m, n);
 		}
 	}
-	
-	public void adAtaque(Bala b){
+
+	public void adAtaque(Bala b) {
 		ataques.add(b);
 	}
-	
-	public boolean temAtaques(){
+
+	public boolean temAtaques() {
 		return !ataques.isEmpty();
 	}
-	public boolean temNovosAtaques(){
+
+	public boolean temNovosAtaques() {
 		return !novosAtaques.isEmpty();
 	}
-	public ArrayList<Bala> getAtaques(){
+
+	public ArrayList<Bala> getAtaques() {
 		return ataques;
 	}
 
@@ -179,7 +180,8 @@ public class Hexagono {
 	public ArrayList<Bala> getNovosAtaques() {
 		return novosAtaques;
 	}
-	public void addNovoAtaque(Bala b){
+
+	public void addNovoAtaque(Bala b) {
 		novosAtaques.add(b);
 	}
 }

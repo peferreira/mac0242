@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import graficos.Sprite;
 
 public class Bala {
+	private int agressor;
 	private int vida;
 	private int turno;
 	private String dir;
@@ -12,9 +13,10 @@ public class Bala {
 	private int posI;
 	private int posJ;
 
-	public Bala(String dir) {
+	public Bala(String dir, int agressor) {
 		vida = 4;
 		turno = 1;
+		this.agressor = agressor;
 		this.dir = dir;
 		this.balaSprite = new Sprite[3];
 		setBalaSprite();
@@ -35,9 +37,17 @@ public class Bala {
 	public void setPosJ(int posJ) {
 		this.posJ = posJ;
 	}
+	
+	public int getAgressor() {
+		return agressor;
+	}
 
 	public int getVida() {
 		return vida;
+	}
+	
+	public void zeraVida() {
+		vida = 0;
 	}
 	
 	public void decVida() {

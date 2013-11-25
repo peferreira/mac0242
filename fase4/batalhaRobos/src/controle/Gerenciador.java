@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import mundo.Arena;
 import mv.MaquinaVirtual;
 import mv.Operacao;
-
 import comunicacao.Resposta;
 
 public class Gerenciador {
@@ -14,13 +13,15 @@ public class Gerenciador {
 	private MaquinaVirtual[] mvs;
 	private Arena arena;
 	private int[] turnos;
+	private LinkedList<Integer> listaDaMorte;
 
 	public Gerenciador(int numMV, int numB) {
 		if ((numMV % 24) == 0 && (numB <= 4 && numB > 0)) {
+			listaDaMorte = new LinkedList<Integer>();
 			numMaquinasVirtuais = numMV;
 			turnos = new int[numMaquinasVirtuais];
 			mvs = new MaquinaVirtual[numMaquinasVirtuais];
-			arena = new Arena(numMV, numB, turnos);
+			arena = new Arena(numMV, numB, turnos, listaDaMorte);
 		} else if ((numMV % 24) == 0) {
 			System.out
 					.println("O número de maquinas virtuais (ou robos) por arena tem que ser multiplo de 24!");
@@ -34,10 +35,11 @@ public class Gerenciador {
 
 	// Para o teste com um robo e um cristal
 	public Gerenciador() {
+		listaDaMorte = new LinkedList<Integer>();
 		numMaquinasVirtuais = 24;
 		turnos = new int[numMaquinasVirtuais];
 		mvs = new MaquinaVirtual[numMaquinasVirtuais];
-		arena = new Arena(24, 4, turnos);
+		arena = new Arena(24, 4, turnos,listaDaMorte);
 	}
 
 	public void inicializa() {
@@ -49,7 +51,7 @@ public class Gerenciador {
 		// Para o teste com um robo e um cristal
 		arena.insereBases();
 		arena.insereExercitos();
-		arena.insereCristais(28);
+		//arena.insereCristais(28);
 		// arena.insereUmaBase();
 		// arena.insereUmRobo();
 		// arena.insereUmCristal();
@@ -66,6 +68,7 @@ public class Gerenciador {
 		System.out.println("tempo de desenho:" + duration);
 
 		// Verifica e atualiza o tempo de espera para realizar uma nova operacao
+		mataMVS();
 		for (int i = 0; i < mvs.length; i++) {
 			if (turnos[i] == 0)
 				mvs[i].passo();
@@ -139,6 +142,12 @@ public class Gerenciador {
 					break;
 				}
 			}
+		}
+	}
+	
+	private void mataMVS(){
+		for (Integer i: listaDaMorte){
+			mvs[i].desativarMV();
 		}
 	}
 

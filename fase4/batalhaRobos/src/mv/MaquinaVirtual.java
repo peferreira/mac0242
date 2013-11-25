@@ -9,7 +9,7 @@ import mv.empilhaveis.*;
 import mv.instrucoes.*;
 
 public class MaquinaVirtual {
-
+	private boolean estado;
 	private Stack<Operacao> pilhaDeOperacoes;
 	private Stack<Empilhavel> pilhaDeDados;
 	private Memoria memoria;
@@ -20,25 +20,29 @@ public class MaquinaVirtual {
 	Random rand;
 
 	public MaquinaVirtual() {
+		estado = true;
 		rand = new Random(Double.doubleToLongBits(Math.random()));
 		pilhaDeOperacoes = new Stack<Operacao>();
 		pilhaDeDados = new Stack<Empilhavel>();
 		memoria = new Memoria();
 		programas = new Programas();
-		programas.testaRoboVsCristalVsBase2();
+		programas.testaRoboVsCristalVsBase();
 		listaDeProgramas = programas.getListaDeProgramas();
 	}
 
 	public void passo() {
-		for (Programa prg : listaDeProgramas) {
-			codigo = prg.getInstrucao();
-			while (!(codigo instanceof END) && !(codigo instanceof Especial)) {
-				codigo.executar(pilhaDeDados, memoria, prg, rand);
+		if (estado) {
+			for (Programa prg : listaDeProgramas) {
 				codigo = prg.getInstrucao();
-			}
-			if (codigo instanceof Especial) {
-				((Especial) codigo).geraOperacao(pilhaDeDados,
-						pilhaDeOperacoes, prg);
+				while (!(codigo instanceof END)
+						&& !(codigo instanceof Especial)) {
+					codigo.executar(pilhaDeDados, memoria, prg, rand);
+					codigo = prg.getInstrucao();
+				}
+				if (codigo instanceof Especial) {
+					((Especial) codigo).geraOperacao(pilhaDeDados,
+							pilhaDeOperacoes, prg);
+				}
 			}
 		}
 	}
@@ -56,5 +60,9 @@ public class MaquinaVirtual {
 
 	public void setResposta(Empilhavel resposta) {
 		pilhaDeDados.push(resposta);
+	}
+	
+	public void desativarMV() {
+		estado = false;
 	}
 }
