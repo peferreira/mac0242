@@ -133,7 +133,6 @@ public class Arena extends Canvas {
 		moveis = fr.getRobos();
 	}
 
-	
 	/*
 	 * public void moveCimaEsq(int idRobo) { int posI, posJ, novoPosI, novoPosJ;
 	 * Hexagono hex; Robo movel = moveis[idRobo]; posI = movel.getPosI(); posJ =
@@ -226,7 +225,7 @@ public class Arena extends Canvas {
 			hex.adRequerente(movel);
 		}
 	}
-	
+
 	public void ataque(int idRobo, String dir) {
 		Hexagono hex;
 		Bala b = new Bala(dir);
@@ -359,7 +358,7 @@ public class Arena extends Canvas {
 		if (zeus.dentroDaArena(novoPosI, novoPosJ)) {
 			hex = mapa.getHexagono(novoPosI, novoPosJ);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Cristal)) {
-
+				lados.remove(dir);
 				if (basePosI == 0 && basePosJ == 0) {
 					lados.remove("SE");
 				} else if (basePosI == 0 && basePosJ == (mapa.getMaxJ() - 1)) {
@@ -386,13 +385,13 @@ public class Arena extends Canvas {
 			}
 		}
 		/*
-		 * novoPosI = zeus.novoX(posI, posJ, dir); novoPosJ = zeus.novoY(posJ, dir);
+		 * novoPosI = zeus.novoX(posI, posJ, dir); novoPosJ = zeus.novoY(posJ,
+		 * dir);
 		 */
 		zeus.regressoBase(posI, posJ, novoPosI, novoPosJ, basePosI, basePosJ,
 				idRobo, dir);
 	}
 
-	
 	/*
 	 * private int insereExercito1(int roboAtual) { int numRobosAux = roboAtual;
 	 * // Meramente informativo System.out.println("Exercito 1:"); for (int i =
@@ -432,7 +431,7 @@ public class Arena extends Canvas {
 	 * 
 	 * }
 	 */
-	
+
 	public void insereDoisRobosInimigos() {
 		Hexagono h = mapa.getHexagono(4, 5);
 		moveis[0].setPosI(4);
@@ -447,26 +446,24 @@ public class Arena extends Canvas {
 	}
 
 	public void insereUmRobo() {
-		Hexagono h = mapa.getHexagono(4, 5);
-		moveis[0].setPosI(4);
-		moveis[0].setPosJ(5);
+		Hexagono h = mapa.getHexagono(3, 1);
+		moveis[0].setPosI(3);
+		moveis[0].setPosJ(1);
 		moveis[0].setExercito(0);
 		h.setOcupante(moveis[0]);
 	}
 
 	public void insereUmCristal() {
-		Hexagono h = mapa.getHexagono(4, 4);
+		Hexagono h = mapa.getHexagono(2, 0);
 		h.setOcupante(new Cristal(1));
-		h = mapa.getHexagono(3, 3);
+		h = mapa.getHexagono(2, 1);
 		h.setOcupante(new Cristal(1));
-		h = mapa.getHexagono(3, 4);
-		h.setOcupante(new Cristal(1));
-		h = mapa.getHexagono(3, 5);
-		h.setOcupante(new Cristal(1));
-		h = mapa.getHexagono(4, 3);
-		h.setOcupante(new Cristal(1));
-		h = mapa.getHexagono(4, 6);
-		h.setOcupante(new Cristal(1));
+		/*
+		 * h = mapa.getHexagono(3, 4); h.setOcupante(new Cristal(1)); h =
+		 * mapa.getHexagono(3, 5); h.setOcupante(new Cristal(1)); h =
+		 * mapa.getHexagono(4, 3); h.setOcupante(new Cristal(1)); h =
+		 * mapa.getHexagono(4, 6); h.setOcupante(new Cristal(1));
+		 */
 	}
 
 	public void insereExercitos() {
@@ -552,8 +549,11 @@ public class Arena extends Canvas {
 		t = 0;
 		cristaisColocados = 0;
 		while (cristaisColocados < n && t < 3 * n) {
-			r = rand.nextInt(mapa.getMaxI());
-			s = rand.nextInt(mapa.getMaxJ());
+			// Posiciona os cristais apenas nos hexágonos que não pertencem às
+			// margens
+			// (resolve problemas de colisões com hexagonos na margens)
+			r = rand.nextInt(mapa.getMaxI() - 2) + 1; // r : 1 - (maxI-2)
+			s = rand.nextInt(mapa.getMaxJ() - 2) + 1; // s : 1 - (maxJ-2)
 			System.out.println("Inserindo Cristal:");
 			System.out.println("i: " + r);
 			System.out.println("j: " + s);
@@ -603,12 +603,10 @@ public class Arena extends Canvas {
 		b = localizacao.get(0);
 		h = mapa.getHexagono(b.getPosI(), b.getPosJ());
 		b.setEquipe(0);
-		b.addCristal();
-		b.addCristal();
-		b.addCristal();
-		b.addCristal();
-		b.addCristal();
-		b.addCristal();
+		/*
+		 * b.addCristal(); b.addCristal(); b.addCristal(); b.addCristal();
+		 * b.addCristal(); b.addCristal();
+		 */
 		bases[0] = b;
 		h.setOcupante(b);
 	}
@@ -629,14 +627,14 @@ public class Arena extends Canvas {
 					if (ocupante instanceof Robo) {
 						if (((Robo) ocupante).getExercito() == idExercito)
 							mapa.getHexagono(i, j).retiraOcupante();
-					} else if(((Base) ocupante).getEquipe() == idExercito) {
+					} else if (((Base) ocupante).getEquipe() == idExercito) {
 						mapa.getHexagono(i, j).retiraOcupante();
 					}
 
 				}
 			}
 		}
-		
+
 	}
 
 	public void removeExercitosPerdedores() {

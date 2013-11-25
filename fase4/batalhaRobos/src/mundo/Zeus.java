@@ -1,15 +1,21 @@
 package mundo;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 
-import comunicacao.*;
 import mundo.elementos.Bala;
 import mundo.elementos.Base;
 import mundo.elementos.Cristal;
 import mundo.elementos.Robo;
+
+import comunicacao.Resposta;
+import comunicacao.RespostaDEP;
+import comunicacao.RespostaHOME;
+import comunicacao.RespostaHOMED;
+import comunicacao.RespostaMOVE;
+import comunicacao.RespostaPICK;
+import comunicacao.RespostaSCAN;
+import comunicacao.RespostaSCAND;
 
 public class Zeus {
 
@@ -121,7 +127,7 @@ public class Zeus {
 			for (int k = 0; k < ataques.size(); k++) {
 				System.out.println("xXx");
 				b = ataques.get(k);
-				
+
 				System.out.println("Bala turno:" + b.getTurno());
 				switch (b.getTurno()) {
 				case 0:
@@ -255,8 +261,9 @@ public class Zeus {
 	public void regressoBase(int i, int j, int ni, int nj, int bi, int bj,
 			int id, String dir) {
 		Hexagono hex;
+		String novoDir;
 		if (dentroDaArena(ni, nj)) {
-			System.out.println("O.O");
+			// System.out.println("O.O");
 			respostas.add(new RespostaHOMED(dir, id));
 			hex = mapa.getHexagono(ni, nj);
 			if (hex.temOcupante() && (hex.getOcupante() instanceof Base)) {
@@ -265,30 +272,42 @@ public class Zeus {
 				return;
 			}
 		} else {
-			System.out.println(":[");
+			// System.out.println(":[");
+			novoDir = "";
 			if (j == bj) {
 				if (i > bi) {
-					respostas.add(new RespostaHOMED("W", id));
+					novoDir = "W";
 				} else {
-					respostas.add(new RespostaHOMED("E", id));
+					novoDir = "E";
 				}
 			}
 			// 1Âº e 2Âº quadrante
 			if (i == bi && j > bj) {
 				if (j % 2 == 0) {
-					respostas.add(new RespostaHOMED("NE", id));
+					novoDir = "NE";
 				} else {
-					respostas.add(new RespostaHOMED("NW", id));
+					novoDir = "NW";
 				}
 			}
 			// 3Âº e 4Âº quadrante
 			if (i == bi && j < bj) {
 				if (j % 2 == 0) {
-					respostas.add(new RespostaHOMED("SE", id));
+					novoDir = "SE";
 				} else {
-					respostas.add(new RespostaHOMED("SW", id));
+					novoDir = "SW";
 				}
 			}
+
+			/*
+			 * // Pode ser usado para resolver colisões com cristais (mas não é
+			 * genérico) // Não recomendo usar hex = mapa.getHexagono(novoX(i,
+			 * j, novoDir), novoY(j, novoDir)); if (hex.temOcupante() &&
+			 * (hex.getOcupante() instanceof Cristal)) { if (j == bj) { if (i >
+			 * bi) { novoDir = "SW"; } else { novoDir = "SE"; } } else { novoDir
+			 * = "E"; if (!dentroDaArena(novoX(i, j, novoDir), novoY(j,
+			 * novoDir))) { novoDir = "W"; } } }
+			 */
+			respostas.add(new RespostaHOMED(novoDir, id));
 		}
 		respostas.add(new RespostaHOME(false, id));
 	}

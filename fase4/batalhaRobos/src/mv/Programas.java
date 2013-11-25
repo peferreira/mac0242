@@ -397,7 +397,7 @@ public class Programas {
 		listaDeProgramas.add(prg1);
 
 	}
-	
+
 	public void testaScanCristal() {
 		Programa prg1 = new Programa();
 
@@ -410,7 +410,7 @@ public class Programas {
 		listaDeProgramas.add(prg1);
 
 	}
-	
+
 	public void testaRandDir() {
 		Programa prg1 = new Programa();
 
@@ -422,7 +422,7 @@ public class Programas {
 		listaDeProgramas.add(prg1);
 
 	}
-	
+
 	public void testaRoboVsCristais() {
 		Programa prg1 = new Programa();
 
@@ -438,6 +438,7 @@ public class Programas {
 		listaDeProgramas.add(prg1);
 
 	}
+
 	public void testaRoboVsHome() {
 		Programa prg1 = new Programa();
 
@@ -450,10 +451,10 @@ public class Programas {
 		prg1.addInstrucao(new MOVE());
 		prg1.addInstrucao(new JMP(new Endereco(4)));
 		prg1.addInstrucao(new END());
-		
+
 		listaDeProgramas.add(prg1);
 	}
-	
+
 	public void testaRoboVsCristalVsBase() {
 		Programa prg1 = new Programa();
 
@@ -463,12 +464,12 @@ public class Programas {
 		prg1.addInstrucao(new MOVE());
 		prg1.addInstrucao(new SCANE());
 		prg1.addInstrucao(new JIF(new Endereco(1)));
-		prg1.addInstrucao(new ATTACK());	
+		prg1.addInstrucao(new ATTACK());
 		prg1.addInstrucao(new JMP(new Endereco(1)));
-		
-		
+
 		listaDeProgramas.add(prg1);
 	}
+
 	public void testaRoboVsCristalVsBase2() {
 		Programa prg1 = new Programa();
 
@@ -478,7 +479,7 @@ public class Programas {
 		prg1.addInstrucao(new MOVE());
 		prg1.addInstrucao(new SCANC());
 		prg1.addInstrucao(new JIF(new Endereco(1)));
-		prg1.addInstrucao(new PICK());	
+		prg1.addInstrucao(new PICK());
 		prg1.addInstrucao(new JIF(new Endereco(1)));
 		prg1.addInstrucao(new HOME());
 		prg1.addInstrucao(new JIT(new Endereco(12)));
@@ -487,33 +488,34 @@ public class Programas {
 		prg1.addInstrucao(new DEP());
 		prg1.addInstrucao(new JIT(new Endereco(1)));
 		prg1.addInstrucao(new END());
-		
+
 		listaDeProgramas.add(prg1);
 	}
-	
+
 	public void testaScanInimigo() {
 		Programa prg1 = new Programa();
-		
+
 		prg1.addInstrucao(new SCANE());
 		prg1.addInstrucao(new JIF(new Endereco(5)));
-		prg1.addInstrucao(new PUSH(new CadeiaDeCaracteres("Encontrei um inimigo!")));
+		prg1.addInstrucao(new PUSH(new CadeiaDeCaracteres(
+				"Encontrei um inimigo!")));
 		prg1.addInstrucao(new PRN());
 		prg1.addInstrucao(new END());
 		prg1.addInstrucao(new SCAND());
 		prg1.addInstrucao(new JIF(new Endereco(5)));
 		prg1.addInstrucao(new MOVE());
 		prg1.addInstrucao(new JMP(new Endereco(0)));
-		
+
 		listaDeProgramas.add(prg1);
 	}
-	
+
 	public void testaTiro() {
 		Programa prg1 = new Programa();
-		
+
 		prg1.addInstrucao(new PUSH(new SEAST()));
 		prg1.addInstrucao(new ATTACK());
 		prg1.addInstrucao(new END());
-		
+
 		listaDeProgramas.add(prg1);
 	}
 

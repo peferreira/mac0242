@@ -25,7 +25,7 @@ public class MaquinaVirtual {
 		pilhaDeDados = new Stack<Empilhavel>();
 		memoria = new Memoria();
 		programas = new Programas();
-		programas.testaRoboVsCristalVsBase();
+		programas.testaRoboVsCristalVsBase2();
 		listaDeProgramas = programas.getListaDeProgramas();
 	}
 
@@ -33,12 +33,12 @@ public class MaquinaVirtual {
 		for (Programa prg : listaDeProgramas) {
 			codigo = prg.getInstrucao();
 			while (!(codigo instanceof END) && !(codigo instanceof Especial)) {
-				codigo.executar(pilhaDeDados, memoria, prg,rand);
+				codigo.executar(pilhaDeDados, memoria, prg, rand);
 				codigo = prg.getInstrucao();
 			}
 			if (codigo instanceof Especial) {
-				((Especial) codigo).geraOperacao(pilhaDeDados, pilhaDeOperacoes,
-						prg);
+				((Especial) codigo).geraOperacao(pilhaDeDados,
+						pilhaDeOperacoes, prg);
 			}
 		}
 	}
@@ -47,7 +47,7 @@ public class MaquinaVirtual {
 		Operacao op;
 		try {
 			op = pilhaDeOperacoes.pop();
-		} catch(EmptyStackException excecao){
+		} catch (EmptyStackException excecao) {
 			System.out.println("Não existem operações para processamento!");
 			op = null;
 		}

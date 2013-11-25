@@ -2,10 +2,11 @@ package controle;
 
 import java.util.LinkedList;
 
-import comunicacao.Resposta;
 import mundo.Arena;
 import mv.MaquinaVirtual;
 import mv.Operacao;
+
+import comunicacao.Resposta;
 
 public class Gerenciador {
 
@@ -49,10 +50,10 @@ public class Gerenciador {
 		arena.insereBases();
 		arena.insereExercitos();
 		arena.insereCristais(28);
-		//arena.insereUmaBase();
-		//arena.insereUmRobo();
-		//arena.insereUmCristal();
-		//arena.insereDoisRobosInimigos();
+		// arena.insereUmaBase();
+		// arena.insereUmRobo();
+		// arena.insereUmCristal();
+		// arena.insereDoisRobosInimigos();
 	}
 
 	public void executaMV() {
@@ -61,9 +62,9 @@ public class Gerenciador {
 		arena.draw();
 
 		long endTime = System.nanoTime();
-		long duration = endTime-startTime;
-		System.out.println("tempo de desenho:" + duration );
-		
+		long duration = endTime - startTime;
+		System.out.println("tempo de desenho:" + duration);
+
 		// Verifica e atualiza o tempo de espera para realizar uma nova operacao
 		for (int i = 0; i < mvs.length; i++) {
 			if (turnos[i] == 0)
@@ -77,17 +78,16 @@ public class Gerenciador {
 		startTime = System.nanoTime();
 		processaOperacoes();
 		endTime = System.nanoTime();
-		duration = endTime-startTime;
+		duration = endTime - startTime;
 		System.out.println("tempo de processa de respostas" + duration);
 		processaOperacoes();
 
-		
 		startTime = System.nanoTime();
 		arena.atualiza();
 		endTime = System.nanoTime();
-		duration = endTime-startTime;
+		duration = endTime - startTime;
 		System.out.println("tempo de atualizacao da arena" + duration);
-		
+
 		processaRespostas(arena.getRespostas());
 
 	}
@@ -113,7 +113,7 @@ public class Gerenciador {
 					break;
 				case 2:
 					// processaAtaque(op)
-					arena.ataque(i,op.getArgumento());
+					arena.ataque(i, op.getArgumento());
 					break;
 				case 3:
 					arena.recolhe(i, op.getArgumento());
@@ -158,19 +158,13 @@ public class Gerenciador {
 														// e um cristal
 		gerenciador.inicializa();
 		/*
-		for (int i = 0; i < 1000000; i++) {
-			gerenciador.executaMV();
-		
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		*/
+		 * for (int i = 0; i < 1000000; i++) { gerenciador.executaMV();
+		 * 
+		 * try { Thread.sleep(1000); } catch (InterruptedException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } }
+		 */
 		while (true) {
-			if (gerenciador.arena.baseVencedor()== null){
+			if (gerenciador.arena.baseVencedor() == null) {
 				gerenciador.executaMV();
 			} else {
 				gerenciador.arena.removeExercitosPerdedores();
@@ -184,7 +178,7 @@ public class Gerenciador {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 }
