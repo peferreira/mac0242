@@ -38,6 +38,7 @@ public class Arena extends Canvas {
 	private int numRobos;
 	private int numBases;
 	private Random rand;
+	private int[] turnos;
 
 	public Arena(int numRobos, int numBases, int[] turnos, LinkedList<Integer> listaDaMorte) {
 		rand = new Random(Double.doubleToLongBits(Math.random()));
@@ -49,6 +50,7 @@ public class Arena extends Canvas {
 														// hexagonal
 		respostas = new LinkedList<Resposta>();
 		zeus = new Zeus(mapa, respostas, turnos, listaDaMorte);
+		this.turnos = turnos;
 	}
 
 	public void draw() {
@@ -230,6 +232,7 @@ public class Arena extends Canvas {
 		Hexagono hex;
 		Bala b = new Bala(dir,idRobo);
 		Robo movel = moveis[idRobo];
+		turnos[idRobo]++; 
 		hex = mapa.getHexagono(movel.getPosI(), movel.getPosJ());
 		hex.addNovoAtaque(b);
 	}
@@ -549,9 +552,9 @@ public class Arena extends Canvas {
 		t = 0;
 		cristaisColocados = 0;
 		while (cristaisColocados < n && t < 3 * n) {
-			// Posiciona os cristais apenas nos hexágonos que não pertencem às
+			// Posiciona os cristais apenas nos hexï¿½gonos que nï¿½o pertencem ï¿½s
 			// margens
-			// (resolve problemas de colisões com hexagonos na margens)
+			// (resolve problemas de colisï¿½es com hexagonos na margens)
 			r = rand.nextInt(mapa.getMaxI() - 2) + 1; // r : 1 - (maxI-2)
 			s = rand.nextInt(mapa.getMaxJ() - 2) + 1; // s : 1 - (maxJ-2)
 			System.out.println("Inserindo Cristal:");

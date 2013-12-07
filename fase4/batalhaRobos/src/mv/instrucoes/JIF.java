@@ -16,7 +16,7 @@ public class JIF extends Instrucao {
 	Empilhavel item = pilhaDeDados.pop();
 	if (item instanceof Falso) {
 		if (argumento instanceof Endereco) {	
-			programa.setPonteiroPrograma(((Endereco)argumento));
+			programa.setJPonteiroPrograma(((Endereco)argumento).getEndereco());
 		} else {
 			System.out.println("JIF: Argumento tem que ser um endereco!");
 			System.exit(1);

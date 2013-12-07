@@ -30,6 +30,10 @@ public class Programa {
 		return ponteiroPrograma;
 	}
 
+	public void setJPonteiroPrograma(int inc) {
+		ponteiroPrograma+= inc;
+	}
+	
 	public void incPonteiroPrograma() {
 		ponteiroPrograma++;
 	}

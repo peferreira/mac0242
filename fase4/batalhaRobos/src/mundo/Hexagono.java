@@ -55,13 +55,14 @@ public class Hexagono {
 
 	public void draw(Graphics g) {
 		sprite.draw(g, m, n);
+		for (int i = 0; i < ataques.size(); i++) {
+			ataques.get(i).draw(g, m, n);
+		}
 		if (ocupante != null) {
 			ocupante.draw(g, m, n);
 
 		}
-		for (int i = 0; i < ataques.size(); i++) {
-			ataques.get(i).draw(g, m, n);
-		}
+		
 	}
 
 	public void adAtaque(Bala b) {
