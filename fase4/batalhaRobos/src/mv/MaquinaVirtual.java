@@ -1,9 +1,14 @@
 package mv;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.EmptyStackException;
 import java.util.Random;
 import java.util.Stack;
 import java.util.LinkedList;
+
+import parser.ParseException;
+import parser.Parser;
 
 import mv.empilhaveis.*;
 import mv.instrucoes.*;
@@ -25,11 +30,37 @@ public class MaquinaVirtual {
 		pilhaDeOperacoes = new Stack<Operacao>();
 		pilhaDeDados = new Stack<Empilhavel>();
 		memoria = new Memoria();
-		programas = new Programas();
+		/*programas = new Programas();
 		programas.testaRoboVsCristalVsBase();
-		listaDeProgramas = programas.getListaDeProgramas();
+		listaDeProgramas = programas.getListaDeProgramas();*/
+		listaDeProgramas = new LinkedList<Programa>();
+		
 	}
 
+	public void defineProg(){
+		Parser parser = null;
+		Instrucao[] prog = null;
+		try
+		{
+				
+			  System.out.println(System.getProperty("user.dir"));
+		      parser = new Parser(new FileInputStream(System.getProperty("user.dir") + "/src/parser/programa.txt"));
+	    }			
+		 catch (FileNotFoundException e)
+		    {}// e um cristal
+		
+		try {
+		prog = parser.Programa();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Programa programa = new Programa();
+		programa.addInstrucoes(prog);
+		listaDeProgramas.add(programa);
+		
+	}
+	
 	public void passo() {
 		if (estado) {
 			for (Programa prg : listaDeProgramas) {

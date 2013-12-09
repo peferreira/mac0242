@@ -1,3 +1,4 @@
-MOVE(NWEST)
-MOVE(EAST)
-PICK(WEST)
+if(SCAND)
+then{
+ATTACK();
+}

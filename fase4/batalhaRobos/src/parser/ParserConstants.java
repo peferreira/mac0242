@@ -11,13 +11,11 @@ public interface ParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int DIR = 7;
+  int NUM = 46;
   /** RegularExpression Id. */
-  int NUM = 39;
+  int ID = 47;
   /** RegularExpression Id. */
-  int ID = 40;
-  /** RegularExpression Id. */
-  int STRING_LITERAL = 41;
+  int STRING_LITERAL = 48;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -31,7 +29,6 @@ public interface ParserConstants {
     "\"\\r\"",
     "<token of kind 5>",
     "<token of kind 6>",
-    "<DIR>",
     "\";\"",
     "\"return\"",
     "\"PRN\"",
@@ -39,14 +36,22 @@ public interface ParserConstants {
     "\"ATTACK\"",
     "\"(\"",
     "\")\"",
-    "\"MOVE\"",
-    "\"PICK\"",
     "\"<=\"",
     "\">=\"",
     "\"!=\"",
     "\"==\"",
     "\"<\"",
     "\">\"",
+    "\"MOVE\"",
+    "\"PICK\"",
+    "\"SCAND\"",
+    "\"SCANE\"",
+    "\"WEST\"",
+    "\"NWEST\"",
+    "\"EAST\"",
+    "\"NEAST\"",
+    "\"SWEST\"",
+    "\"SEAST\"",
     "\"+\"",
     "\"-\"",
     "\"*\"",

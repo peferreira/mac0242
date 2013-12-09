@@ -49,6 +49,7 @@ public class Gerenciador {
 	public void inicializa() {
 		for (int i = 0; i < numMaquinasVirtuais; i++) {
 			mvs[i] = new MaquinaVirtual();
+			mvs[i].defineProg();
 		}
 		arena.inicializa();
 		arena.initGraphics();
@@ -167,22 +168,9 @@ public class Gerenciador {
 
 	public static void main(String[] args) {
 		// Gerenciador gerenciador = new Gerenciador(2);
-		Instrucao[] prog;
-		Gerenciador gerenciador = new Gerenciador(); // Para o teste com um robo
-		Parser parser =  null;
-		/*try
-	    {
-		      parser = new Parser(new FileInputStream(System.getProperty("user.dir") + "/src/parser/programa.txt"));
-	    }			
-		 catch (FileNotFoundException e)
-		    {}// e um cristal
 		
-		try {
-			prog = parser.Programa();
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
+		Gerenciador gerenciador = new Gerenciador(); // Para o teste com um robo
+		
 		
 		gerenciador.inicializa();
 		/*
