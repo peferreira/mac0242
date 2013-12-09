@@ -4,6 +4,8 @@ import java.util.Vector;
 import mv.*;
 import mv.instrucoes.*;
 import mv.empilhaveis.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /** Token Manager. */
 public class ParserTokenManager implements ParserConstants

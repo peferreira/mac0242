@@ -458,6 +458,17 @@ public class Programas {
 	public void testaRoboVsCristalVsBase() {
 		Programa prg1 = new Programa();
 
+		/*prg1.addInstrucao(new JMP(new Endereco(4)));
+		prg1.addInstrucao(new SCAND());
+		prg1.addInstrucao(new JIF(new Endereco(1)));
+		prg1.addInstrucao(new MOVE());
+		prg1.addInstrucao(new SCANE());
+		prg1.addInstrucao(new JIF(new Endereco(1)));
+		prg1.addInstrucao(new ATTACK());
+		prg1.addInstrucao(new JMP(new Endereco(1)));
+
+		listaDeProgramas.add(prg1);*/
+		
 		prg1.addInstrucao(new JMP(new Endereco(4)));
 		prg1.addInstrucao(new SCAND());
 		prg1.addInstrucao(new JIF(new Endereco(1)));
@@ -468,6 +479,9 @@ public class Programas {
 		prg1.addInstrucao(new JMP(new Endereco(1)));
 
 		listaDeProgramas.add(prg1);
+		
+		
+		
 	}
 
 	public void testaRoboVsCristalVsBase2() {

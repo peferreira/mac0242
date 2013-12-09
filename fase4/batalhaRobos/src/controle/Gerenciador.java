@@ -1,12 +1,16 @@
 package controle;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
 import mundo.Arena;
 import mv.MaquinaVirtual;
 import mv.Operacao;
+import mv.instrucoes.Instrucao;
 import comunicacao.Resposta;
-
+import parser.ParseException;
+import parser.Parser;
 public class Gerenciador {
 
 	private int numMaquinasVirtuais;
@@ -163,8 +167,23 @@ public class Gerenciador {
 
 	public static void main(String[] args) {
 		// Gerenciador gerenciador = new Gerenciador(2);
+		Instrucao[] prog;
 		Gerenciador gerenciador = new Gerenciador(); // Para o teste com um robo
-														// e um cristal
+		Parser parser =  null;
+		/*try
+	    {
+		      parser = new Parser(new FileInputStream(System.getProperty("user.dir") + "/src/parser/programa.txt"));
+	    }			
+		 catch (FileNotFoundException e)
+		    {}// e um cristal
+		
+		try {
+			prog = parser.Programa();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+		
 		gerenciador.inicializa();
 		/*
 		 * for (int i = 0; i < 1000000; i++) { gerenciador.executaMV();

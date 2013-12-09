@@ -23,5 +23,6 @@ public class ATTACK extends Especial {
 			System.out.println("ATTACK: Argumento tem que ser do tipo direcao!");
 			System.exit(1);
 		}
+		
 	}
 }
