@@ -4,24 +4,24 @@ import java.util.*;
 
 /** Tabela de simbolos. */
 public class TabSim {
-	HashMap<String, S√≠mbolo> H;
-	int pos = 0;
+        HashMap<String, SÌmbolo> H;
+        int pos = 0;
 
-	TabSim() {
-		H = new HashMap<String, S√≠mbolo>(128);
-	}
+        TabSim() {
+                H = new HashMap<String, SÌmbolo>(128);
+        }
 
-	public void add(String s, S√≠mbolo o) {
-		H.put(s, o);
-		if (o instanceof Vari√°vel)
-			o.SetPos(pos++);
-	}
+        public void add(String s, SÌmbolo o) {
+                H.put(s, o);
+                if (o instanceof Vari·vel)
+                        o.SetPos(pos++);
+        }
 
-	public S√≠mbolo get(String s) {
-		return (S√≠mbolo) H.get(s);
-	}
+        public SÌmbolo get(String s) {
+                return (SÌmbolo) H.get(s);
+        }
 
-	public boolean exists(String s) {
-		return H.containsKey(s);
-	}
+        public boolean exists(String s) {
+                return H.containsKey(s);
+        }
 }

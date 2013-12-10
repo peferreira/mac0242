@@ -3,6 +3,7 @@ package controle;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 import mundo.Arena;
 import mv.MaquinaVirtual;
@@ -11,6 +12,7 @@ import mv.instrucoes.Instrucao;
 import comunicacao.Resposta;
 import parser.ParseException;
 import parser.Parser;
+
 public class Gerenciador {
 
 	private int numMaquinasVirtuais;
@@ -20,15 +22,15 @@ public class Gerenciador {
 	private LinkedList<Integer> listaDaMorte;
 
 	public Gerenciador(int numMV, int numB) {
-		if ((numMV % 24) == 0 && (numB <= 4 && numB > 0)) {
+		if ((numMV <= 24) && (numB <= 4 && numB > 0)) {
 			listaDaMorte = new LinkedList<Integer>();
 			numMaquinasVirtuais = numMV;
 			turnos = new int[numMaquinasVirtuais];
 			mvs = new MaquinaVirtual[numMaquinasVirtuais];
 			arena = new Arena(numMV, numB, turnos, listaDaMorte);
-		} else if ((numMV % 24) == 0) {
+		} else if ((numMV > 24)) {
 			System.out
-					.println("O número de maquinas virtuais (ou robos) por arena tem que ser multiplo de 24!");
+					.println("O número de maquinas virtuais (ou robos) tem que ser menor do que 24");
 			System.exit(1);
 		} else {
 			System.out
@@ -43,20 +45,26 @@ public class Gerenciador {
 		numMaquinasVirtuais = 24;
 		turnos = new int[numMaquinasVirtuais];
 		mvs = new MaquinaVirtual[numMaquinasVirtuais];
-		arena = new Arena(24, 4, turnos,listaDaMorte);
+		arena = new Arena(24, 4, turnos, listaDaMorte);
 	}
 
-	public void inicializa() {
-		for (int i = 0; i < numMaquinasVirtuais; i++) {
-			mvs[i] = new MaquinaVirtual();
-			mvs[i].defineProg();
+	public void inicializa(int numRobos, int numEquipes) {
+		int numDaMv = 0;
+		for (int k = 1; k <= numEquipes; k++) {
+			String s = Integer.toString(k);
+			for (int i = 0; i < numRobos; i++) {
+				
+				mvs[numDaMv] = new MaquinaVirtual(s);
+				mvs[numDaMv].defineProg();
+				numDaMv++;
+			}
 		}
 		arena.inicializa();
 		arena.initGraphics();
 		// Para o teste com um robo e um cristal
 		arena.insereBases();
 		arena.insereExercitos();
-		//arena.insereCristais(28);
+		arena.insereCristais(28);
 		// arena.insereUmaBase();
 		// arena.insereUmRobo();
 		// arena.insereUmCristal();
@@ -149,9 +157,9 @@ public class Gerenciador {
 			}
 		}
 	}
-	
-	private void mataMVS(){
-		for (Integer i: listaDaMorte){
+
+	private void mataMVS() {
+		for (Integer i : listaDaMorte) {
 			mvs[i].desativarMV();
 		}
 	}
@@ -168,11 +176,25 @@ public class Gerenciador {
 
 	public static void main(String[] args) {
 		// Gerenciador gerenciador = new Gerenciador(2);
-		
-		Gerenciador gerenciador = new Gerenciador(); // Para o teste com um robo
-		
-		
-		gerenciador.inicializa();
+		int numEquipes;
+		int numRobos;
+		Scanner s = new Scanner(System.in);
+		System.out.println("Introduza o numero de equipes(max 4):");
+		numEquipes = s.nextInt();
+		System.out.println("Introduza o numero de robos(max 6):");
+		numRobos = s.nextInt();
+
+		System.out
+				.println("Edite os ficheiros no diretorio /src/parser que sejam da forma: programa(numero).txt");
+		System.out
+				.println("Digite qualquer numero e de enter quando os ficheiros estiverem prontos");
+		s.nextInt();
+		s.close();
+
+		Gerenciador gerenciador = new Gerenciador(numRobos * numEquipes,
+				numEquipes); // Para o teste com um robo
+
+		gerenciador.inicializa(numRobos, numEquipes);
 		/*
 		 * for (int i = 0; i < 1000000; i++) { gerenciador.executaMV();
 		 * 

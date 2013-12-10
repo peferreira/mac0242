@@ -11,11 +11,11 @@ public interface ParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int NUM = 46;
+  int NUM = 48;
   /** RegularExpression Id. */
-  int ID = 47;
+  int ID = 49;
   /** RegularExpression Id. */
-  int STRING_LITERAL = 48;
+  int STRING_LITERAL = 50;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -46,6 +46,8 @@ public interface ParserConstants {
     "\"PICK\"",
     "\"SCAND\"",
     "\"SCANE\"",
+    "\"SCANC\"",
+    "\"HOME\"",
     "\"WEST\"",
     "\"NWEST\"",
     "\"EAST\"",

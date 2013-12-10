@@ -7,12 +7,6 @@ if(D)
 then
 {
 	MOVE(D);
-	E = SCANE;
-    if(E)
-	then
-	{
-		ATTACK(E);
-	}
 	C = SCANC;
 	if(C)
 	then

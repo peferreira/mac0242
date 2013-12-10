@@ -9,7 +9,6 @@ import java.util.LinkedList;
 
 import parser.ParseException;
 import parser.Parser;
-
 import mv.empilhaveis.*;
 import mv.instrucoes.*;
 
@@ -23,8 +22,8 @@ public class MaquinaVirtual {
 	LinkedList<Programa> listaDeProgramas;
 	boolean ultimaResposta;
 	Random rand;
-
-	public MaquinaVirtual() {
+	String nameProg;
+	public MaquinaVirtual(String s) {
 		estado = true;
 		rand = new Random(Double.doubleToLongBits(Math.random()));
 		pilhaDeOperacoes = new Stack<Operacao>();
@@ -34,7 +33,7 @@ public class MaquinaVirtual {
 		programas.testaRoboVsCristalVsBase();
 		listaDeProgramas = programas.getListaDeProgramas();*/
 		listaDeProgramas = new LinkedList<Programa>();
-		
+		this.nameProg = s;
 	}
 
 	public void defineProg(){
@@ -44,7 +43,7 @@ public class MaquinaVirtual {
 		{
 				
 			  System.out.println(System.getProperty("user.dir"));
-		      parser = new Parser(new FileInputStream(System.getProperty("user.dir") + "/src/parser/programa.txt"));
+		      parser = new Parser(new FileInputStream(System.getProperty("user.dir") + "/src/parser/programa"+nameProg+".txt"));
 	    }			
 		 catch (FileNotFoundException e)
 		    {}// e um cristal

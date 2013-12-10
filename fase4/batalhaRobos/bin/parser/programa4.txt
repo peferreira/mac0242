@@ -13,11 +13,7 @@ then
 	{
 		ATTACK(E);
 	}
-	C = SCANC;
-	if(C)
-	then
-	{
-		PICK(C);	
-	}
+	
+	
 }
 }
