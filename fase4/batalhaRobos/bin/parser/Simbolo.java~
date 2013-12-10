@@ -4,11 +4,11 @@ import java.util.Vector;
 
 import mv.empilhaveis.Endereco;
 
-// Símbolo: pode ser nome de variável ou função
-class Símbolo {
+// Simbolo: pode ser nome de variavel ou funcao
+class Simbolo {
         Endereco pos; // posição na memória: endereço
 
-        Símbolo(int n) {
+        Simbolo(int n) {
                 pos = new Endereco(n);
         }
 
@@ -18,7 +18,7 @@ class Símbolo {
 }
 
 // Função
-class Função extends Símbolo {
+class Função extends Simbolo {
         Vector<String> args = new Vector<String>(); // lista dos argumentos
         TabSim Vars = new TabSim(); // nomes dos argumentos
 
@@ -28,7 +28,7 @@ class Função extends Símbolo {
 
         // inclui um argumento
         void addarg(String a) {
-                Variável v = new Variável();
+                Variavel v = new Variavel();
                 args.add(a);
                 Vars.add(a, v);
         }
@@ -38,9 +38,9 @@ class Função extends Símbolo {
                 return args.get(n);
         }
 
-        // retorna a variável de nome a
-        Variável get(String a) {
-                return (Variável) Vars.get(a);
+        // retorna a Variavel de nome a
+        Variavel get(String a) {
+                return (Variavel) Vars.get(a);
         }
 
         // verifica a existência
@@ -49,11 +49,11 @@ class Função extends Símbolo {
         }
 }
 
-// Variável
-class Variável extends Símbolo {
+// Variavel
+class Variavel extends Simbolo {
         static int nvars = 0; // número de variáveis globais
 
-        Variável() {
+        Variavel() {
                 super(nvars++);
         }
 }

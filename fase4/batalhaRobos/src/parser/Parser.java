@@ -11,7 +11,7 @@ public class Parser implements ParserConstants {
   Instrucao [] Prog; // programa  TabSim Nomes = new TabSim(); // nomes globais
   int tam = 0;
 
-// Programa é o ponto de partida  final public Instrucao [ ] Programa() throws ParseException {
+// Programa ï¿½ o ponto de partida  final public Instrucao [ ] Programa() throws ParseException {
   Vector < Instrucao > p = new Vector < Instrucao > (0); // para retornar  Vector < Instrucao > x = new Vector < Instrucao > (0); // trecho compilado  // por outras regras  Instrucao [ ] a = new Instrucao [ 0 ];
     label_1:
     while (true) {
@@ -35,14 +35,14 @@ public class Parser implements ParserConstants {
   Vector < Instrucao > x = new Vector < Instrucao > (0);
   Token t;
     if (jj_2_2(2)) {
-      x = Expressão();
+      x = Expressao();
       jj_consume_token(7);
       p.addAll(x);
     } else if (jj_2_3(2)) {
       x = Condicional();
       p.addAll(x);
     } else if (jj_2_4(2)) {
-      x = Laço();
+      x = Laco();
       p.addAll(x);
     } else if (jj_2_5(2)) {
       jj_consume_token(8);
@@ -62,7 +62,7 @@ public class Parser implements ParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-// No nível mais baixo calcula as expressões lógicas e realiza as opérações especiais  final public Vector < Instrucao > Expressão() throws ParseException {
+// No nï¿½vel mais baixo calcula as expressï¿½es lï¿½gicas e realiza as opï¿½raï¿½ï¿½es especiais  final public Vector < Instrucao > Expressao() throws ParseException {
   Vector < Instrucao > p = new Vector < Instrucao > (0);
   Vector < Instrucao > x = new Vector < Instrucao > (0);
     if (jj_2_15(2)) {
@@ -114,7 +114,7 @@ public class Parser implements ParserConstants {
     } else if (jj_2_16(2)) {
       jj_consume_token(16);
       jj_consume_token(17);
-      x = Expressão();
+      x = Expressao();
       jj_consume_token(18);
     System.out.println("ataque");
     p.addAll(x);
@@ -124,7 +124,7 @@ public class Parser implements ParserConstants {
       jj_consume_token(19);
       jj_consume_token(17);
       if (jj_2_14(2)) {
-        x = Expressão();
+        x = Expressao();
       } else {
         ;
       }
@@ -136,7 +136,7 @@ public class Parser implements ParserConstants {
     } else if (jj_2_18(2)) {
       jj_consume_token(20);
       jj_consume_token(17);
-      x = Expressão();
+      x = Expressao();
       jj_consume_token(18);
     System.out.println("pick");
     p.addAll(x);
@@ -221,7 +221,7 @@ public class Parser implements ParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-// Artiméticas  final public Vector < Instrucao > Arit() throws ParseException {
+// Artimï¿½ticas  final public Vector < Instrucao > Arit() throws ParseException {
   Vector < Instrucao > p = new Vector < Instrucao > (0);
   Vector < Instrucao > x = new Vector < Instrucao > (0);
     x = Termo();
@@ -287,40 +287,38 @@ public class Parser implements ParserConstants {
   Vector < Instrucao > p = new Vector < Instrucao > (0);
   Vector < Instrucao > x = new Vector < Instrucao > (0);
   Token t;
-  Símbolo v;
+  Simbolo v;
     if (jj_2_38(2)) {
       t = jj_consume_token(ID);
       jj_consume_token(38);
-      x = Expressão();
-    System.out.println("print1.0");
+      x = Expressao();
     p.addAll(x);
     if (Nomes.exists(t.image))
     { // existe como global?
-      System.out.println("print1");
       v = Nomes.get(t.image);
-      if (v instanceof Variável) p.add(new STO(v.pos));
-      else p.add(new PRN()); // colocar erro de compilação aqui
+      if (v instanceof Variavel) p.add(new STO(v.pos));
+      else p.add(new PRN()); // colocar erro de compilaï¿½ï¿½o aqui
     }
     else
     { // cria local ou global, de acordo
-      v = new Variável();
+      v = new Variavel();
       Nomes.add(t.image, v);
       p.add(new STO(v.pos));
     }
     {if (true) return p;}
     } else if (jj_2_39(2)) {
       t = jj_consume_token(ID);
-    // variável, tratamento similar ao de cima
+    // Variavel, tratamento similar ao de cima
     if (Nomes.exists(t.image))
     {
       v = Nomes.get(t.image);
-      if (v instanceof Variável) p.add(new RCL(v.pos));
-      else p.add(new PRN()); // colocar erro de compilação aqui
+      if (v instanceof Variavel) p.add(new RCL(v.pos));
+      else p.add(new PRN()); // colocar erro de compilaï¿½ï¿½o aqui
     }
     else
     {
-      // Variável não inicializada
-      v = new Variável();
+      // Variavel nï¿½o inicializada
+      v = new Variavel();
       Nomes.add(t.image, v);
       p.add(new STO(v.pos));
     }
@@ -331,7 +329,7 @@ public class Parser implements ParserConstants {
     {if (true) return p;}
     } else if (jj_2_41(2)) {
       jj_consume_token(17);
-      x = Expressão();
+      x = Expressao();
       jj_consume_token(18);
     p.addAll(x);
     {if (true) return p;}
@@ -355,7 +353,7 @@ public class Parser implements ParserConstants {
       throw new ParseException();
     }
     jj_consume_token(17);
-    x = Expressão();
+    x = Expressao();
     p.addAll(x);
     jj_consume_token(18);
     if (jj_2_44(2)) {
@@ -394,7 +392,7 @@ public class Parser implements ParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public Vector < Instrucao > Laço() throws ParseException {
+  final public Vector < Instrucao > Laco() throws ParseException {
   Vector < Instrucao > p = new Vector < Instrucao > (0);
   Vector < Instrucao > x = new Vector < Instrucao > (0);
   int exp, delta;
@@ -407,7 +405,7 @@ public class Parser implements ParserConstants {
       throw new ParseException();
     }
     jj_consume_token(17);
-    x = Expressão();
+    x = Expressao();
     exp = x.size();
     p.addAll(x);
     System.out.println("expS:" + exp);
@@ -451,7 +449,7 @@ public class Parser implements ParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-// Lista para impressão  final public Vector < Instrucao > ListPrint() throws ParseException {
+// Lista para impressï¿½o  final public Vector < Instrucao > ListPrint() throws ParseException {
   Vector < Instrucao > p = new Vector < Instrucao > (0);
   Vector < Instrucao > x = new Vector < Instrucao > (0);
     x = ItemPrint();
@@ -471,12 +469,12 @@ public class Parser implements ParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-// Um ítem a ser impresso  final public Vector < Instrucao > ItemPrint() throws ParseException {
+// Um ï¿½tem a ser impresso  final public Vector < Instrucao > ItemPrint() throws ParseException {
   Vector < Instrucao > p = new Vector < Instrucao > (0);
   Vector < Instrucao > x = new Vector < Instrucao > (0);
   Token t;
     if (jj_2_55(2)) {
-      x = Expressão();
+      x = Expressao();
       p.addAll(x);
       p.add(new PRN());
     } else if (jj_2_56(2)) {
@@ -958,17 +956,6 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3_53() {
-    if (jj_3R_7()) return true;
-    return false;
-  }
-
-  private boolean jj_3_41() {
-    if (jj_scan_token(17)) return true;
-    if (jj_3R_8()) return true;
-    return false;
-  }
-
   private boolean jj_3_14() {
     if (jj_3R_8()) return true;
     return false;
@@ -984,19 +971,30 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3R_15() {
-    if (jj_scan_token(49)) return true;
+  private boolean jj_3_53() {
+    if (jj_3R_7()) return true;
     return false;
   }
 
-  private boolean jj_3_40() {
-    if (jj_scan_token(NUM)) return true;
+  private boolean jj_3_41() {
+    if (jj_scan_token(17)) return true;
+    if (jj_3R_8()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_15() {
+    if (jj_scan_token(49)) return true;
     return false;
   }
 
   private boolean jj_3_18() {
     if (jj_scan_token(20)) return true;
     if (jj_scan_token(17)) return true;
+    return false;
+  }
+
+  private boolean jj_3_40() {
+    if (jj_scan_token(NUM)) return true;
     return false;
   }
 
@@ -1069,13 +1067,13 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3_49() {
-    if (jj_scan_token(45)) return true;
+  private boolean jj_3_27() {
+    if (jj_scan_token(29)) return true;
     return false;
   }
 
-  private boolean jj_3_27() {
-    if (jj_scan_token(29)) return true;
+  private boolean jj_3_49() {
+    if (jj_scan_token(45)) return true;
     return false;
   }
 
@@ -1134,14 +1132,14 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3_47() {
-    if (jj_scan_token(44)) return true;
-    return false;
-  }
-
   private boolean jj_3_9() {
     if (jj_scan_token(11)) return true;
     if (jj_3R_12()) return true;
+    return false;
+  }
+
+  private boolean jj_3_47() {
+    if (jj_scan_token(44)) return true;
     return false;
   }
 
@@ -1188,6 +1186,11 @@ public class Parser implements ParserConstants {
     return false;
   }
 
+  private boolean jj_3_23() {
+    if (jj_scan_token(25)) return true;
+    return false;
+  }
+
   private boolean jj_3R_16() {
     Token xsp;
     xsp = jj_scanpos;
@@ -1200,22 +1203,6 @@ public class Parser implements ParserConstants {
 
   private boolean jj_3_46() {
     if (jj_scan_token(43)) return true;
-    return false;
-  }
-
-  private boolean jj_3_48() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_46()) {
-    jj_scanpos = xsp;
-    if (jj_3_47()) return true;
-    }
-    if (jj_3R_15()) return true;
-    return false;
-  }
-
-  private boolean jj_3_23() {
-    if (jj_scan_token(25)) return true;
     return false;
   }
 
@@ -1280,6 +1267,17 @@ public class Parser implements ParserConstants {
     return false;
   }
 
+  private boolean jj_3_48() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_46()) {
+    jj_scanpos = xsp;
+    if (jj_3_47()) return true;
+    }
+    if (jj_3R_15()) return true;
+    return false;
+  }
+
   private boolean jj_3_15() {
     if (jj_3R_12()) return true;
     Token xsp;
@@ -1311,16 +1309,6 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3_45() {
-    if (jj_scan_token(42)) return true;
-    return false;
-  }
-
-  private boolean jj_3_44() {
-    if (jj_scan_token(41)) return true;
-    return false;
-  }
-
   private boolean jj_3R_13() {
     if (jj_3R_14()) return true;
     Token xsp;
@@ -1328,6 +1316,16 @@ public class Parser implements ParserConstants {
       xsp = jj_scanpos;
       if (jj_3_35()) { jj_scanpos = xsp; break; }
     }
+    return false;
+  }
+
+  private boolean jj_3_45() {
+    if (jj_scan_token(42)) return true;
+    return false;
+  }
+
+  private boolean jj_3_44() {
+    if (jj_scan_token(41)) return true;
     return false;
   }
 
@@ -1358,14 +1356,14 @@ public class Parser implements ParserConstants {
     return false;
   }
 
-  private boolean jj_3R_11() {
-    if (jj_3R_16()) return true;
-    return false;
-  }
-
   private boolean jj_3_5() {
     if (jj_scan_token(8)) return true;
     if (jj_3R_11()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_11() {
+    if (jj_3R_16()) return true;
     return false;
   }
 
