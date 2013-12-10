@@ -3,14 +3,16 @@ package mv;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.EmptyStackException;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
-import java.util.LinkedList;
 
+import mv.empilhaveis.Empilhavel;
+import mv.instrucoes.END;
+import mv.instrucoes.Especial;
+import mv.instrucoes.Instrucao;
 import parser.ParseException;
 import parser.Parser;
-import mv.empilhaveis.*;
-import mv.instrucoes.*;
 
 public class MaquinaVirtual {
 	private boolean estado;

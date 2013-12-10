@@ -1,17 +1,13 @@
 package controle;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 import mundo.Arena;
 import mv.MaquinaVirtual;
 import mv.Operacao;
-import mv.instrucoes.Instrucao;
+
 import comunicacao.Resposta;
-import parser.ParseException;
-import parser.Parser;
 
 public class Gerenciador {
 
@@ -189,7 +185,7 @@ public class Gerenciador {
 		System.out
 				.println("Exemplo: Se o numero de equipes for 2 entao os ficheiros a serem editados sao programa1.txt e programa2.txt.");
 		System.out
-				.println("OBS: O numero no nome dos programas é o identificador de cada player!");
+				.println("OBS: O numero no nome dos programas ï¿½ o identificador de cada player!");
 		System.out
 				.println("Digite qualquer inteiro e de enter quando os ficheiros estiverem prontos!");
 		s.nextInt();
