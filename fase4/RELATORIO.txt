@@ -1,32 +1,41 @@
-Pedro Ferreira Alexandre    nUsp: 7577448
-António Martins Miranda     nUsp: 7644342
-Gilmar Cintra
+Laboratório de Programação 2 - Fase 4
 
+Gilmar Cintra da Silva: 7289482
+António Martins Miranda: 7644342
+Pedro Ferreira Alexandre: 7577448
 
+Principais implementações:
+
+-> Jogo implementado na totalidade;
+-> JavaCC quase completo;
+
+Por implementar no javacc:
+
+-> Funções e associados (ex: return);
+
+Requisitos:
+
+-> Importar o ficheiro batalhaRobos no eclipse;
+-> Java 7.
+
+Algumas observações:
 
 O nosso jogo foi feito utilizando a plataforma eclipse, portanto o projeto pode ser
 facilmente importado para o eclipse. A Classe main está no arquivo Gerenciador.java
-e o arquivo do java cc está no diretorio parser, na classe Parser.jj.
+e o arquivo do javacc está no diretorio parser, na classe Parser.jj.
 
 Tivemos alguns problemas com tempo, e infelizmente para essa fase, nosso parser ficou incompleto.
 
-WHILE: funciona mas pode dar erros para alguns casos.
-FUNÇÕES: não foram implementadas.
-
-de resto, é possível criar alguns códigos.
+FUNÇÕES não foram implementadas mas é possível criar códigos.
 
 Os programas são constrúidos através de códigos que estão na pasta parser no diretorio do
 jogo. (por exemplo: programa1.txt será para o jogador 1, programa2.txt será para o jogador 2).
 
-Pode-se notar que na fase 3 conseguiamos implementar
-o retorno a base de um robo, mas não foi possível manter essa função implementada para 
-a fase 4, pois o WHILE não está completo. Dessa forma, o exemplo utilizado para o jogo nessa fase 4 
-os Robôs não regressam as suas bases.
-
-para compilar nosso jogo deve ser utilizado versão do java7(por causa de switchs com strings).
+Para compilar nosso jogo deve ser utilizado versão do java7(por causa de switchs com strings).
 
 No inicio teremos um menu que o jogador deve pelo terminal, iterativamente, decidir quantos jogadores
 e quantas equipes vão participar.
+No final no jogo é imprimido pelo terminal o vencedor da batalha.
 
 
 

@@ -34,7 +34,7 @@ public class Hexagono {
 	int m, n;
 	private Sprite sprite;
 
-	public Hexagono(int x, int y, double r, Sprite imagem) {
+	public Hexagono(int x, int y, double r, Solo solo, Sprite imagem) {
 		m = x;
 		n = y;
 		cx = x;
@@ -49,7 +49,7 @@ public class Hexagono {
 		novosAtaques = new ArrayList<Bala>();
 		rand = new Random(Double.doubleToLongBits(Math.random()));
 		// Por motivo de testes
-		solo = new Solo();
+		this.solo = solo;
 
 	}
 

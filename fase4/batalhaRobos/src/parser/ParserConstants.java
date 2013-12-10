@@ -11,11 +11,11 @@ public interface ParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int NUM = 48;
+  int NUM = 52;
   /** RegularExpression Id. */
-  int ID = 49;
+  int ID = 53;
   /** RegularExpression Id. */
-  int STRING_LITERAL = 50;
+  int STRING_LITERAL = 54;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -30,20 +30,20 @@ public interface ParserConstants {
     "<token of kind 5>",
     "<token of kind 6>",
     "\";\"",
-    "\"return\"",
-    "\"PRN\"",
+    "\"print\"",
     "\"println\"",
-    "\"ATTACK\"",
-    "\"(\"",
-    "\")\"",
     "\"<=\"",
     "\">=\"",
     "\"!=\"",
     "\"==\"",
     "\"<\"",
     "\">\"",
+    "\"ATTACK\"",
+    "\"(\"",
+    "\")\"",
     "\"MOVE\"",
     "\"PICK\"",
+    "\"DEP\"",
     "\"SCAND\"",
     "\"SCANE\"",
     "\"SCANC\"",
@@ -54,6 +54,8 @@ public interface ParserConstants {
     "\"NEAST\"",
     "\"SWEST\"",
     "\"SEAST\"",
+    "\"true\"",
+    "\"false\"",
     "\"+\"",
     "\"-\"",
     "\"*\"",
@@ -63,6 +65,8 @@ public interface ParserConstants {
     "\"se\"",
     "\"then\"",
     "\"ent\\u00e3o\"",
+    "\"else\"",
+    "\"sen\\u00e3o\"",
     "\"while\"",
     "\"enquanto\"",
     "\"do\"",

@@ -1,23 +1,41 @@
-while(1 == 1)
+while(true)
 do
 {
-D = SCAND;
-
-if(D)
-then
-{
-	MOVE(D);
+	C = SCANC;
+	if(C)
+	then
+	{
+		if (PICK(C))
+		then
+		{
+			B = true;
+			while(B)
+			do
+			{
+				H = HOME;
+				if (H)
+				then
+				{
+					B = false;
+				}
+				else
+				{
+					MOVE();
+				}
+			}
+			DEP();
+		}	
+	}
+	D = SCAND;
+	if(D)
+	then
+	{
+		MOVE(D);
+	}
 	E = SCANE;
     if(E)
 	then
 	{
 		ATTACK(E);
 	}
-	C = SCANC;
-	if(C)
-	then
-	{
-		PICK(C);	
-	}
-}
 }

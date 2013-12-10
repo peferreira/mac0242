@@ -44,6 +44,7 @@ public class Programa {
 	}
 	public void addInstrucoes(Instrucao[] vetorPrograma) {
 		this.vetorPrograma = vetorPrograma;
+		numeroDeInstrucoes = vetorPrograma.length;
 	}
 	public Instrucao getInstrucao() {
 		return vetorPrograma[ponteiroPrograma];

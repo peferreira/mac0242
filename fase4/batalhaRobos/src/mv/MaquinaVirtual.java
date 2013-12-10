@@ -57,7 +57,7 @@ public class MaquinaVirtual {
 		Programa programa = new Programa();
 		programa.addInstrucoes(prog);
 		listaDeProgramas.add(programa);
-		
+		System.out.println("LProgSZ: " + listaDeProgramas.get(0).getNumeroDeInstrucoes());
 	}
 	
 	public void passo() {

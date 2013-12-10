@@ -53,7 +53,7 @@ public class Gerenciador {
 		for (int k = 1; k <= numEquipes; k++) {
 			String s = Integer.toString(k);
 			for (int i = 0; i < numRobos; i++) {
-				
+
 				mvs[numDaMv] = new MaquinaVirtual(s);
 				mvs[numDaMv].defineProg();
 				numDaMv++;
@@ -185,9 +185,13 @@ public class Gerenciador {
 		numRobos = s.nextInt();
 
 		System.out
-				.println("Edite os ficheiros no diretorio /src/parser que sejam da forma: programa(numero).txt");
+				.println("Edite os ficheiros no diretorio /src/parser que sejam da forma: programa(numero).txt .");
 		System.out
-				.println("Digite qualquer numero e de enter quando os ficheiros estiverem prontos");
+				.println("Exemplo: Se o numero de equipes for 2 entao os ficheiros a serem editados sao programa1.txt e programa2.txt.");
+		System.out
+				.println("OBS: O numero no nome dos programas é o identificador de cada player!");
+		System.out
+				.println("Digite qualquer inteiro e de enter quando os ficheiros estiverem prontos!");
 		s.nextInt();
 		s.close();
 
@@ -207,6 +211,8 @@ public class Gerenciador {
 			} else {
 				gerenciador.arena.removeExercitosPerdedores();
 				gerenciador.executaMV();
+				System.out.println("O VENCEDOR E A EQUIPE "
+						+ (gerenciador.arena.baseVencedor().getEquipe() + 1) + "!");
 				break;
 			}
 			try {

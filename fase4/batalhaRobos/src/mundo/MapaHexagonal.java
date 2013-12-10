@@ -5,7 +5,15 @@ import graficos.Sprite;
 import java.awt.Graphics;
 //import java.awt.image.BufferedImage;
 
+
+
+
+
+import mundo.elementos.Grama;
+import mundo.elementos.Pantano;
 import mundo.elementos.Robo;
+import mundo.elementos.Solo;
+import mundo.elementos.Terra;
 
 //import javax.imageio.ImageIO;
 
@@ -17,18 +25,31 @@ public class MapaHexagonal {
 	private int[][] Terreno;
 	int Larg, Alt, Dx, Dy; // largura do terreno, altura do terreno, incremento
 	// em x e incremento em y
-	Sprite grama, terra, agua;
+	Sprite grama, terra, pantano;
 
 	public MapaHexagonal(int maxJ, int maxI, int L, int W, int H) {
 		this.maxJ = maxJ;
 		this.maxI = maxI;
 		int DELTA = 0;
+		double p;
+		int t;
+		Solo soloAux;
 		mapaHexagonal = new Hexagono[this.maxJ][this.maxI];
 
 		this.Terreno = new int[maxJ][maxI];
-		for (int j = 0; j < maxJ; j++)
-			for (int i = 0; i < maxI; i++)
-				this.Terreno[j][i] = 2;
+		for (int j = 0; j < maxJ; j++) {
+			for (int i = 0; i < maxI; i++) {
+				p = Math.random();
+				if (p < 0.5) {
+					t = 2;
+				} else if (p >= 0.5 && p < 0.9) {
+					t = 1;
+				} else {
+					t = 0;
+				}
+				this.Terreno[j][i] = t;
+			}
+		}
 		/*
 		 * Dx = (int) (2 * L * Math.sin(2 * Math.PI / 6)); // incremento em x
 		 * para // desenhar os hexágonos Dy = 3 * L / 2; // idem para y Larg =
@@ -38,10 +59,10 @@ public class MapaHexagonal {
 		// cada try..catch que segue carregará uma textura, ou levantará uma
 		// exceção que encerrará a aplicação com erro
 
-		agua = graficos.SpriteStore.get().getSprite("graficos/hexagua.png");
+		pantano = graficos.SpriteStore.get().getSprite("graficos/hexagua.png");
 		grama = graficos.SpriteStore.get().getSprite("graficos/hexgrama.png");
 		terra = graficos.SpriteStore.get().getSprite("graficos/hexterra.png");
-		Sprite[] imagem = { agua, terra, grama }; // array de texturas
+		Sprite[] imagem = { pantano, terra, grama }; // array de texturas
 
 		// (valores de
 		// enumeração: 0, 1,
@@ -57,7 +78,21 @@ public class MapaHexagonal {
 		 */
 		for (int j = 0; j < maxJ; j++) {
 			for (int i = 0; i < maxI; i++) {
-				mapaHexagonal[j][i] = new Hexagono(DELTA + i * 52, j * 45, L,
+				switch(Terreno[j][i]){
+				case 0:
+					soloAux = new Pantano();
+					break;
+				case 1:
+					soloAux = new Terra();
+					break;
+				case 2:
+					soloAux = new Grama();
+					break;
+				default:
+					soloAux = null;
+					break;
+				}
+				mapaHexagonal[j][i] = new Hexagono(DELTA + i * 52, j * 45, L, soloAux,
 						imagem[Terreno[j][i]]);
 
 			}

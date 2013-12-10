@@ -1,7 +1,5 @@
 package mundo.elementos;
 
-public class Solo {
-	public int custo() {
-		return 5;
-	}
+public interface Solo {
+	abstract int custo();
 }

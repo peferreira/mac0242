@@ -1,18 +1,51 @@
-while(1 == 1)
+PE = 10;
+while(true)
 do
 {
-D = SCAND;
-
-if(D)
-then
-{
-	
-	E = SCANE;
-    if(E)
+	C = SCANC;
+	if(C)
 	then
 	{
-		ATTACK(E);
+		if (PICK(C))
+		then
+		{
+			B = true;
+			while(B)
+			do
+			{
+				H = HOME;
+				if (H)
+				then
+				{
+					B = false;
+				}
+				else
+				{
+					MOVE();
+				}
+			}
+			DEP();
+		}	
 	}
-	
-}
+	D = SCAND;
+	if(D)
+	then
+	{
+		MOVE(D);
+	}
+	if(PE == 0)
+	then
+	{
+		PE = 10;
+		E = SCANE;
+    	if(E)
+		then
+		{
+			ATTACK(E);
+		}
+	}
+	else
+	{
+		PE = PE - 1;
+	}
 }
