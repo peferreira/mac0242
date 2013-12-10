@@ -37,6 +37,10 @@ No inicio teremos um menu que o jogador deve pelo terminal, iterativamente, deci
 e quantas equipes vão participar.
 No final no jogo é imprimido pelo terminal o vencedor da batalha.
 
+Em alguns casos (raros) o ep tem um probleminha de memória (não sabemos se é isso e nem conseguimos resolver o problema) mas reinicializando o eclipse tudo volta a funcionar.
+
+Também em alguns casos  (raros) e ep diz que dá um erro dizendo que a pilha do programa esta vazia (nao encontramos uma solução) mas rodando de novo o programa tudo funciona corretamente (pode ser necessário tentar rodar o programa mais de uma vez (aconteceu uma vez connosco)).
+
 
 
 
